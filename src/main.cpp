@@ -102,7 +102,7 @@ if (enable == true)
 	if (m_player1)
 	{
 		m_player1->setColor(rainbowColor);
-		m_player1->setSecondColor(rainbowColor2);
+		m_player1->setSecondColor(rainbowColor);
 
 		if (m_player1->m_waveTrail)
 		{
@@ -113,7 +113,7 @@ if (enable == true)
 	if (m_player2)
 	{
 		m_player2->setColor(rainbowColor2);
-		m_player2->setSecondColor(rainbowColor);
+		m_player2->setSecondColor(rainbowColor2);
 
 		if (m_player2->m_waveTrail)
 		{
