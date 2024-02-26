@@ -82,9 +82,7 @@ cocos2d::_ccColor3B getRainbow(float offset)
 class $modify(PlayLayer)
 {
 
-	int speed = Mod::get()->getSettingValue<int>("speed");
-	// 1 slow
-	// 10 fast
+	float speed = Mod::get()->getSettingValue<float>("speed");
 	float rainbowSpeed = speed / 10.0f;
 	
 
@@ -100,6 +98,7 @@ class $modify(PlayLayer)
 		else
 		{
 			g += rainbowSpeed;
+			printf("%f\n", g);
 		}
 
 		auto rainbowColor = getRainbow(0);
