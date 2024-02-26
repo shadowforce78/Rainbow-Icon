@@ -80,6 +80,14 @@ cocos2d::_ccColor3B getRainbow(float offset)
 };
 
 class $modify(PlayLayer){
+
+
+	int speed = Mod::get()->getSettingValue<int>("speed");
+	// 0.5 = 5
+	// 1 = 10
+	// 0.1 = 1
+	float rainbowSpeed = speed / 10;
+	
 	void postUpdate(float p0){
 
 		PlayLayer::postUpdate(p0);
@@ -90,7 +98,7 @@ if (g >= 360)
 }
 else
 {
-	g += 0.5;
+	g += rainbowSpeed;
 }
 
 auto rainbowColor = getRainbow(0);
