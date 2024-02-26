@@ -79,56 +79,56 @@ cocos2d::_ccColor3B getRainbow(float offset)
 	return out;
 };
 
-class $modify(PlayLayer){
-
+class $modify(PlayLayer)
+{
 
 	int speed = Mod::get()->getSettingValue<int>("speed");
-	// 0.5 = 5
-	// 1 = 10
-	// 0.1 = 1
-	float rainbowSpeed = speed / 10;
+	// 1 slow
+	// 10 fast
+	float rainbowSpeed = speed / 10.0f;
 	
-	void postUpdate(float p0){
+
+	void postUpdate(float p0)
+	{
 
 		PlayLayer::postUpdate(p0);
 
-if (g >= 360)
-{
-	g = 0;
-}
-else
-{
-	g += rainbowSpeed;
-}
-
-auto rainbowColor = getRainbow(0);
-auto rainbowColor2 = getRainbow(180);
-bool enable = Mod::get()->getSettingValue<bool>("enable");
-
-if (enable == true)
-{
-	if (m_player1)
-	{
-		m_player1->setColor(rainbowColor);
-		m_player1->setSecondColor(rainbowColor);
-
-		if (m_player1->m_waveTrail)
+		if (g >= 360)
 		{
-			m_player1->m_waveTrail->setColor(rainbowColor);
+			g = 0;
+		}
+		else
+		{
+			g += rainbowSpeed;
+		}
+
+		auto rainbowColor = getRainbow(0);
+		auto rainbowColor2 = getRainbow(180);
+		bool enable = Mod::get()->getSettingValue<bool>("enable");
+
+		if (enable == true)
+		{
+			if (m_player1)
+			{
+				m_player1->setColor(rainbowColor);
+				m_player1->setSecondColor(rainbowColor);
+
+				if (m_player1->m_waveTrail)
+				{
+					m_player1->m_waveTrail->setColor(rainbowColor);
+				}
+			}
+
+			if (m_player2)
+			{
+				m_player2->setColor(rainbowColor2);
+				m_player2->setSecondColor(rainbowColor2);
+
+				if (m_player2->m_waveTrail)
+				{
+					m_player2->m_waveTrail->setColor(rainbowColor2);
+				}
+			}
 		}
 	}
-
-	if (m_player2)
-	{
-		m_player2->setColor(rainbowColor2);
-		m_player2->setSecondColor(rainbowColor2);
-
-		if (m_player2->m_waveTrail)
-		{
-			m_player2->m_waveTrail->setColor(rainbowColor2);
-		}
-	}
-}
-}
-}
-;
+};

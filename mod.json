@@ -13,6 +13,7 @@
 		"enable":{
 			"name": "Enable Rainbow Icon",
 			"type": "bool",
+			"description": "Enable or disable the rainbow effect on your icons.",
 			"default": true
 		},
 		"speed":{
@@ -23,7 +24,8 @@
 			"max": 10,
 			"control": {
 				"slider": true
-			}
+			},
+			"description": "The speed of the rainbow effect (1-3 is really really slow)"
 		}
 	}
 }
