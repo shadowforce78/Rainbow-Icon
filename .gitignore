@@ -25,6 +25,8 @@
 *.la
 *.a
 *.lib
+*.bat
+# if you want to, you can remove .bat from this sam.
 
 # Executables
 *.exe
