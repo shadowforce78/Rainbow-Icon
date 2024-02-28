@@ -16,6 +16,12 @@
 			"description": "Enable or disable the rainbow effect on your icons.",
 			"default": true
 		},
+		"glow":{
+			"name": "Rainbow Glow",
+			"type": "bool",
+			"description": "Enable or disable the glow effect on the rainbow.",
+			"default": true
+		},
 		"speed":{
 			"name": "Rainbow Speed",
 			"type": "float",

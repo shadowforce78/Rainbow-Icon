@@ -1,5 +1,6 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
+#include <Geode/binding/GameManager.hpp>
 #include <chrono>
 
 using namespace geode::prelude;
@@ -79,51 +80,59 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation)
     return out;
 }
 
-class $modify(PlayLayer)
-{
-    void postUpdate(float p0)
-    {
+class $modify(PlayLayer){
+    void postUpdate(float p0){
         PlayLayer::postUpdate(p0);
 
-        float speed = Mod::get()->getSettingValue<double>("speed");
-        float saturation = Mod::get()->getSettingValue<double>("saturation");
+float speed = Mod::get()->getSettingValue<double>("speed");
+float saturation = Mod::get()->getSettingValue<double>("saturation");
 
-        if (g >= 360)
+if (g >= 360)
+{
+    g = 0;
+}
+else
+{
+    g += speed / 10;
+}
+
+auto rainbowColor = getRainbow(0, saturation);
+auto rainbowColor2 = getRainbow(180, saturation);
+bool enable = Mod::get()->getSettingValue<bool>("enable");
+bool glow = Mod::get()->getSettingValue<bool>("glow");
+
+if (enable == true)
+{
+    if (m_player1)
+    {
+        m_player1->setColor(rainbowColor);
+        m_player1->setSecondColor(rainbowColor);
+
+        if (m_player1->m_waveTrail)
         {
-            g = 0;
-        }
-        else
-        {
-            g += speed / 10;
-        }
-
-        auto rainbowColor = getRainbow(0, saturation);
-        auto rainbowColor2 = getRainbow(180, saturation);
-        bool enable = Mod::get()->getSettingValue<bool>("enable");
-
-        if (enable == true)
-        {
-            if (m_player1)
-            {
-                m_player1->setColor(rainbowColor);
-                m_player1->setSecondColor(rainbowColor);
-
-                if (m_player1->m_waveTrail)
-                {
-                    m_player1->m_waveTrail->setColor(rainbowColor);
-                }
-            }
-
-            if (m_player2)
-            {
-                m_player2->setColor(rainbowColor2);
-                m_player2->setSecondColor(rainbowColor2);
-
-                if (m_player2->m_waveTrail)
-                {
-                    m_player2->m_waveTrail->setColor(rainbowColor2);
-                }
-            }
+            m_player1->m_waveTrail->setColor(rainbowColor);
         }
     }
-};
+
+    if (glow == true)
+    {
+        m_player1->m_glowColor = rainbowColor;
+        m_player2->m_glowColor = rainbowColor2;
+        m_player1->updateGlowColor();
+        m_player2->updateGlowColor();
+    }
+
+    if (m_player2)
+    {
+        m_player2->setColor(rainbowColor2);
+        m_player2->setSecondColor(rainbowColor2);
+
+        if (m_player2->m_waveTrail)
+        {
+            m_player2->m_waveTrail->setColor(rainbowColor2);
+        }
+    }
+}
+}
+}
+;
