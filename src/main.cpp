@@ -100,19 +100,11 @@ auto rainbowColor = getRainbow(0, saturation);
 auto rainbowColor2 = getRainbow(180, saturation);
 bool enable = Mod::get()->getSettingValue<bool>("enable");
 bool glow = Mod::get()->getSettingValue<bool>("glow");
+int preset = Mod::get()->getSettingValue<int64_t>("preset");
+bool sync = Mod::get()->getSettingValue<bool>("sync");
 
 if (enable == true)
 {
-    if (m_player1)
-    {
-        m_player1->setColor(rainbowColor);
-        m_player1->setSecondColor(rainbowColor);
-
-        if (m_player1->m_waveTrail)
-        {
-            m_player1->m_waveTrail->setColor(rainbowColor);
-        }
-    }
 
     if (glow == true)
     {
@@ -122,11 +114,61 @@ if (enable == true)
         m_player2->updateGlowColor();
     }
 
-    if (m_player2)
+    if (preset == 0)
     {
-        m_player2->setColor(rainbowColor2);
-        m_player2->setSecondColor(rainbowColor2);
+        printf("preset 0, Mod Disabled\n");
+    }
 
+    if (preset == 1)
+    {
+        if (sync == true)
+        {
+            m_player1->setColor(rainbowColor);
+            m_player1->setSecondColor(rainbowColor);
+            m_player2->setColor(rainbowColor2);
+            m_player2->setSecondColor(rainbowColor2);
+        }
+        else
+        {
+            m_player1->setColor(rainbowColor);
+            m_player1->setSecondColor(rainbowColor2);
+            m_player2->setColor(rainbowColor2);
+            m_player2->setSecondColor(rainbowColor);
+        }
+
+        if (m_player1->m_waveTrail)
+        {
+            m_player1->m_waveTrail->setColor(rainbowColor);
+        }
+
+        if (m_player2->m_waveTrail)
+        {
+            m_player2->m_waveTrail->setColor(rainbowColor2);
+        }
+    }
+
+    if (preset == 2)
+    {
+        m_player1->setColor(rainbowColor);
+        m_player2->setColor(rainbowColor2);
+        if (m_player1->m_waveTrail)
+        {
+            m_player1->m_waveTrail->setColor(rainbowColor);
+        }
+        if (m_player2->m_waveTrail)
+        {
+            m_player2->m_waveTrail->setColor(rainbowColor2);
+        }
+    }
+
+    if (preset == 3)
+    {
+        m_player1->setSecondColor(rainbowColor);
+        m_player2->setSecondColor(rainbowColor2);
+        if (m_player1->m_waveTrail)
+        {
+            m_player1->m_waveTrail->setColor(rainbowColor);
+        }
         if (m_player2->m_waveTrail)
         {
             m_player2->m_waveTrail->setColor(rainbowColor2);
