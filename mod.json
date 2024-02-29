@@ -67,5 +67,10 @@
 			"description": "The saturation of the rainbow effect (0 is the lowest, 100 is the highest)."
 		}
 	},
-	"repository": "https://github.com/shadowforce78/Rainbow-Icon"
+	"repository": "https://github.com/shadowforce78/Rainbow-Icon",
+	"resources": {
+		"sprites": [
+			"resources/btnSprite.png"
+		]
+	}
 }

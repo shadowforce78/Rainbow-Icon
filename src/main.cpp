@@ -1,6 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/binding/GameManager.hpp>
+#include <Geode/ui/GeodeUI.hpp>
 #include <chrono>
 
 using namespace geode::prelude;
@@ -178,3 +179,25 @@ if (enable == true)
 }
 }
 ;
+
+
+#include <Geode/modify/PauseLayer.hpp>
+class $modify(OpenSettings, PauseLayer){
+    void btnSettings(CCObject *){
+            geode::openSettingsPopup(Mod::get());
+    };  
+
+    void customSetup(){
+        PauseLayer::customSetup();
+
+        auto btnSprite = CCSprite::create("btnSprite.png"_spr);
+        auto menu = this->getChildByID("center-button-menu");
+        auto btn = CCMenuItemSpriteExtra::create(btnSprite, this, menu_selector(OpenSettings::btnSettings));
+        btn->setID("settings-button"_spr);
+        btn->setPosition(241, -92);
+        btn->setScale(0.475f);
+        btn->setZOrder(10);
+        menu->addChild(btn);
+        menu->updateLayout();
+    };
+};
