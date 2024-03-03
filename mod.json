@@ -9,6 +9,7 @@
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
 	"description": "Makes your icons look incredibly",
+	"early-load": true,
 	"tags": [
 		"icon",
 		"rainbow",
@@ -37,6 +38,12 @@
 			"name": "Rainbow Wave",
 			"type": "bool",
 			"description": "Enable or disable the wave effect on the rainbow.",
+			"default": true
+		},
+		"bar":{
+			"name": "Rainbow Bar",
+			"type": "bool",
+			"description": "Enable or disable the bar effect on the rainbow.",
 			"default": true
 		},
 		"preset": {

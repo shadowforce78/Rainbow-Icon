@@ -13,3 +13,4 @@
 
 - Thanks [availax](https://linktr.ee/availaxmusic) for the new mod icon.
 - Thanks [beat](https://github.com/BeatACVR) for v1.0.2.
+- Thanks [Firee](user:6253758) for the progress bar code for v1.0.4.

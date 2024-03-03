@@ -2,6 +2,7 @@
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
 #include <Geode/ui/GeodeUI.hpp>
+#include "Utils.hpp"
 #include <chrono>
 
 using namespace geode::prelude;
@@ -84,10 +85,13 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation)
 class $modify(PlayLayer)
 {
 
-    ccColor3B playerOneColorMain = m_player1->m_playerColor1;
-    ccColor3B playerTwoColorMain = m_player2->m_playerColor1;
-    ccColor3B playerOneColorSec = m_player1->m_playerColor2;
-    ccColor3B playerTwoColorSec = m_player2->m_playerColor2;
+    CCSprite *progressBar;
+    CCLabelBMFont *percentLabel;
+
+    // ccColor3B playerOneColorMain = m_player1->m_playerColor1;
+    // ccColor3B playerTwoColorMain = m_player2->m_playerColor1;
+    // ccColor3B playerOneColorSec = m_player1->m_playerColor2;
+    // ccColor3B playerTwoColorSec = m_player2->m_playerColor2;
     void postUpdate(float p0)
     {
         PlayLayer::postUpdate(p0);
@@ -111,9 +115,37 @@ class $modify(PlayLayer)
         int preset = Mod::get()->getSettingValue<int64_t>("preset");
         bool sync = Mod::get()->getSettingValue<bool>("sync");
         bool wave = Mod::get()->getSettingValue<bool>("wave");
+        bool bar = Mod::get()->getSettingValue<bool>("bar");
 
         if (enable == true)
         {
+
+            if (m_fields->progressBar == nullptr || m_fields->percentLabel == nullptr)
+            {
+                for (size_t i = 0; i < this->getChildrenCount(); i++)
+                {
+                    auto obj = this->getChildren()->objectAtIndex(i);
+                    if (Utils::getNodeName(obj) == "cocos2d::CCLabelBMFont" && m_fields->percentLabel == nullptr)
+                    {
+                        auto labelTest = static_cast<CCLabelBMFont *>(obj);
+                        if (strlen(labelTest->getString()) < 6)
+                        {
+                            m_fields->percentLabel = labelTest;
+                        }
+                    }
+                    else if (Utils::getNodeName(obj) == "cocos2d::CCSprite" && m_fields->progressBar == nullptr)
+                    {
+                        m_fields->progressBar = static_cast<CCSprite *>(obj);
+                    }
+                }
+            }
+            else
+            {
+                if (bar == true)
+                {
+                    m_fields->progressBar->setChildColor(rainbowColor);
+                }
+            }
 
             if (glow == true)
             {
@@ -162,9 +194,8 @@ class $modify(PlayLayer)
 
             if (preset == 2)
             {
-                
+
                 m_player1->setColor(rainbowColor);
-                m_player1->setSecondColor(playerOneColorSec);
                 m_player2->setColor(rainbowColor2);
             }
 
