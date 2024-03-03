@@ -1,6 +1,6 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include <Geode/binding/GameManager.hpp>
+#include <Geode/modify/PlayerObject.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 #include <chrono>
 
@@ -81,113 +81,112 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation)
     return out;
 }
 
-class $modify(PlayLayer){
-    void postUpdate(float p0){
+class $modify(PlayLayer)
+{
+
+    ccColor3B playerOneColorMain = m_player1->m_playerColor1;
+    ccColor3B playerTwoColorMain = m_player2->m_playerColor1;
+    ccColor3B playerOneColorSec = m_player1->m_playerColor2;
+    ccColor3B playerTwoColorSec = m_player2->m_playerColor2;
+    void postUpdate(float p0)
+    {
         PlayLayer::postUpdate(p0);
 
-float speed = Mod::get()->getSettingValue<double>("speed");
-float saturation = Mod::get()->getSettingValue<double>("saturation");
+        float speed = Mod::get()->getSettingValue<double>("speed");
+        float saturation = Mod::get()->getSettingValue<double>("saturation");
 
-if (g >= 360)
-{
-    g = 0;
-}
-else
-{
-    g += speed / 10;
-}
-
-auto rainbowColor = getRainbow(0, saturation);
-auto rainbowColor2 = getRainbow(180, saturation);
-bool enable = Mod::get()->getSettingValue<bool>("enable");
-bool glow = Mod::get()->getSettingValue<bool>("glow");
-int preset = Mod::get()->getSettingValue<int64_t>("preset");
-bool sync = Mod::get()->getSettingValue<bool>("sync");
-
-if (enable == true)
-{
-
-    if (glow == true)
-    {
-        m_player1->m_glowColor = rainbowColor;
-        m_player2->m_glowColor = rainbowColor2;
-        m_player1->updateGlowColor();
-        m_player2->updateGlowColor();
-    }
-
-    if (preset == 0)
-    {
-        printf("preset 0, Mod Disabled\n");
-    }
-
-    if (preset == 1)
-    {
-        if (sync == true)
+        if (g >= 360)
         {
-            m_player1->setColor(rainbowColor);
-            m_player1->setSecondColor(rainbowColor);
-            m_player2->setColor(rainbowColor2);
-            m_player2->setSecondColor(rainbowColor2);
+            g = 0;
         }
         else
         {
-            m_player1->setColor(rainbowColor);
-            m_player1->setSecondColor(rainbowColor2);
-            m_player2->setColor(rainbowColor2);
-            m_player2->setSecondColor(rainbowColor);
+            g += speed / 10;
         }
 
-        if (m_player1->m_waveTrail)
-        {
-            m_player1->m_waveTrail->setColor(rainbowColor);
-        }
+        auto rainbowColor = getRainbow(0, saturation);
+        auto rainbowColor2 = getRainbow(180, saturation);
+        bool enable = Mod::get()->getSettingValue<bool>("enable");
+        bool glow = Mod::get()->getSettingValue<bool>("glow");
+        int preset = Mod::get()->getSettingValue<int64_t>("preset");
+        bool sync = Mod::get()->getSettingValue<bool>("sync");
+        bool wave = Mod::get()->getSettingValue<bool>("wave");
 
-        if (m_player2->m_waveTrail)
+        if (enable == true)
         {
-            m_player2->m_waveTrail->setColor(rainbowColor2);
+
+            if (glow == true)
+            {
+                m_player1->m_glowColor = rainbowColor;
+                m_player2->m_glowColor = rainbowColor2;
+                m_player1->updateGlowColor();
+                m_player2->updateGlowColor();
+            }
+
+            if (wave == true)
+            {
+                if (m_player1->m_waveTrail)
+                {
+                    m_player1->m_waveTrail->setColor(rainbowColor);
+                }
+
+                if (m_player2->m_waveTrail)
+                {
+                    m_player2->m_waveTrail->setColor(rainbowColor2);
+                }
+            }
+
+            if (preset == 0)
+            {
+                printf("preset 0, Mod Disabled\n");
+            }
+
+            if (preset == 1)
+            {
+
+                if (sync == true)
+                {
+                    m_player1->setColor(rainbowColor);
+                    m_player1->setSecondColor(rainbowColor);
+                    m_player2->setColor(rainbowColor2);
+                    m_player2->setSecondColor(rainbowColor2);
+                }
+                else
+                {
+                    m_player1->setColor(rainbowColor);
+                    m_player1->setSecondColor(rainbowColor2);
+                    m_player2->setColor(rainbowColor2);
+                    m_player2->setSecondColor(rainbowColor);
+                }
+            }
+
+            if (preset == 2)
+            {
+                
+                m_player1->setColor(rainbowColor);
+                m_player1->setSecondColor(playerOneColorSec);
+                m_player2->setColor(rainbowColor2);
+            }
+
+            if (preset == 3)
+            {
+                m_player1->setSecondColor(rainbowColor);
+                m_player2->setSecondColor(rainbowColor2);
+            }
         }
     }
-
-    if (preset == 2)
-    {
-        m_player1->setColor(rainbowColor);
-        m_player2->setColor(rainbowColor2);
-        if (m_player1->m_waveTrail)
-        {
-            m_player1->m_waveTrail->setColor(rainbowColor);
-        }
-        if (m_player2->m_waveTrail)
-        {
-            m_player2->m_waveTrail->setColor(rainbowColor2);
-        }
-    }
-
-    if (preset == 3)
-    {
-        m_player1->setSecondColor(rainbowColor);
-        m_player2->setSecondColor(rainbowColor2);
-        if (m_player1->m_waveTrail)
-        {
-            m_player1->m_waveTrail->setColor(rainbowColor);
-        }
-        if (m_player2->m_waveTrail)
-        {
-            m_player2->m_waveTrail->setColor(rainbowColor2);
-        }
-    }
-}
-}
-}
-;
-
+};
 
 #include <Geode/modify/PauseLayer.hpp>
-class $modify(OpenSettings, PauseLayer){
-    void btnSettings(CCObject *){
-            geode::openSettingsPopup(Mod::get());
-    };  
+class $modify(OpenSettings, PauseLayer)
+{
+    void btnSettings(CCObject *)
+    {
+        geode::openSettingsPopup(Mod::get());
+    };
 
-    void customSetup(){
+    void customSetup()
+    {
         PauseLayer::customSetup();
 
         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
