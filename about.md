@@ -1,16 +1,12 @@
 # Rainbow Icon Mod
 
 - This mod will change the color of the icons in the game to a rainbow color.
-
 - This mod was made by [SaumonDeLuxe](https://github.com/shadowforce78)
-
-- You can enable or disable the mod in the settings.
-
-- You can also change the speed of the rainbow effect in the settings.
-
-- You can also change the saturation of the rainbow effect in the settings.
+- Check the mod settings to change the color of the icons and more.
+- Join the [discord server](https://discord.gg/eRBsfKtD2k) for more mods and updates.
 
 # Warning
+
 <cr>THIS MOD DON'T WORK PROPERLY WITH THE "AmbientIcons" OR "Same Dual Color" ENABLED</cr>
 
 # Credits

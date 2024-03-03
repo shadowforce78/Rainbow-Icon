@@ -41,7 +41,8 @@
 			"max": 3,
 			"min": 0,
 			"control": {
-				"big-arrow-step": 1
+				"arrows": true,
+				"slider": false
 			}
 		},
 		"speed": {
