@@ -88,13 +88,14 @@ class $modify(PlayLayer)
     CCSprite *progressBar;
     CCLabelBMFont *percentLabel;
 
-    // ccColor3B playerOneColorMain = m_player1->m_playerColor1;
-    // ccColor3B playerTwoColorMain = m_player2->m_playerColor1;
-    // ccColor3B playerOneColorSec = m_player1->m_playerColor2;
-    // ccColor3B playerTwoColorSec = m_player2->m_playerColor2;
     void postUpdate(float p0)
     {
         PlayLayer::postUpdate(p0);
+        ccColor3B playerOneColorMain = m_player1->m_playerColor1;
+        ccColor3B playerTwoColorMain = m_player2->m_playerColor1;
+        ccColor3B playerOneColorSec = m_player1->m_playerColor2;
+        ccColor3B playerTwoColorSec = m_player2->m_playerColor2;
+        ccColor3B playerGlowOriginal = m_player1->m_glowColor;
 
         float speed = Mod::get()->getSettingValue<double>("speed");
         float saturation = Mod::get()->getSettingValue<double>("saturation");
