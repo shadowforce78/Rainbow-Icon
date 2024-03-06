@@ -90,12 +90,12 @@ class $modify(PlayLayer)
 
     void postUpdate(float p0)
     {
-        PlayLayer::postUpdate(p0);
         ccColor3B playerOneColorMain = m_player1->m_playerColor1;
         ccColor3B playerTwoColorMain = m_player2->m_playerColor1;
         ccColor3B playerOneColorSec = m_player1->m_playerColor2;
         ccColor3B playerTwoColorSec = m_player2->m_playerColor2;
         ccColor3B playerGlowOriginal = m_player1->m_glowColor;
+        PlayLayer::postUpdate(p0);
 
         float speed = Mod::get()->getSettingValue<double>("speed");
         float saturation = Mod::get()->getSettingValue<double>("saturation");
@@ -117,7 +117,6 @@ class $modify(PlayLayer)
         bool sync = Mod::get()->getSettingValue<bool>("sync");
         bool wave = Mod::get()->getSettingValue<bool>("wave");
         bool bar = Mod::get()->getSettingValue<bool>("bar");
-        bool trail = Mod::get()->getSettingValue<bool>("trail");
 
         if (enable == true)
         {
@@ -180,10 +179,10 @@ class $modify(PlayLayer)
 
                 if (sync == true)
                 {
-                    m_player1->setColor(rainbowColor);
-                    m_player1->setSecondColor(rainbowColor);
-                    m_player2->setColor(rainbowColor2);
-                    m_player2->setSecondColor(rainbowColor2);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
                 }
                 else
                 {
