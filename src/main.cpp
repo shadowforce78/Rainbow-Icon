@@ -155,7 +155,7 @@ class $modify(PlayLayer)
                 m_player2->m_glowColor = rainbowColor2;
                 m_player1->updateGlowColor();
                 m_player2->updateGlowColor();
-            }          
+            }
 
             if (wave == true)
             {
@@ -213,6 +213,7 @@ class $modify(PlayLayer)
 #include <Geode/modify/PauseLayer.hpp>
 class $modify(OpenSettings, PauseLayer)
 {
+
     void btnSettings(CCObject *)
     {
         geode::openSettingsPopup(Mod::get());
@@ -220,16 +221,20 @@ class $modify(OpenSettings, PauseLayer)
 
     void customSetup()
     {
+        bool shortcut = Mod::get()->getSettingValue<bool>("shortcut");
         PauseLayer::customSetup();
-
         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
+        btnSprite->setScale(0.475f);
         auto menu = this->getChildByID("center-button-menu");
         auto btn = CCMenuItemSpriteExtra::create(btnSprite, this, menu_selector(OpenSettings::btnSettings));
         btn->setID("settings-button"_spr);
-        btn->setPosition(241, -92);
-        btn->setScale(0.475f);
+        btn->setPosition(234, -34);
         btn->setZOrder(10);
-        menu->addChild(btn);
-        menu->updateLayout();
+
+        if (shortcut == true)
+        {
+            menu->addChild(btn);
+            menu->updateLayout();
+        }
     };
 };

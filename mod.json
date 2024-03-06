@@ -1,6 +1,6 @@
 {
 	"geode": "2.0.0-beta.19",
-	"version": "v1.0.4",
+	"version": "v1.0.5",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205"
@@ -20,6 +20,12 @@
 			"name": "Enable Rainbow Icon",
 			"type": "bool",
 			"description": "Enable or disable the rainbow effect on your icons.",
+			"default": true
+		},
+		"shortcut":{
+			"name": "Rainbow Shortcut",
+			"type": "bool",
+			"description": "Enable or disable shortcut button on the pause menu",
 			"default": true
 		},
 		"sync": {
