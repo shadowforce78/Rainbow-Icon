@@ -153,15 +153,15 @@ class $modify(PlayLayer)
             {
                 if (sync == true)
                 {
-                    m_player1->m_glowColor = rainbowColor;
-                    m_player2->m_glowColor = rainbowColor2;
+                    m_player1->m_iconGlow->setColor(rainbowColor);
+                    m_player2->m_iconGlow->setColor(rainbowColor);
                     m_player1->updateGlowColor();
                     m_player2->updateGlowColor();
                 }
                 else
                 {
-                    m_player1->m_glowColor = rainbowColor2;
-                    m_player2->m_glowColor = rainbowColor3;
+                    m_player1->m_iconGlow->setColor(rainbowColor);
+                    m_player2->m_iconGlow->setColor(rainbowColor2);
                     m_player1->updateGlowColor();
                     m_player2->updateGlowColor();
                 }
@@ -184,15 +184,10 @@ class $modify(PlayLayer)
                 }
             }
 
-            if (preset == 0)
-            {
-                printf("preset 0, Mod Disabled\n");
-            }
-
             if (preset == 1)
             {
 
-                if (sync == true)
+                if (sync)
                 {
                     static_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
                     static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
