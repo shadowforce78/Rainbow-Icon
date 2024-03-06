@@ -11,9 +11,9 @@
 	"description": "Makes your icons look incredibly",
 	"early-load": true,
 	"tags": [
-		"icon",
-		"rainbow",
-		"glow"
+		"enhancement",
+		"customization",
+		"utility"
 	],
 	"settings": {
 		"enable": {
