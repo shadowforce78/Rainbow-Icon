@@ -90,13 +90,6 @@ class $modify(PlayLayer)
 
     void postUpdate(float p0)
     {
-        ccColor3B playerOneColorMain = m_player1->m_playerColor1;
-        ccColor3B playerTwoColorMain = m_player2->m_playerColor1;
-        ccColor3B playerOneColorSec = m_player1->m_playerColor2;
-        ccColor3B playerTwoColorSec = m_player2->m_playerColor2;
-        ccColor3B playerGlowOriginal = m_player1->m_glowColor;
-        PlayLayer::postUpdate(p0);
-
         float speed = Mod::get()->getSettingValue<double>("speed");
         float saturation = Mod::get()->getSettingValue<double>("saturation");
 
@@ -186,26 +179,27 @@ class $modify(PlayLayer)
                 }
                 else
                 {
-                    m_player1->setColor(rainbowColor);
-                    m_player1->setSecondColor(rainbowColor2);
-                    m_player2->setColor(rainbowColor2);
-                    m_player2->setSecondColor(rainbowColor);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor);
+                    reinterpret_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
                 }
             }
 
             if (preset == 2)
             {
-
-                m_player1->setColor(rainbowColor);
-                m_player2->setColor(rainbowColor2);
+                reinterpret_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
+                reinterpret_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
             }
 
             if (preset == 3)
             {
-                m_player1->setSecondColor(rainbowColor);
-                m_player2->setSecondColor(rainbowColor2);
+                reinterpret_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
+                reinterpret_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
             }
         }
+
+        PlayLayer::postUpdate(p0);
     }
 };
 
