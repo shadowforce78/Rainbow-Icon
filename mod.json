@@ -35,9 +35,15 @@
 			"default": true
 		},
 		"wave":{
-			"name": "Rainbow Wave",
+			"name": "Rainbow Wave Trail",
 			"type": "bool",
 			"description": "Enable or disable the wave effect on the rainbow.",
+			"default": true
+		},
+		"trail":{
+			"name": "Rainbow Trail",
+			"type": "bool",
+			"description": "Enable or disable the trail effect on the rainbow.",
 			"default": true
 		},
 		"bar":{

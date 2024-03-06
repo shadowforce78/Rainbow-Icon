@@ -117,6 +117,7 @@ class $modify(PlayLayer)
         bool sync = Mod::get()->getSettingValue<bool>("sync");
         bool wave = Mod::get()->getSettingValue<bool>("wave");
         bool bar = Mod::get()->getSettingValue<bool>("bar");
+        bool trail = Mod::get()->getSettingValue<bool>("trail");
 
         if (enable == true)
         {
@@ -154,7 +155,7 @@ class $modify(PlayLayer)
                 m_player2->m_glowColor = rainbowColor2;
                 m_player1->updateGlowColor();
                 m_player2->updateGlowColor();
-            }
+            }          
 
             if (wave == true)
             {
