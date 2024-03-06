@@ -82,6 +82,14 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation)
     return out;
 }
 
+class $modify(PlayerObject)
+{
+    void flashPlayer(float p0, float p1, cocos2d::ccColor3B mainColor, cocos2d::ccColor3B secondColor)
+    {
+        // neutralised kappa
+    }
+};
+
 class $modify(PlayLayer)
 {
 
