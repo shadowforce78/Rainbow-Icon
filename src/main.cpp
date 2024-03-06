@@ -153,15 +153,15 @@ class $modify(PlayLayer)
             {
                 if (sync == true)
                 {
-                    m_player1->m_iconGlow->setColor(rainbowColor);
-                    m_player2->m_iconGlow->setColor(rainbowColor);
+                    m_player1->m_glowColor = rainbowColor;
+                    m_player2->m_glowColor = rainbowColor;
                     m_player1->updateGlowColor();
                     m_player2->updateGlowColor();
                 }
                 else
                 {
-                    m_player1->m_iconGlow->setColor(rainbowColor);
-                    m_player2->m_iconGlow->setColor(rainbowColor2);
+                    m_player1->m_glowColor = rainbowColor;
+                    m_player2->m_glowColor = rainbowColor2;
                     m_player1->updateGlowColor();
                     m_player2->updateGlowColor();
                 }
