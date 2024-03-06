@@ -1,6 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
+#include <Geode/cocos/misc_nodes/CCMotionStreak.h>
 #include <Geode/ui/GeodeUI.hpp>
 #include "Utils.hpp"
 #include <chrono>
@@ -82,13 +83,10 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation)
     return out;
 }
 
-class $modify(PlayerObject)
-{
-    void flashPlayer(float p0, float p1, cocos2d::ccColor3B mainColor, cocos2d::ccColor3B secondColor)
-    {
+class $modify(PlayerObject){
+    void flashPlayer(float p0, float p1, cocos2d::ccColor3B mainColor, cocos2d::ccColor3B secondColor){
         // neutralised kappa
-    }
-};
+    }};
 
 class $modify(PlayLayer)
 {
@@ -112,12 +110,14 @@ class $modify(PlayLayer)
 
         auto rainbowColor = getRainbow(0, saturation);
         auto rainbowColor2 = getRainbow(180, saturation);
+        auto rainbowColor3 = getRainbow(90, saturation);
         bool enable = Mod::get()->getSettingValue<bool>("enable");
         bool glow = Mod::get()->getSettingValue<bool>("glow");
         int preset = Mod::get()->getSettingValue<int64_t>("preset");
         bool sync = Mod::get()->getSettingValue<bool>("sync");
         bool wave = Mod::get()->getSettingValue<bool>("wave");
         bool bar = Mod::get()->getSettingValue<bool>("bar");
+        bool trail = Mod::get()->getSettingValue<bool>("trail");
 
         if (enable == true)
         {
@@ -151,12 +151,26 @@ class $modify(PlayLayer)
 
             if (glow == true)
             {
-                m_player1->m_glowColor = rainbowColor;
-                m_player2->m_glowColor = rainbowColor2;
-                m_player1->updateGlowColor();
-                m_player2->updateGlowColor();
+                if (sync == true)
+                {
+                    m_player1->m_glowColor = rainbowColor;
+                    m_player2->m_glowColor = rainbowColor2;
+                    m_player1->updateGlowColor();
+                    m_player2->updateGlowColor();
+                }
+                else
+                {
+                    m_player1->m_glowColor = rainbowColor2;
+                    m_player2->m_glowColor = rainbowColor3;
+                    m_player1->updateGlowColor();
+                    m_player2->updateGlowColor();
+                }
             }
 
+            if (trail == true)
+            {
+                // TODO: Add trail color
+            }
             if (wave == true)
             {
                 if (m_player1->m_waveTrail)
@@ -180,30 +194,30 @@ class $modify(PlayLayer)
 
                 if (sync == true)
                 {
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
                 }
                 else
                 {
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor2);
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor);
-                    reinterpret_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
                 }
             }
 
             if (preset == 2)
             {
-                reinterpret_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
-                reinterpret_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
+                static_cast<cocos2d::CCSprite *>(m_player1)->setColor(rainbowColor);
+                static_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
             }
 
             if (preset == 3)
             {
-                reinterpret_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
-                reinterpret_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
+                static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
             }
         }
 
