@@ -213,6 +213,8 @@ class $modify(PlayLayer)
             {
                 static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
                 static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                static_cast<cocos2d::CCSprite *>(m_player1->m_vehicleSpriteSecondary)->setColor(rainbowColor);
+                static_cast<cocos2d::CCSprite *>(m_player2->m_vehicleSpriteSecondary)->setColor(rainbowColor2);
             }
         }
 
