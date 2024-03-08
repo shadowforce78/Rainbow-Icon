@@ -209,7 +209,6 @@ class $modify(PlayLayer)
                 static_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
                 static_cast<cocos2d::CCSprite *>(m_player1->m_vehicleSprite)->setColor(rainbowColor);
                 static_cast<cocos2d::CCSprite *>(m_player2->m_vehicleSprite)->setColor(rainbowColor2);
-                
             }
 
             if (preset == 3)
@@ -238,13 +237,18 @@ class $modify(OpenSettings, PauseLayer)
     void customSetup()
     {
         bool shortcut = Mod::get()->getSettingValue<bool>("shortcut");
+        auto winSize = CCDirector::sharedDirector()->getWinSize();
+        
+        auto bottomRightPos = ccp((winSize.width / 2) - 41, (winSize.height / 2) - 181);
+
         PauseLayer::customSetup();
         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
         btnSprite->setScale(0.475f);
         auto menu = this->getChildByID("center-button-menu");
         auto btn = CCMenuItemSpriteExtra::create(btnSprite, this, menu_selector(OpenSettings::btnSettings));
         btn->setID("settings-button"_spr);
-        btn->setPosition(234, -34);
+        // btn->setPosition(234, -34);
+        btn->setPosition(bottomRightPos);
         btn->setZOrder(10);
 
         if (shortcut == true)

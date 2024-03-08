@@ -9,6 +9,9 @@
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
 	"description": "Makes your icons look incredibly",
+	"links": {
+		"community": "https://discord.gg/F4phpWrtnd"
+	},
 	"early-load": true,
 	"dependencies": [
 		{
