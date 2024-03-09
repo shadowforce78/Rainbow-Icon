@@ -20,6 +20,13 @@
 			"version": ">=1.7.1"
 		}
 	],
+	"incompatibilities": [
+		{
+			"id": "TheSillyDoggo.Cheats",
+			"importance": "breaking",
+			"version": "*"
+		}
+	],
 	"tags": [
 		"enhancement",
 		"customization",

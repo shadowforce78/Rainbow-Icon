@@ -119,6 +119,7 @@ class $modify(PlayLayer)
         bool bar = Mod::get()->getSettingValue<bool>("bar");
         bool trail = Mod::get()->getSettingValue<bool>("trail");
 
+
         if (enable == true)
         {
 
@@ -238,7 +239,7 @@ class $modify(OpenSettings, PauseLayer)
     {
         bool shortcut = Mod::get()->getSettingValue<bool>("shortcut");
         auto winSize = CCDirector::sharedDirector()->getWinSize();
-        
+
         auto bottomRightPos = ccp((winSize.width / 2) - 41, (winSize.height / 2) - 181);
 
         PauseLayer::customSetup();
@@ -247,7 +248,6 @@ class $modify(OpenSettings, PauseLayer)
         auto menu = this->getChildByID("center-button-menu");
         auto btn = CCMenuItemSpriteExtra::create(btnSprite, this, menu_selector(OpenSettings::btnSettings));
         btn->setID("settings-button"_spr);
-        // btn->setPosition(234, -34);
         btn->setPosition(bottomRightPos);
         btn->setZOrder(10);
 
