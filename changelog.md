@@ -1,3 +1,6 @@
+# 1.0.7
+- Added QOLMOD as incompatible (breaking)
+
 # 1.0.6
 - Fixed the mod not working with the new update
 - Added node's ID to dependencies to avoid crashes
