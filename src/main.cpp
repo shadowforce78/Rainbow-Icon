@@ -1,7 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
-#include <Geode/cocos/misc_nodes/CCMotionStreak.h>
+#include <Geode/binding/GJRobotSprite.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 #include "Utils.hpp"
 #include <chrono>
@@ -194,6 +194,12 @@ class $modify(PlayLayer)
                     static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
                     static_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor2);
                     static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player1->m_vehicleSprite)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player2->m_vehicleSprite)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player1->m_vehicleSpriteSecondary)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player2->m_vehicleSpriteSecondary)->setColor(rainbowColor2);
+                    
+                    
                 }
                 else
                 {
@@ -201,6 +207,10 @@ class $modify(PlayLayer)
                     static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor2);
                     static_cast<cocos2d::CCSprite *>(m_player2)->setColor(rainbowColor);
                     static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player1->m_vehicleSprite)->setColor(rainbowColor2);
+                    static_cast<cocos2d::CCSprite *>(m_player2->m_vehicleSprite)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player1->m_vehicleSpriteSecondary)->setColor(rainbowColor);
+                    static_cast<cocos2d::CCSprite *>(m_player2->m_vehicleSpriteSecondary)->setColor(rainbowColor);
                 }
             }
 
@@ -213,12 +223,12 @@ class $modify(PlayLayer)
             }
 
             if (preset == 3)
-            {
+            {        
                 static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(rainbowColor);
                 static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(rainbowColor2);
                 static_cast<cocos2d::CCSprite *>(m_player1->m_vehicleSpriteSecondary)->setColor(rainbowColor);
                 static_cast<cocos2d::CCSprite *>(m_player2->m_vehicleSpriteSecondary)->setColor(rainbowColor2);
-                static_cast<cocos2d::CCSprite *>(m_player1->m_spiderSprite)->setColor(rainbowColor);
+                
             }
         }
 
