@@ -1,5 +1,6 @@
 # 1.0.7
 - Added QOLMOD as incompatible (breaking)
+- Fixed every gamemode not working with the mod
 
 # 1.0.6
 - Fixed the mod not working with the new update
