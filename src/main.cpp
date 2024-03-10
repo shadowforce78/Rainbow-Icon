@@ -500,11 +500,10 @@ class $modify(OpenSettings, PauseLayer)
 
         PauseLayer::customSetup();
         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
-        btnSprite->setScale(0.475f);
-        auto menu = this->getChildByID("center-button-menu");
+        btnSprite->setScale(0.350f);
+        auto menu = this->getChildByID("right-button-menu");
         auto btn = CCMenuItemSpriteExtra::create(btnSprite, this, menu_selector(OpenSettings::btnSettings));
         btn->setID("settings-button"_spr);
-        btn->setPosition(bottomRightPos);
         btn->setZOrder(10);
 
         if (shortcut == true)
