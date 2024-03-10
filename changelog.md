@@ -1,4 +1,4 @@
-# 1.0.7
+# 1.1.0
 - Added QOLMOD as incompatible (breaking)
 - Fixed every gamemode not working with the mod
 - Fixed shortcut button position
