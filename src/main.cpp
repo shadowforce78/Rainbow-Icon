@@ -199,6 +199,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
 
                     if (m_player1->m_isShip)
@@ -208,6 +211,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
 
                     if (m_player1->m_isBall)
@@ -217,6 +223,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
 
                     if (m_player1->m_isRobot)
@@ -226,6 +235,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
 
                     if (m_player1->m_isBird)
@@ -235,6 +247,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
 
                     if (m_player1->m_isDart)
@@ -244,6 +259,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
 
                     if (m_player1->m_isSpider)
@@ -253,6 +271,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
 
                     if (m_player1->m_isSwing)
@@ -262,6 +283,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col2);
                     }
                 }
                 else
@@ -274,6 +298,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
 
                     if (m_player1->m_isShip)
@@ -283,6 +310,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
 
                     if (m_player1->m_isBall)
@@ -292,6 +322,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
 
                     if (m_player1->m_isRobot)
@@ -301,6 +334,9 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
 
                     if (m_player1->m_isBird)
@@ -310,6 +346,8 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
 
                     if (m_player1->m_isDart)
@@ -319,6 +357,8 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
 
                     if (m_player1->m_isSpider)
@@ -328,6 +368,8 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
 
                     if (m_player1->m_isSwing)
@@ -337,6 +379,8 @@ class $modify(PlayLayer)
 
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
+                        m_player2->setColor(col2);
+                        m_player2->setSecondColor(col1);
                     }
                 }
             }
@@ -350,6 +394,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
 
                 if (m_player1->m_isShip)
@@ -358,6 +403,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
 
                 if (m_player1->m_isBall)
@@ -366,6 +412,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
 
                 if (m_player1->m_isRobot)
@@ -374,6 +421,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
 
                 if (m_player1->m_isBird)
@@ -382,6 +430,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
 
                 if (m_player1->m_isDart)
@@ -390,6 +439,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
 
                 if (m_player1->m_isSpider)
@@ -398,6 +448,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
 
                 if (m_player1->m_isSwing)
@@ -406,6 +457,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setColor(col1);
+                    m_player2->setColor(col2);
                 }
             }
 
@@ -418,6 +470,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
 
                 if (m_player1->m_isShip)
@@ -426,6 +479,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
 
                 if (m_player1->m_isBall)
@@ -434,6 +488,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
 
                 if (m_player1->m_isRobot)
@@ -442,6 +497,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
 
                 if (m_player1->m_isBird)
@@ -450,6 +506,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
 
                 if (m_player1->m_isDart)
@@ -458,6 +515,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
 
                 if (m_player1->m_isSpider)
@@ -466,6 +524,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
 
                 if (m_player1->m_isSwing)
@@ -474,6 +533,7 @@ class $modify(PlayLayer)
                     ccColor3B col2 = rainbowColor2;
 
                     m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col2);
                 }
             }
         }
