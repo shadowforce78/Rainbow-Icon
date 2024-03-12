@@ -186,352 +186,36 @@ class $modify(PlayLayer)
                 }
             }
             bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
-            if (preset == 1)
+
+            if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
             {
+                ccColor3B col1 = rainbowColor;
+                ccColor3B col2 = rainbowColor2;
 
-                if (sync)
+                if (preset == 1)
                 {
-
-                    if (isCube)
+                    if (sync)
                     {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col1);
-
                         m_player2->setColor(col2);
                         m_player2->setSecondColor(col2);
                     }
-
-                    if (m_player1->m_isShip)
+                    else
                     {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
-                    }
-
-                    if (m_player1->m_isBall)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
-                    }
-
-                    if (m_player1->m_isRobot)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
-                    }
-
-                    if (m_player1->m_isBird)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
-                    }
-
-                    if (m_player1->m_isDart)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
-                    }
-
-                    if (m_player1->m_isSpider)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
-                    }
-
-                    if (m_player1->m_isSwing)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
-                    }
-                }
-                else
-                {
-
-                    if (isCube)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
-                    }
-
-                    if (m_player1->m_isShip)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
-                    }
-
-                    if (m_player1->m_isBall)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
-                    }
-
-                    if (m_player1->m_isRobot)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
-                    }
-
-                    if (m_player1->m_isBird)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
-                    }
-
-                    if (m_player1->m_isDart)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
-                    }
-
-                    if (m_player1->m_isSpider)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
-                    }
-
-                    if (m_player1->m_isSwing)
-                    {
-                        ccColor3B col1 = rainbowColor;
-                        ccColor3B col2 = rainbowColor2;
-
                         m_player1->setColor(col1);
                         m_player1->setSecondColor(col2);
                         m_player2->setColor(col2);
                         m_player2->setSecondColor(col1);
                     }
                 }
-            }
-
-            if (preset == 2)
-            {
-
-                if (isCube)
+                else if (preset == 2)
                 {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
                     m_player1->setColor(col1);
                     m_player2->setColor(col2);
                 }
-
-                if (m_player1->m_isShip)
+                else if (preset == 3)
                 {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
-                }
-
-                if (m_player1->m_isBall)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
-                }
-
-                if (m_player1->m_isRobot)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
-                }
-
-                if (m_player1->m_isBird)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
-                }
-
-                if (m_player1->m_isDart)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
-                }
-
-                if (m_player1->m_isSpider)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
-                }
-
-                if (m_player1->m_isSwing)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
-                }
-            }
-
-            if (preset == 3)
-            {
-
-                if (isCube)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-
-                if (m_player1->m_isShip)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-
-                if (m_player1->m_isBall)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-
-                if (m_player1->m_isRobot)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-
-                if (m_player1->m_isBird)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-
-                if (m_player1->m_isDart)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-
-                if (m_player1->m_isSpider)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-
-                if (m_player1->m_isSwing)
-                {
-                    ccColor3B col1 = rainbowColor;
-                    ccColor3B col2 = rainbowColor2;
-
                     m_player1->setSecondColor(col1);
                     m_player2->setSecondColor(col2);
                 }
