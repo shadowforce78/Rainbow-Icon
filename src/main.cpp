@@ -96,6 +96,7 @@ class $modify(PlayLayer)
 
     void postUpdate(float p0)
     {
+
         float speed = Mod::get()->getSettingValue<double>("speed");
         float saturation = Mod::get()->getSettingValue<double>("saturation");
 
