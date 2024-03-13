@@ -1,5 +1,7 @@
 # 1.1.1
 - Make the code less spaghetti to avoid lag and crashes
+- Removed input as preset (not that useful)
+- MacOS support !!!
 
 # 1.1.0
 - Added QOLMOD as incompatible (breaking)

@@ -79,7 +79,8 @@
 			"min": 0,
 			"control": {
 				"arrows": true,
-				"slider": false
+				"slider": false,
+				"input": false
 			}
 		},
 		"speed": {

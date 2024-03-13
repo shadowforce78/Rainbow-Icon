@@ -1,10 +1,12 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
-#include <Geode/binding/GJRobotSprite.hpp>
 #include <Geode/ui/GeodeUI.hpp>
 #include "Utils.hpp"
 #include <chrono>
+#include <functional>
+#include <string>
+#include <map>
 
 using namespace geode::prelude;
 using namespace std::chrono;
@@ -146,6 +148,7 @@ class $modify(PlayLayer)
             }
             else
             {
+
                 if (bar == true)
                 {
                     m_fields->progressBar->setChildColor(rainbowColor);
@@ -197,34 +200,31 @@ class $modify(PlayLayer)
                 {
                     if (sync)
                     {
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col2);
+
+                        static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
+                        static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(col2);
                     }
                     else
                     {
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
-                        m_player2->setColor(col2);
-                        m_player2->setSecondColor(col1);
+                        static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(col2);
+                        static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(col2);
                     }
                 }
                 else if (preset == 2)
                 {
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col2);
+                    static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
+                    static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
                 }
                 else if (preset == 3)
                 {
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col2);
+                    static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(col2);
+                    static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(col2);
                 }
             }
-
-            // auto *gameLayer = gd::GameManager::sharedState()->m_gameLayer();
-            // if (!gameLayer)
-            //     return;
         }
 
         PlayLayer::postUpdate(p0);
