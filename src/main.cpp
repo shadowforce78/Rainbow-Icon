@@ -2,16 +2,18 @@
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
 #include <Geode/ui/GeodeUI.hpp>
-#include "Utils.hpp"
 #include <chrono>
 #include <functional>
-#include <string>
 #include <map>
+#include <string>
+
+#include "Utils.hpp"
 
 using namespace geode::prelude;
 using namespace std::chrono;
 
-void HSVtoRGB(float &fR, float &fG, float &fB, float &fH, float &fS, float &fV)
+void HSVtoRGB(float &fR, float &fG, float &fB, float &fH, float &fS,
+              float &fV)
 {
     float fC = fV * fS; // Chroma
     float fHPrime = fmod(fH / 60.0, 6);
@@ -85,32 +87,21 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation)
     return out;
 }
 
-class $modify(PlayerObject){
-    void flashPlayer(float p0, float p1, cocos2d::ccColor3B mainColor, cocos2d::ccColor3B secondColor){
-        // neutralised kappa
-    }};
+class $modify(PlayerObject){void flashPlayer(float p0, float p1,
+                                             cocos2d::ccColor3B mainColor,
+                                             cocos2d::ccColor3B secondColor){
+    // neutralised kappa
+}};
 
 class $modify(PlayLayer)
 {
-
     CCSprite *progressBar;
     CCLabelBMFont *percentLabel;
 
     void postUpdate(float p0)
     {
-
         float speed = Mod::get()->getSettingValue<double>("speed");
         float saturation = Mod::get()->getSettingValue<double>("saturation");
-
-        if (g >= 360)
-        {
-            g = 0;
-        }
-        else
-        {
-            g += speed / 10;
-        }
-
         auto rainbowColor = getRainbow(0, saturation);
         auto rainbowColor2 = getRainbow(180, saturation);
         auto rainbowColor3 = getRainbow(90, saturation);
@@ -122,33 +113,45 @@ class $modify(PlayLayer)
         bool bar = Mod::get()->getSettingValue<bool>("bar");
         bool trail = Mod::get()->getSettingValue<bool>("trail");
 
-        auto gameManager = GameManager::get();
+        if (g >= 360)
+        {
+            g = 0;
+        }
+        else
+        {
+            g += speed / 10;
+        }
 
         if (enable == true)
         {
-
-            if (m_fields->progressBar == nullptr || m_fields->percentLabel == nullptr)
+            if (m_fields->progressBar == nullptr ||
+                m_fields->percentLabel == nullptr)
             {
                 for (size_t i = 0; i < this->getChildrenCount(); i++)
                 {
                     auto obj = this->getChildren()->objectAtIndex(i);
-                    if (Utils::getNodeName(obj) == "cocos2d::CCLabelBMFont" && m_fields->percentLabel == nullptr)
+                    if (Utils::getNodeName(obj) ==
+                            "cocos2d::CCLabelBMFont" &&
+                        m_fields->percentLabel == nullptr)
                     {
-                        auto labelTest = static_cast<CCLabelBMFont *>(obj);
+                        auto labelTest =
+                            static_cast<CCLabelBMFont *>(obj);
                         if (strlen(labelTest->getString()) < 6)
                         {
                             m_fields->percentLabel = labelTest;
                         }
                     }
-                    else if (Utils::getNodeName(obj) == "cocos2d::CCSprite" && m_fields->progressBar == nullptr)
+                    else if (Utils::getNodeName(obj) ==
+                                 "cocos2d::CCSprite" &&
+                             m_fields->progressBar == nullptr)
                     {
-                        m_fields->progressBar = static_cast<CCSprite *>(obj);
+                        m_fields->progressBar =
+                            static_cast<CCSprite *>(obj);
                     }
                 }
             }
             else
             {
-
                 if (bar == true)
                 {
                     m_fields->progressBar->setChildColor(rainbowColor);
@@ -189,9 +192,15 @@ class $modify(PlayLayer)
                     m_player2->m_waveTrail->setColor(rainbowColor2);
                 }
             }
-            bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
+            bool isCube = !m_player1->m_isShip && !m_player1->m_isBall &&
+                          !m_player1->m_isBird && !m_player1->m_isDart &&
+                          !m_player1->m_isRobot && !m_player1->m_isSpider &&
+                          !m_player1->m_isSwing;
 
-            if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
+            if (isCube || m_player1->m_isShip || m_player1->m_isBall ||
+                m_player1->m_isBird || m_player1->m_isDart ||
+                m_player1->m_isRobot || m_player1->m_isSpider ||
+                m_player1->m_isSwing)
             {
                 ccColor3B col1 = rainbowColor;
                 ccColor3B col2 = rainbowColor2;
@@ -200,29 +209,46 @@ class $modify(PlayLayer)
                 {
                     if (sync)
                     {
-
-                        static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
-                        static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(col2);
+                        static_cast<cocos2d::CCSprite *>(m_player1)
+                            ->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(
+                            m_player1->m_iconSpriteSecondary)
+                            ->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(m_player2)
+                            ->setColor(col2);
+                        static_cast<cocos2d::CCSprite *>(
+                            m_player2->m_iconSpriteSecondary)
+                            ->setColor(col2);
                     }
                     else
                     {
-                        static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(col2);
-                        static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(col2);
+                        static_cast<cocos2d::CCSprite *>(m_player1)
+                            ->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(
+                            m_player1->m_iconSpriteSecondary)
+                            ->setColor(col2);
+                        static_cast<cocos2d::CCSprite *>(m_player2)
+                            ->setColor(col1);
+                        static_cast<cocos2d::CCSprite *>(
+                            m_player2->m_iconSpriteSecondary)
+                            ->setColor(col2);
                     }
                 }
                 else if (preset == 2)
                 {
-                    static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
-                    static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
+                    static_cast<cocos2d::CCSprite *>(m_player1)->setColor(
+                        col1);
+                    static_cast<cocos2d::CCSprite *>(m_player2)->setColor(
+                        col2);
                 }
                 else if (preset == 3)
                 {
-                    static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)->setColor(col2);
-                    static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)->setColor(col2);
+                    static_cast<cocos2d::CCSprite *>(
+                        m_player1->m_iconSpriteSecondary)
+                        ->setColor(col2);
+                    static_cast<cocos2d::CCSprite *>(
+                        m_player2->m_iconSpriteSecondary)
+                        ->setColor(col2);
                 }
             }
         }
@@ -230,28 +256,102 @@ class $modify(PlayLayer)
         PlayLayer::postUpdate(p0);
     }
 };
+#include <Geode/modify/LevelEditorLayer.hpp>
+class $modify(LevelEditorLayer){
+
+    void postUpdate(float p0){
+
+        auto rainbowColor = getRainbow(0, 100);
+auto rainbowColor2 = getRainbow(180, 100);
+auto rainbowColor3 = getRainbow(90, 100);
+int preset = Mod::get()->getSettingValue<int64_t>("preset");
+bool sync = Mod::get()->getSettingValue<bool>("sync");
+bool enabled = Mod::get()->getSettingValue<bool>("enable");
+float speed = Mod::get()->getSettingValue<double>("speed");
+
+if (g >= 360)
+{
+    g = 0;
+}
+else
+{
+    g += speed / 10;
+}
+if (enabled)
+{
+
+    bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
+
+    if (isCube || m_player1->m_isShip || m_player1->m_isBall ||
+        m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot ||
+        m_player1->m_isSpider || m_player1->m_isSwing)
+    {
+        ccColor3B col1 = rainbowColor;
+        ccColor3B col2 = rainbowColor2;
+
+        if (preset == 1)
+        {
+            if (sync)
+            {
+                static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
+                static_cast<cocos2d::CCSprite *>(
+                    m_player1->m_iconSpriteSecondary)
+                    ->setColor(col1);
+                static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
+                static_cast<cocos2d::CCSprite *>(
+                    m_player2->m_iconSpriteSecondary)
+                    ->setColor(col2);
+            }
+            else
+            {
+                static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
+                static_cast<cocos2d::CCSprite *>(
+                    m_player1->m_iconSpriteSecondary)
+                    ->setColor(col2);
+                static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col1);
+                static_cast<cocos2d::CCSprite *>(
+                    m_player2->m_iconSpriteSecondary)
+                    ->setColor(col2);
+            }
+        }
+        else if (preset == 2)
+        {
+            static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
+            static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
+        }
+        else if (preset == 3)
+        {
+            static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)
+                ->setColor(col2);
+            static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)
+                ->setColor(col2);
+        }
+    }
+}
+LevelEditorLayer::postUpdate(p0);
+}
+}
+;
 
 #include <Geode/modify/PauseLayer.hpp>
 class $modify(OpenSettings, PauseLayer)
 {
-
-    void btnSettings(CCObject *)
-    {
-        geode::openSettingsPopup(Mod::get());
-    };
+    void btnSettings(CCObject *) { geode::openSettingsPopup(Mod::get()); };
 
     void customSetup()
     {
         bool shortcut = Mod::get()->getSettingValue<bool>("shortcut");
         auto winSize = CCDirector::sharedDirector()->getWinSize();
 
-        auto bottomRightPos = ccp((winSize.width / 2) - 41, (winSize.height / 2) - 181);
+        auto bottomRightPos =
+            ccp((winSize.width / 2) - 41, (winSize.height / 2) - 181);
 
         PauseLayer::customSetup();
         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
         btnSprite->setScale(0.350f);
         auto menu = this->getChildByID("right-button-menu");
-        auto btn = CCMenuItemSpriteExtra::create(btnSprite, this, menu_selector(OpenSettings::btnSettings));
+        auto btn = CCMenuItemSpriteExtra::create(
+            btnSprite, this, menu_selector(OpenSettings::btnSettings));
         btn->setID("settings-button"_spr);
         btn->setZOrder(10);
 
