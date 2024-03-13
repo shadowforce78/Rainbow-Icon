@@ -221,6 +221,10 @@ class $modify(PlayLayer)
                     m_player2->setSecondColor(col2);
                 }
             }
+
+            // auto *gameLayer = gd::GameManager::sharedState()->m_gameLayer();
+            // if (!gameLayer)
+            //     return;
         }
 
         PlayLayer::postUpdate(p0);
