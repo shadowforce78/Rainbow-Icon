@@ -93,6 +93,8 @@ class $modify(PlayerObject){void flashPlayer(float p0, float p1,
     // neutralised kappa
 }};
 
+//-----------Player Rainbow-----------\\
+
 class $modify(PlayLayer)
 {
     CCSprite *progressBar;
@@ -256,6 +258,10 @@ class $modify(PlayLayer)
         PlayLayer::postUpdate(p0);
     }
 };
+
+//-----------Editor Rainbow-----------\\
+
+
 #include <Geode/modify/LevelEditorLayer.hpp>
 class $modify(LevelEditorLayer){
 
@@ -332,6 +338,8 @@ LevelEditorLayer::postUpdate(p0);
 }
 }
 ;
+
+//-----------PauseButton Rainbow-----------\\
 
 #include <Geode/modify/PauseLayer.hpp>
 class $modify(OpenSettings, PauseLayer)
