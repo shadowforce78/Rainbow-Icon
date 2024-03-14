@@ -1,6 +1,6 @@
 {
 	"geode": "2.0.0-beta.19",
-	"version": "v1.1.1-beta.5",
+	"version": "v1.1.1-beta.6",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205",
@@ -38,6 +38,12 @@
 			"name": "Enable Rainbow Icon",
 			"type": "bool",
 			"description": "Enable or disable the rainbow effect on your icons.",
+			"default": true
+		},
+		"editorEnable":{
+			"name": "Enable Rainbow Icon in Editor",
+			"type": "bool",
+			"description": "Enable or disable the rainbow effect on your icons in the editor.",
 			"default": true
 		},
 		"shortcut":{

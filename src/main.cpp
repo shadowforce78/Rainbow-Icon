@@ -272,7 +272,7 @@ auto rainbowColor2 = getRainbow(180, 100);
 auto rainbowColor3 = getRainbow(90, 100);
 int preset = Mod::get()->getSettingValue<int64_t>("preset");
 bool sync = Mod::get()->getSettingValue<bool>("sync");
-bool enabled = Mod::get()->getSettingValue<bool>("enable");
+bool enabled = Mod::get()->getSettingValue<bool>("editorEnable");
 float speed = Mod::get()->getSettingValue<double>("speed");
 
 if (g >= 360)
