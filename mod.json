@@ -64,6 +64,12 @@
 			"description": "Enable or disable the glow effect on the rainbow.",
 			"default": true
 		},
+		"particles":{
+			"name": "Rainbow Particles",
+			"type": "bool",
+			"description": "Enable or disable the particles effect on the rainbow.",
+			"default": true	
+		},
 		"wave":{
 			"name": "Rainbow Wave Trail",
 			"type": "bool",
