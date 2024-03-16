@@ -418,7 +418,10 @@ LevelEditorLayer::postUpdate(p0);
 #include <Geode/modify/PauseLayer.hpp>
 class $modify(OpenSettings, PauseLayer)
 {
-    void btnSettings(CCObject *) { geode::openSettingsPopup(Mod::get()); };
+    void btnSettings(CCObject *)
+    {
+        geode::openSettingsPopup(Mod::get());
+    };
 
     void customSetup()
     {
@@ -430,7 +433,6 @@ class $modify(OpenSettings, PauseLayer)
 
         PauseLayer::customSetup();
         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
-        btnSprite->setScale(0.350f);
         auto menu = this->getChildByID("right-button-menu");
         auto btn = CCMenuItemSpriteExtra::create(
             btnSprite, this, menu_selector(OpenSettings::btnSettings));
