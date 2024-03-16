@@ -1,6 +1,6 @@
 {
 	"geode": "2.0.0-beta.19",
-	"version": "v1.1.2-beta.1",
+	"version": "v1.1.2-beta.2",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205",
@@ -83,6 +83,19 @@
 			"default": 1,
 			"max": 3,
 			"min": 0,
+			"control": {
+				"arrows": true,
+				"slider": false,
+				"input": false
+			}
+		},
+		"playerPreset":{
+			"name": "Rainbow Player Preset",
+			"type": "int",
+			"description": "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
+			"default": 1,
+			"max": 3,
+			"min": 1,
 			"control": {
 				"arrows": true,
 				"slider": false,

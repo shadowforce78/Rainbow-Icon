@@ -110,6 +110,7 @@ class $modify(PlayLayer)
         bool enable = Mod::get()->getSettingValue<bool>("enable");
         bool glow = Mod::get()->getSettingValue<bool>("glow");
         int preset = Mod::get()->getSettingValue<int64_t>("preset");
+        int playerPreset = Mod::get()->getSettingValue<int64_t>("playerPreset");
         bool sync = Mod::get()->getSettingValue<bool>("sync");
         bool wave = Mod::get()->getSettingValue<bool>("wave");
         bool bar = Mod::get()->getSettingValue<bool>("bar");
@@ -205,30 +206,81 @@ class $modify(PlayLayer)
                 {
                     if (sync)
                     {
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col1);
 
-                        m_player2->setColor(col1);
-                        m_player2->setSecondColor(col1);
+                        //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
+                        if (playerPreset == 1)
+                        {
+                            m_player1->setColor(col1);
+                            m_player1->setSecondColor(col1);
+
+                            m_player2->setColor(col1);
+                            m_player2->setSecondColor(col1);
+                        }
+                        else if (playerPreset == 2)
+                        {
+                            m_player1->setColor(col1);
+                            m_player1->setSecondColor(col1);
+                        }
+                        else if (playerPreset == 3)
+                        {
+                            m_player2->setColor(col1);
+                            m_player2->setSecondColor(col1);
+                        }
                     }
                     else
                     {
-                        m_player1->setColor(col1);
-                        m_player1->setSecondColor(col2);
+                        if (playerPreset == 1)
+                        {
+                            m_player1->setColor(col1);
+                            m_player1->setSecondColor(col2);
 
-                        m_player2->setColor(col1);
-                        m_player2->setSecondColor(col2);
+                            m_player2->setColor(col1);
+                            m_player2->setSecondColor(col2);
+                        }
+                        else if (playerPreset == 2)
+                        {
+                            m_player1->setColor(col1);
+                            m_player1->setSecondColor(col2);
+                        }
+                        else if (playerPreset == 3)
+                        {
+                            m_player2->setColor(col1);
+                            m_player2->setSecondColor(col2);
+                        }
                     }
                 }
                 else if (preset == 2)
                 {
-                    m_player1->setColor(col1);
-                    m_player2->setColor(col1);
+
+                    if (playerPreset == 1)
+                    {
+                        m_player1->setColor(col1);
+                        m_player2->setColor(col1);
+                    }
+                    else if (playerPreset == 2)
+                    {
+                        m_player1->setColor(col1);
+                    }
+                    else if (playerPreset == 3)
+                    {
+                        m_player2->setColor(col1);
+                    }
                 }
                 else if (preset == 3)
                 {
-                    m_player1->setSecondColor(col1);
-                    m_player2->setSecondColor(col1);
+                    if (playerPreset == 1)
+                    {
+                        m_player1->setSecondColor(col1);
+                        m_player2->setSecondColor(col1);
+                    }
+                    else if (playerPreset == 2)
+                    {
+                        m_player1->setSecondColor(col1);
+                    }
+                    else if (playerPreset == 3)
+                    {
+                        m_player2->setSecondColor(col1);
+                    }
                 }
             }
         }
@@ -252,6 +304,7 @@ int preset = Mod::get()->getSettingValue<int64_t>("preset");
 bool sync = Mod::get()->getSettingValue<bool>("sync");
 bool enabled = Mod::get()->getSettingValue<bool>("editorEnable");
 float speed = Mod::get()->getSettingValue<double>("speed");
+int playerPreset = Mod::get()->getSettingValue<int64_t>("playerPreset");
 
 if (g >= 360)
 {
@@ -277,30 +330,81 @@ if (enabled)
         {
             if (sync)
             {
-                m_player1->setColor(col1);
-                m_player1->setSecondColor(col1);
 
-                m_player2->setColor(col1);
-                m_player2->setSecondColor(col1);
+                //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
+                if (playerPreset == 1)
+                {
+                    m_player1->setColor(col1);
+                    m_player1->setSecondColor(col1);
+
+                    m_player2->setColor(col1);
+                    m_player2->setSecondColor(col1);
+                }
+                else if (playerPreset == 2)
+                {
+                    m_player1->setColor(col1);
+                    m_player1->setSecondColor(col1);
+                }
+                else if (playerPreset == 3)
+                {
+                    m_player2->setColor(col1);
+                    m_player2->setSecondColor(col1);
+                }
             }
             else
             {
-                m_player1->setColor(col1);
-                m_player1->setSecondColor(col2);
+                if (playerPreset == 1)
+                {
+                    m_player1->setColor(col1);
+                    m_player1->setSecondColor(col2);
 
-                m_player2->setColor(col1);
-                m_player2->setSecondColor(col2);
+                    m_player2->setColor(col1);
+                    m_player2->setSecondColor(col2);
+                }
+                else if (playerPreset == 2)
+                {
+                    m_player1->setColor(col1);
+                    m_player1->setSecondColor(col2);
+                }
+                else if (playerPreset == 3)
+                {
+                    m_player2->setColor(col1);
+                    m_player2->setSecondColor(col2);
+                }
             }
         }
         else if (preset == 2)
         {
-            m_player1->setColor(col1);
-            m_player2->setColor(col1);
+
+            if (playerPreset == 1)
+            {
+                m_player1->setColor(col1);
+                m_player2->setColor(col1);
+            }
+            else if (playerPreset == 2)
+            {
+                m_player1->setColor(col1);
+            }
+            else if (playerPreset == 3)
+            {
+                m_player2->setColor(col1);
+            }
         }
         else if (preset == 3)
         {
-            m_player1->setSecondColor(col1);
-            m_player2->setSecondColor(col1);
+            if (playerPreset == 1)
+            {
+                m_player1->setSecondColor(col1);
+                m_player2->setSecondColor(col1);
+            }
+            else if (playerPreset == 2)
+            {
+                m_player1->setSecondColor(col1);
+            }
+            else if (playerPreset == 3)
+            {
+                m_player2->setSecondColor(col1);
+            }
         }
     }
 }
