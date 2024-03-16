@@ -185,230 +185,249 @@ class $modify(PlayLayer)
             }
             if (wave == true)
             {
-                if (m_player1->m_waveTrail)
-                {
-                    m_player1->m_waveTrail->setColor(rainbowColor);
-                }
 
-                if (m_player2->m_waveTrail)
+                if (playerPreset == 1)
                 {
-                    m_player2->m_waveTrail->setColor(rainbowColor2);
+                    if (m_player1->m_waveTrail)
+                    {
+                        m_player1->m_waveTrail->setColor(rainbowColor);
+                    }
+
+                    if (m_player2->m_waveTrail)
+                    {
+                        m_player2->m_waveTrail->setColor(rainbowColor2);
+                    }
+                }
+                else if (playerPreset == 2)
+                {
+                    if (m_player1->m_waveTrail)
+                    {
+                        m_player1->m_waveTrail->setColor(rainbowColor);
+                    }
+                }
+                else if (playerPreset == 3)
+                {
+                    if (m_player2->m_waveTrail)
+                    {
+                        m_player2->m_waveTrail->setColor(rainbowColor);
+                    }
                 }
             }
-            bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
 
-            if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
-            {
-                ccColor3B col1 = rainbowColor;
-                ccColor3B col2 = rainbowColor2;
+                bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
 
-                if (preset == 1)
+                if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
                 {
-                    if (sync)
+                    ccColor3B col1 = rainbowColor;
+                    ccColor3B col2 = rainbowColor2;
+
+                    if (preset == 1)
+                    {
+                        if (sync)
+                        {
+
+                            //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
+                            if (playerPreset == 1)
+                            {
+                                m_player1->setColor(col1);
+                                m_player1->setSecondColor(col1);
+
+                                m_player2->setColor(col1);
+                                m_player2->setSecondColor(col1);
+                            }
+                            else if (playerPreset == 2)
+                            {
+                                m_player1->setColor(col1);
+                                m_player1->setSecondColor(col1);
+                            }
+                            else if (playerPreset == 3)
+                            {
+                                m_player2->setColor(col1);
+                                m_player2->setSecondColor(col1);
+                            }
+                        }
+                        else
+                        {
+                            if (playerPreset == 1)
+                            {
+                                m_player1->setColor(col1);
+                                m_player1->setSecondColor(col2);
+
+                                m_player2->setColor(col1);
+                                m_player2->setSecondColor(col2);
+                            }
+                            else if (playerPreset == 2)
+                            {
+                                m_player1->setColor(col1);
+                                m_player1->setSecondColor(col2);
+                            }
+                            else if (playerPreset == 3)
+                            {
+                                m_player2->setColor(col1);
+                                m_player2->setSecondColor(col2);
+                            }
+                        }
+                    }
+                    else if (preset == 2)
                     {
 
-                        //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
                         if (playerPreset == 1)
                         {
                             m_player1->setColor(col1);
-                            m_player1->setSecondColor(col1);
-
                             m_player2->setColor(col1);
-                            m_player2->setSecondColor(col1);
                         }
                         else if (playerPreset == 2)
                         {
                             m_player1->setColor(col1);
+                        }
+                        else if (playerPreset == 3)
+                        {
+                            m_player2->setColor(col1);
+                        }
+                    }
+                    else if (preset == 3)
+                    {
+                        if (playerPreset == 1)
+                        {
+                            m_player1->setSecondColor(col1);
+                            m_player2->setSecondColor(col1);
+                        }
+                        else if (playerPreset == 2)
+                        {
                             m_player1->setSecondColor(col1);
                         }
                         else if (playerPreset == 3)
                         {
-                            m_player2->setColor(col1);
                             m_player2->setSecondColor(col1);
                         }
                     }
-                    else
-                    {
-                        if (playerPreset == 1)
-                        {
-                            m_player1->setColor(col1);
-                            m_player1->setSecondColor(col2);
-
-                            m_player2->setColor(col1);
-                            m_player2->setSecondColor(col2);
-                        }
-                        else if (playerPreset == 2)
-                        {
-                            m_player1->setColor(col1);
-                            m_player1->setSecondColor(col2);
-                        }
-                        else if (playerPreset == 3)
-                        {
-                            m_player2->setColor(col1);
-                            m_player2->setSecondColor(col2);
-                        }
-                    }
-                }
-                else if (preset == 2)
-                {
-
-                    if (playerPreset == 1)
-                    {
-                        m_player1->setColor(col1);
-                        m_player2->setColor(col1);
-                    }
-                    else if (playerPreset == 2)
-                    {
-                        m_player1->setColor(col1);
-                    }
-                    else if (playerPreset == 3)
-                    {
-                        m_player2->setColor(col1);
-                    }
-                }
-                else if (preset == 3)
-                {
-                    if (playerPreset == 1)
-                    {
-                        m_player1->setSecondColor(col1);
-                        m_player2->setSecondColor(col1);
-                    }
-                    else if (playerPreset == 2)
-                    {
-                        m_player1->setSecondColor(col1);
-                    }
-                    else if (playerPreset == 3)
-                    {
-                        m_player2->setSecondColor(col1);
-                    }
                 }
             }
+
+            PlayLayer::postUpdate(p0);
         }
+    };
 
-        PlayLayer::postUpdate(p0);
-    }
-};
-
-//-----------Editor Rainbow-----------\\
+    //-----------Editor Rainbow-----------\\
 
 
 #include <Geode/modify/LevelEditorLayer.hpp>
-class $modify(LevelEditorLayer){
+    class $modify(LevelEditorLayer){
 
-    void postUpdate(float p0){
+        void postUpdate(float p0){
 
-        auto rainbowColor = getRainbow(0, 100);
-auto rainbowColor2 = getRainbow(180, 100);
-auto rainbowColor3 = getRainbow(90, 100);
-int preset = Mod::get()->getSettingValue<int64_t>("preset");
-bool sync = Mod::get()->getSettingValue<bool>("sync");
-bool enabled = Mod::get()->getSettingValue<bool>("editorEnable");
-float speed = Mod::get()->getSettingValue<double>("speed");
-int playerPreset = Mod::get()->getSettingValue<int64_t>("playerPreset");
+            auto rainbowColor = getRainbow(0, 100);
+    auto rainbowColor2 = getRainbow(180, 100);
+    auto rainbowColor3 = getRainbow(90, 100);
+    int preset = Mod::get()->getSettingValue<int64_t>("preset");
+    bool sync = Mod::get()->getSettingValue<bool>("sync");
+    bool enabled = Mod::get()->getSettingValue<bool>("editorEnable");
+    float speed = Mod::get()->getSettingValue<double>("speed");
+    int playerPreset = Mod::get()->getSettingValue<int64_t>("playerPreset");
 
-if (g >= 360)
-{
-    g = 0;
-}
-else
-{
-    g += speed / 10;
-}
-if (enabled)
-{
-
-    bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
-
-    if (isCube || m_player1->m_isShip || m_player1->m_isBall ||
-        m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot ||
-        m_player1->m_isSpider || m_player1->m_isSwing)
+    if (g >= 360)
     {
-        ccColor3B col1 = rainbowColor;
-        ccColor3B col2 = rainbowColor2;
+        g = 0;
+    }
+    else
+    {
+        g += speed / 10;
+    }
+    if (enabled)
+    {
 
-        if (preset == 1)
+        bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
+
+        if (isCube || m_player1->m_isShip || m_player1->m_isBall ||
+            m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot ||
+            m_player1->m_isSpider || m_player1->m_isSwing)
         {
-            if (sync)
+            ccColor3B col1 = rainbowColor;
+            ccColor3B col2 = rainbowColor2;
+
+            if (preset == 1)
+            {
+                if (sync)
+                {
+
+                    //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
+                    if (playerPreset == 1)
+                    {
+                        m_player1->setColor(col1);
+                        m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col1);
+                        m_player2->setSecondColor(col1);
+                    }
+                    else if (playerPreset == 2)
+                    {
+                        m_player1->setColor(col1);
+                        m_player1->setSecondColor(col1);
+                    }
+                    else if (playerPreset == 3)
+                    {
+                        m_player2->setColor(col1);
+                        m_player2->setSecondColor(col1);
+                    }
+                }
+                else
+                {
+                    if (playerPreset == 1)
+                    {
+                        m_player1->setColor(col1);
+                        m_player1->setSecondColor(col2);
+
+                        m_player2->setColor(col1);
+                        m_player2->setSecondColor(col2);
+                    }
+                    else if (playerPreset == 2)
+                    {
+                        m_player1->setColor(col1);
+                        m_player1->setSecondColor(col2);
+                    }
+                    else if (playerPreset == 3)
+                    {
+                        m_player2->setColor(col1);
+                        m_player2->setSecondColor(col2);
+                    }
+                }
+            }
+            else if (preset == 2)
             {
 
-                //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
                 if (playerPreset == 1)
                 {
                     m_player1->setColor(col1);
-                    m_player1->setSecondColor(col1);
-
                     m_player2->setColor(col1);
-                    m_player2->setSecondColor(col1);
                 }
                 else if (playerPreset == 2)
                 {
                     m_player1->setColor(col1);
+                }
+                else if (playerPreset == 3)
+                {
+                    m_player2->setColor(col1);
+                }
+            }
+            else if (preset == 3)
+            {
+                if (playerPreset == 1)
+                {
+                    m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col1);
+                }
+                else if (playerPreset == 2)
+                {
                     m_player1->setSecondColor(col1);
                 }
                 else if (playerPreset == 3)
                 {
-                    m_player2->setColor(col1);
                     m_player2->setSecondColor(col1);
                 }
-            }
-            else
-            {
-                if (playerPreset == 1)
-                {
-                    m_player1->setColor(col1);
-                    m_player1->setSecondColor(col2);
-
-                    m_player2->setColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-                else if (playerPreset == 2)
-                {
-                    m_player1->setColor(col1);
-                    m_player1->setSecondColor(col2);
-                }
-                else if (playerPreset == 3)
-                {
-                    m_player2->setColor(col1);
-                    m_player2->setSecondColor(col2);
-                }
-            }
-        }
-        else if (preset == 2)
-        {
-
-            if (playerPreset == 1)
-            {
-                m_player1->setColor(col1);
-                m_player2->setColor(col1);
-            }
-            else if (playerPreset == 2)
-            {
-                m_player1->setColor(col1);
-            }
-            else if (playerPreset == 3)
-            {
-                m_player2->setColor(col1);
-            }
-        }
-        else if (preset == 3)
-        {
-            if (playerPreset == 1)
-            {
-                m_player1->setSecondColor(col1);
-                m_player2->setSecondColor(col1);
-            }
-            else if (playerPreset == 2)
-            {
-                m_player1->setSecondColor(col1);
-            }
-            else if (playerPreset == 3)
-            {
-                m_player2->setSecondColor(col1);
             }
         }
     }
-}
-LevelEditorLayer::postUpdate(p0);
+    LevelEditorLayer::postUpdate(p0);
 }
 }
 ;

@@ -26,6 +26,11 @@
 			"id": "TheSillyDoggo.Cheats",
 			"importance": "breaking",
 			"version": "*"
+		},
+		{
+			"id": "ninkaz.blending_glow",
+			"importance": "conflicting",
+			"version": "*"
 		}
 	],
 	"tags": [
