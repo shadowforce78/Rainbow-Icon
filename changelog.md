@@ -1,3 +1,6 @@
+# 1.1.2
+- Fixed the mod not working with the new update
+
 # 1.1.1
 - Make the code less spaghetti to avoid lag and crashes
 - Removed input as preset (not that useful)

@@ -194,15 +194,9 @@ class $modify(PlayLayer)
                     m_player2->m_waveTrail->setColor(rainbowColor2);
                 }
             }
-            bool isCube = !m_player1->m_isShip && !m_player1->m_isBall &&
-                          !m_player1->m_isBird && !m_player1->m_isDart &&
-                          !m_player1->m_isRobot && !m_player1->m_isSpider &&
-                          !m_player1->m_isSwing;
+            bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
 
-            if (isCube || m_player1->m_isShip || m_player1->m_isBall ||
-                m_player1->m_isBird || m_player1->m_isDart ||
-                m_player1->m_isRobot || m_player1->m_isSpider ||
-                m_player1->m_isSwing)
+            if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
             {
                 ccColor3B col1 = rainbowColor;
                 ccColor3B col2 = rainbowColor2;
@@ -211,46 +205,30 @@ class $modify(PlayLayer)
                 {
                     if (sync)
                     {
-                        static_cast<cocos2d::CCSprite *>(m_player1)
-                            ->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(
-                            m_player1->m_iconSpriteSecondary)
-                            ->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(m_player2)
-                            ->setColor(col2);
-                        static_cast<cocos2d::CCSprite *>(
-                            m_player2->m_iconSpriteSecondary)
-                            ->setColor(col2);
+                        m_player1->setColor(col1);
+                        m_player1->setSecondColor(col1);
+
+                        m_player2->setColor(col1);
+                        m_player2->setSecondColor(col1);
                     }
                     else
                     {
-                        static_cast<cocos2d::CCSprite *>(m_player1)
-                            ->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(
-                            m_player1->m_iconSpriteSecondary)
-                            ->setColor(col2);
-                        static_cast<cocos2d::CCSprite *>(m_player2)
-                            ->setColor(col1);
-                        static_cast<cocos2d::CCSprite *>(
-                            m_player2->m_iconSpriteSecondary)
-                            ->setColor(col2);
+                        m_player1->setColor(col1);
+                        m_player1->setSecondColor(col2);
+
+                        m_player2->setColor(col1);
+                        m_player2->setSecondColor(col2);
                     }
                 }
                 else if (preset == 2)
                 {
-                    static_cast<cocos2d::CCSprite *>(m_player1)->setColor(
-                        col1);
-                    static_cast<cocos2d::CCSprite *>(m_player2)->setColor(
-                        col2);
+                    m_player1->setColor(col1);
+                    m_player2->setColor(col1);
                 }
                 else if (preset == 3)
                 {
-                    static_cast<cocos2d::CCSprite *>(
-                        m_player1->m_iconSpriteSecondary)
-                        ->setColor(col2);
-                    static_cast<cocos2d::CCSprite *>(
-                        m_player2->m_iconSpriteSecondary)
-                        ->setColor(col2);
+                    m_player1->setSecondColor(col1);
+                    m_player2->setSecondColor(col1);
                 }
             }
         }
@@ -299,38 +277,30 @@ if (enabled)
         {
             if (sync)
             {
-                static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
-                static_cast<cocos2d::CCSprite *>(
-                    m_player1->m_iconSpriteSecondary)
-                    ->setColor(col1);
-                static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
-                static_cast<cocos2d::CCSprite *>(
-                    m_player2->m_iconSpriteSecondary)
-                    ->setColor(col2);
+                m_player1->setColor(col1);
+                m_player1->setSecondColor(col1);
+
+                m_player2->setColor(col1);
+                m_player2->setSecondColor(col1);
             }
             else
             {
-                static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
-                static_cast<cocos2d::CCSprite *>(
-                    m_player1->m_iconSpriteSecondary)
-                    ->setColor(col2);
-                static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col1);
-                static_cast<cocos2d::CCSprite *>(
-                    m_player2->m_iconSpriteSecondary)
-                    ->setColor(col2);
+                m_player1->setColor(col1);
+                m_player1->setSecondColor(col2);
+
+                m_player2->setColor(col1);
+                m_player2->setSecondColor(col2);
             }
         }
         else if (preset == 2)
         {
-            static_cast<cocos2d::CCSprite *>(m_player1)->setColor(col1);
-            static_cast<cocos2d::CCSprite *>(m_player2)->setColor(col2);
+            m_player1->setColor(col1);
+            m_player2->setColor(col1);
         }
         else if (preset == 3)
         {
-            static_cast<cocos2d::CCSprite *>(m_player1->m_iconSpriteSecondary)
-                ->setColor(col2);
-            static_cast<cocos2d::CCSprite *>(m_player2->m_iconSpriteSecondary)
-                ->setColor(col2);
+            m_player1->setSecondColor(col1);
+            m_player2->setSecondColor(col1);
         }
     }
 }
