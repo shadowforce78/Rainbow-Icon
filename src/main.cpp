@@ -323,14 +323,14 @@ class $modify(LevelEditorLayer){
 
     void postUpdate(float p0){
 
-        auto rainbowColor = getRainbow(0, 100);
-auto rainbowColor2 = getRainbow(180, 100);
-auto rainbowColor3 = getRainbow(90, 100);
-int preset = Mod::get()->getSettingValue<int64_t>("preset");
+        int preset = Mod::get()->getSettingValue<int64_t>("preset");
 bool sync = Mod::get()->getSettingValue<bool>("sync");
 bool enabled = Mod::get()->getSettingValue<bool>("editorEnable");
 float speed = Mod::get()->getSettingValue<double>("speed");
 int playerPreset = Mod::get()->getSettingValue<int64_t>("playerPreset");
+float saturation = Mod::get()->getSettingValue<double>("saturation");
+int offset_color_p1 = Mod::get()->getSettingValue<int64_t>("offset_color_p1");
+int offset_color_p2 = Mod::get()->getSettingValue<int64_t>("offset_color_p2");
 
 if (g >= 360)
 {
@@ -343,14 +343,21 @@ else
 if (enabled)
 {
 
+    auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation);
+    auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation);
+
+    auto rainbowColorMainP2 = getRainbow(offset_color_p2, saturation);
+    auto rainbowColorInvertedP2 = getRainbow(offset_color_p2 + 180, saturation);
+
+    auto rainbowColor = getRainbow(0, saturation);
+    auto rainbowColor2 = getRainbow(180, saturation);
+
     bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
 
     if (isCube || m_player1->m_isShip || m_player1->m_isBall ||
         m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot ||
         m_player1->m_isSpider || m_player1->m_isSwing)
     {
-        ccColor3B col1 = rainbowColor;
-        ccColor3B col2 = rainbowColor2;
 
         if (preset == 1)
         {
@@ -360,42 +367,42 @@ if (enabled)
                 //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
                 if (playerPreset == 1)
                 {
-                    m_player1->setColor(col1);
-                    m_player1->setSecondColor(col1);
+                    m_player1->setColor(rainbowColorMainP1);
+                    m_player1->setSecondColor(rainbowColorMainP1);
 
-                    m_player2->setColor(col1);
-                    m_player2->setSecondColor(col1);
+                    m_player2->setColor(rainbowColorMainP2);
+                    m_player2->setSecondColor(rainbowColorMainP2);
                 }
                 else if (playerPreset == 2)
                 {
-                    m_player1->setColor(col1);
-                    m_player1->setSecondColor(col1);
+                    m_player1->setColor(rainbowColorMainP1);
+                    m_player1->setSecondColor(rainbowColorMainP1);
                 }
                 else if (playerPreset == 3)
                 {
-                    m_player2->setColor(col1);
-                    m_player2->setSecondColor(col1);
+                    m_player2->setColor(rainbowColorMainP2);
+                    m_player2->setSecondColor(rainbowColorMainP2);
                 }
             }
             else
             {
                 if (playerPreset == 1)
                 {
-                    m_player1->setColor(col1);
-                    m_player1->setSecondColor(col2);
+                    m_player1->setColor(rainbowColorMainP1);
+                    m_player1->setSecondColor(rainbowColorInvertedP1);
 
-                    m_player2->setColor(col1);
-                    m_player2->setSecondColor(col2);
+                    m_player2->setColor(rainbowColorMainP2);
+                    m_player2->setSecondColor(rainbowColorInvertedP2);
                 }
                 else if (playerPreset == 2)
                 {
-                    m_player1->setColor(col1);
-                    m_player1->setSecondColor(col2);
+                    m_player1->setColor(rainbowColorMainP1);
+                    m_player1->setSecondColor(rainbowColorInvertedP1);
                 }
                 else if (playerPreset == 3)
                 {
-                    m_player2->setColor(col1);
-                    m_player2->setSecondColor(col2);
+                    m_player2->setColor(rainbowColorMainP2);
+                    m_player2->setSecondColor(rainbowColorInvertedP2);
                 }
             }
         }
@@ -404,32 +411,32 @@ if (enabled)
 
             if (playerPreset == 1)
             {
-                m_player1->setColor(col1);
-                m_player2->setColor(col1);
+                m_player1->setColor(rainbowColorMainP1);
+                m_player2->setColor(rainbowColorMainP2);
             }
             else if (playerPreset == 2)
             {
-                m_player1->setColor(col1);
+                m_player1->setColor(rainbowColorMainP1);
             }
             else if (playerPreset == 3)
             {
-                m_player2->setColor(col1);
+                m_player2->setColor(rainbowColorMainP2);
             }
         }
         else if (preset == 3)
         {
             if (playerPreset == 1)
             {
-                m_player1->setSecondColor(col1);
-                m_player2->setSecondColor(col1);
+                m_player1->setSecondColor(rainbowColorMainP1);
+                m_player2->setSecondColor(rainbowColorMainP2);
             }
             else if (playerPreset == 2)
             {
-                m_player1->setSecondColor(col1);
+                m_player1->setSecondColor(rainbowColorMainP1);
             }
             else if (playerPreset == 3)
             {
-                m_player2->setSecondColor(col1);
+                m_player2->setSecondColor(rainbowColorMainP2);
             }
         }
     }
@@ -471,4 +478,36 @@ class $modify(OpenSettings, PauseLayer)
             menu->updateLayout();
         }
     };
+};
+
+#include <Geode/modify/EditorPauseLayer.hpp>
+//-----------Editor PauseButton Rainbow-----------\\
+
+class $modify(SettingsBTN, EditorPauseLayer)
+{
+    void btnSettings(CCObject *)
+    {
+        geode::openSettingsPopup(Mod::get());
+    };
+    bool init(LevelEditorLayer * lel)
+    {
+        if (!EditorPauseLayer::init(lel))
+            return false;
+        bool shortcut = Mod::get()->getSettingValue<bool>("shortcut");
+
+        auto btnSprite = CCSprite::create("btnSprite.png"_spr);
+        auto menu = this->getChildByID("guidelines-menu");
+        auto btn = CCMenuItemSpriteExtra::create(
+            btnSprite, this, menu_selector(SettingsBTN::btnSettings));
+        btn->setID("settings-button"_spr);
+        btn->setZOrder(10);
+
+        if (shortcut == true)
+        {
+            menu->addChild(btn);
+            menu->updateLayout();
+        }
+
+        return true;
+    }
 };
