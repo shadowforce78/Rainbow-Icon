@@ -31,6 +31,11 @@
 			"id": "ninkaz.blending_glow",
 			"importance": "conflicting",
 			"version": "*"
+		},
+		{
+			"id": "weebify.separate_dual_icons",
+			"importance": "conflicting",
+			"version": "*"
 		}
 	],
 	"tags": [
@@ -75,6 +80,7 @@
 			"description": "Enable or disable the wave effect on the rainbow.",
 			"default": true
 		},
+
 		"bar":{
 			"name": "Rainbow Bar",
 			"type": "bool",
