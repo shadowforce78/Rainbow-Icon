@@ -104,10 +104,8 @@ class $modify(PlayLayer)
     {
         float speed = Mod::get()->getSettingValue<double>("speed");
         float saturation = Mod::get()->getSettingValue<double>("saturation");
-        // float offset = Mod::get()->getSettingValue<double>("offset");
-        auto rainbowColor = getRainbow(0, saturation);
-        auto rainbowColor2 = getRainbow(180, saturation);
-        auto rainbowColor3 = getRainbow(90, saturation);
+        int offset_color_p1 = Mod::get()->getSettingValue<int64_t>("offset_color_p1");
+        int offset_color_p2 = Mod::get()->getSettingValue<int64_t>("offset_color_p2");
         bool enable = Mod::get()->getSettingValue<bool>("enable");
         bool glow = Mod::get()->getSettingValue<bool>("glow");
         int preset = Mod::get()->getSettingValue<int64_t>("preset");
@@ -128,6 +126,16 @@ class $modify(PlayLayer)
 
         if (enable == true)
         {
+
+            auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation);
+            auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation);
+
+            auto rainbowColorMainP2 = getRainbow(offset_color_p2, saturation);
+            auto rainbowColorInvertedP2 = getRainbow(offset_color_p2 + 180, saturation);
+
+            auto rainbowColor = getRainbow(0, saturation);
+            auto rainbowColor2 = getRainbow(180, saturation);
+
             if (m_fields->progressBar == nullptr ||
                 m_fields->percentLabel == nullptr)
             {
@@ -166,15 +174,15 @@ class $modify(PlayLayer)
             {
                 if (sync == true)
                 {
-                    m_player1->m_glowColor = rainbowColor;
-                    m_player2->m_glowColor = rainbowColor;
+                    m_player1->m_glowColor = rainbowColorMainP1;
+                    m_player2->m_glowColor = rainbowColorMainP2;
                     m_player1->updateGlowColor();
                     m_player2->updateGlowColor();
                 }
                 else
                 {
-                    m_player1->m_glowColor = rainbowColor;
-                    m_player2->m_glowColor = rainbowColor2;
+                    m_player1->m_glowColor = rainbowColorInvertedP1;
+                    m_player2->m_glowColor = rainbowColorInvertedP2;
                     m_player1->updateGlowColor();
                     m_player2->updateGlowColor();
                 }
@@ -191,26 +199,26 @@ class $modify(PlayLayer)
                 {
                     if (m_player1->m_waveTrail)
                     {
-                        m_player1->m_waveTrail->setColor(rainbowColor);
+                        m_player1->m_waveTrail->setColor(rainbowColorMainP1);
                     }
 
                     if (m_player2->m_waveTrail)
                     {
-                        m_player2->m_waveTrail->setColor(rainbowColor2);
+                        m_player2->m_waveTrail->setColor(rainbowColorMainP2);
                     }
                 }
                 else if (playerPreset == 2)
                 {
                     if (m_player1->m_waveTrail)
                     {
-                        m_player1->m_waveTrail->setColor(rainbowColor);
+                        m_player1->m_waveTrail->setColor(rainbowColorMainP1);
                     }
                 }
                 else if (playerPreset == 3)
                 {
                     if (m_player2->m_waveTrail)
                     {
-                        m_player2->m_waveTrail->setColor(rainbowColor);
+                        m_player2->m_waveTrail->setColor(rainbowColorMainP2);
                     }
                 }
             }
@@ -219,8 +227,6 @@ class $modify(PlayLayer)
 
             if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
             {
-                ccColor3B col1 = rainbowColor;
-                ccColor3B col2 = rainbowColor2;
 
                 if (preset == 1)
                 {
@@ -230,42 +236,42 @@ class $modify(PlayLayer)
                         //  "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
                         if (playerPreset == 1)
                         {
-                            m_player1->setColor(col1);
-                            m_player1->setSecondColor(col1);
+                            m_player1->setColor(rainbowColorMainP1);
+                            m_player1->setSecondColor(rainbowColorMainP1);
 
-                            m_player2->setColor(col1);
-                            m_player2->setSecondColor(col1);
+                            m_player2->setColor(rainbowColorMainP2);
+                            m_player2->setSecondColor(rainbowColorMainP2);
                         }
                         else if (playerPreset == 2)
                         {
-                            m_player1->setColor(col1);
-                            m_player1->setSecondColor(col1);
+                            m_player1->setColor(rainbowColorMainP1);
+                            m_player1->setSecondColor(rainbowColorMainP1);
                         }
                         else if (playerPreset == 3)
                         {
-                            m_player2->setColor(col1);
-                            m_player2->setSecondColor(col1);
+                            m_player2->setColor(rainbowColorMainP2);
+                            m_player2->setSecondColor(rainbowColorMainP2);
                         }
                     }
                     else
                     {
                         if (playerPreset == 1)
                         {
-                            m_player1->setColor(col1);
-                            m_player1->setSecondColor(col2);
+                            m_player1->setColor(rainbowColorMainP1);
+                            m_player1->setSecondColor(rainbowColorInvertedP1);
 
-                            m_player2->setColor(col1);
-                            m_player2->setSecondColor(col2);
+                            m_player2->setColor(rainbowColorMainP2);
+                            m_player2->setSecondColor(rainbowColorInvertedP2);
                         }
                         else if (playerPreset == 2)
                         {
-                            m_player1->setColor(col1);
-                            m_player1->setSecondColor(col2);
+                            m_player1->setColor(rainbowColorMainP1);
+                            m_player1->setSecondColor(rainbowColorInvertedP1);
                         }
                         else if (playerPreset == 3)
                         {
-                            m_player2->setColor(col1);
-                            m_player2->setSecondColor(col2);
+                            m_player2->setColor(rainbowColorMainP2);
+                            m_player2->setSecondColor(rainbowColorInvertedP2);
                         }
                     }
                 }
@@ -274,32 +280,32 @@ class $modify(PlayLayer)
 
                     if (playerPreset == 1)
                     {
-                        m_player1->setColor(col1);
-                        m_player2->setColor(col1);
+                        m_player1->setColor(rainbowColorMainP1);
+                        m_player2->setColor(rainbowColorMainP2);
                     }
                     else if (playerPreset == 2)
                     {
-                        m_player1->setColor(col1);
+                        m_player1->setColor(rainbowColorMainP1);
                     }
                     else if (playerPreset == 3)
                     {
-                        m_player2->setColor(col1);
+                        m_player2->setColor(rainbowColorMainP2);
                     }
                 }
                 else if (preset == 3)
                 {
                     if (playerPreset == 1)
                     {
-                        m_player1->setSecondColor(col1);
-                        m_player2->setSecondColor(col1);
+                        m_player1->setSecondColor(rainbowColorMainP1);
+                        m_player2->setSecondColor(rainbowColorMainP2);
                     }
                     else if (playerPreset == 2)
                     {
-                        m_player1->setSecondColor(col1);
+                        m_player1->setSecondColor(rainbowColorMainP1);
                     }
                     else if (playerPreset == 3)
                     {
-                        m_player2->setSecondColor(col1);
+                        m_player2->setSecondColor(rainbowColorMainP2);
                     }
                 }
             }

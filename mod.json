@@ -50,13 +50,13 @@
 			"description": "Enable or disable the rainbow effect on your icons.",
 			"default": true
 		},
-		"editorEnable":{
+		"editorEnable": {
 			"name": "Enable Rainbow Icon in Editor",
 			"type": "bool",
 			"description": "Enable or disable the rainbow effect on your icons in the editor.",
 			"default": true
 		},
-		"shortcut":{
+		"shortcut": {
 			"name": "Rainbow Shortcut",
 			"type": "bool",
 			"description": "Enable or disable shortcut button on the pause menu",
@@ -74,14 +74,35 @@
 			"description": "Enable or disable the glow effect on the rainbow.",
 			"default": true
 		},
-		"wave":{
+		"wave": {
 			"name": "Rainbow Wave Trail",
 			"type": "bool",
 			"description": "Enable or disable the wave effect on the rainbow.",
 			"default": true
 		},
-
-		"bar":{
+		"offset_color_p1": {
+			"type": "int",
+			"name": "Rainbow Offset Color Player 1",
+			"description": "The color of the offset effect on the rainbow for player 1.",
+			"default": 0,
+			"min": 0,
+			"max": 360,
+			"control": {
+				"slider-step": 1
+			}
+		},
+		"offset_color_p2": {
+			"type": "int",
+			"name": "Rainbow Offset Color Player 2",
+			"description": "The color of the offset effect on the rainbow for player 2.",
+			"default": 0,
+			"min": 0,
+			"max": 360,
+			"control": {
+				"slider-step": 1
+			}
+		},
+		"bar": {
 			"name": "Rainbow Bar",
 			"type": "bool",
 			"description": "Enable or disable the bar effect on the rainbow.",
@@ -100,7 +121,7 @@
 				"input": false
 			}
 		},
-		"playerPreset":{
+		"playerPreset": {
 			"name": "Rainbow Player Preset",
 			"type": "int",
 			"description": "1 = Both player 1 and are rainbow, 2 = Only player 1 is rainbow, 3 = Only player 2 is rainbow",
