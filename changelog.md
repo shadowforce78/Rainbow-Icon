@@ -1,3 +1,6 @@
+# 1.1.3
+- Added brightness settings to the rainbow effect
+
 # 1.1.2
 - Fixed the mod not working with the new update
 - Added player 1 or 2 color to the rainbow effect

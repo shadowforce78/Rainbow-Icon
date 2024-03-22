@@ -1,6 +1,6 @@
 {
 	"geode": "2.0.0-beta.19",
-	"version": "v1.1.2",
+	"version": "v1.1.3-beta.1",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205",
@@ -155,6 +155,17 @@
 				"slider-step": 1
 			},
 			"description": "The saturation of the rainbow effect (0 is the lowest, 100 is the highest)."
+		},
+		"brightness": {
+			"name": "Rainbow Brightness",
+			"type": "float",
+			"default": 100,
+			"min": 0,
+			"max": 100,
+			"control": {
+				"slider-step": 1
+			},
+			"description": "The brightness of the rainbow effect (0 is the lowest, 100 is the highest)."
 		}
 	},
 	"repository": "https://github.com/shadowforce78/Rainbow-Icon",

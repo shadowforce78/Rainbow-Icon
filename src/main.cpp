@@ -69,7 +69,7 @@ void HSVtoRGB(float &fR, float &fG, float &fB, float &fH, float &fS,
 }
 
 float g = 0;
-cocos2d::_ccColor3B getRainbow(float offset, float saturation)
+cocos2d::_ccColor3B getRainbow(float offset, float saturation, float value)
 {
     float R;
     float G;
@@ -77,7 +77,7 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation)
 
     float hue = fmod(g + offset, 360);
     float sat = saturation / 100.0;
-    float vc = 1;
+    float vc = value / 100.0;
     HSVtoRGB(R, G, B, hue, sat, vc);
 
     cocos2d::_ccColor3B out;
@@ -114,6 +114,7 @@ class $modify(PlayLayer)
         bool wave = Mod::get()->getSettingValue<bool>("wave");
         bool bar = Mod::get()->getSettingValue<bool>("bar");
         bool trail = Mod::get()->getSettingValue<bool>("trail");
+        float brightness = Mod::get()->getSettingValue<double>("brightness");
 
         if (g >= 360)
         {
@@ -127,14 +128,14 @@ class $modify(PlayLayer)
         if (enable == true)
         {
 
-            auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation);
-            auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation);
+            auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation, brightness);
+            auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation, brightness);
 
-            auto rainbowColorMainP2 = getRainbow(offset_color_p2, saturation);
-            auto rainbowColorInvertedP2 = getRainbow(offset_color_p2 + 180, saturation);
+            auto rainbowColorMainP2 = getRainbow(offset_color_p2, saturation, brightness);
+            auto rainbowColorInvertedP2 = getRainbow(offset_color_p2 + 180, saturation, brightness);
 
-            auto rainbowColor = getRainbow(0, saturation);
-            auto rainbowColor2 = getRainbow(180, saturation);
+            auto rainbowColor = getRainbow(0, saturation, brightness);
+            auto rainbowColor2 = getRainbow(180, saturation, brightness);
 
             if (m_fields->progressBar == nullptr ||
                 m_fields->percentLabel == nullptr)
@@ -331,6 +332,7 @@ int playerPreset = Mod::get()->getSettingValue<int64_t>("playerPreset");
 float saturation = Mod::get()->getSettingValue<double>("saturation");
 int offset_color_p1 = Mod::get()->getSettingValue<int64_t>("offset_color_p1");
 int offset_color_p2 = Mod::get()->getSettingValue<int64_t>("offset_color_p2");
+float brightness = Mod::get()->getSettingValue<double>("brightness");
 
 if (g >= 360)
 {
@@ -343,14 +345,14 @@ else
 if (enabled)
 {
 
-    auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation);
-    auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation);
+    auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation, brightness);
+    auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation, brightness);
 
-    auto rainbowColorMainP2 = getRainbow(offset_color_p2, saturation);
-    auto rainbowColorInvertedP2 = getRainbow(offset_color_p2 + 180, saturation);
+    auto rainbowColorMainP2 = getRainbow(offset_color_p2, saturation, brightness);
+    auto rainbowColorInvertedP2 = getRainbow(offset_color_p2 + 180, saturation, brightness);
 
-    auto rainbowColor = getRainbow(0, saturation);
-    auto rainbowColor2 = getRainbow(180, saturation);
+    auto rainbowColor = getRainbow(0, saturation, brightness);
+    auto rainbowColor2 = getRainbow(180, saturation, brightness);
 
     bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
 
