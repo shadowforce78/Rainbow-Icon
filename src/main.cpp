@@ -87,6 +87,30 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation, float value)
     return out;
 }
 
+cocos2d::_ccColor4F getRainbow4B(float offset, float saturation, float value)
+{
+    float R;
+    float G;
+    float B;
+
+    float hue = fmod(g + offset, 360);
+    float sat = saturation / 100.0;
+    float vc = value / 100.0;
+    HSVtoRGB(R, G, B, hue, sat, vc);
+
+    cocos2d::_ccColor4F out;
+    out.r = R * 255;
+    out.g = G * 255;
+    out.b = B * 255;
+    out.a = 255;
+    return out;
+}
+void forceColor(CCParticleSystem *system, const ccColor4F &col)
+{
+    // virtuals are broken in geode
+    system->CCParticleSystem::setStartColor(col);
+    system->CCParticleSystem::setEndColor(col);
+}
 class $modify(PlayerObject){void flashPlayer(float p0, float p1,
                                              cocos2d::ccColor3B mainColor,
                                              cocos2d::ccColor3B secondColor){
@@ -513,3 +537,48 @@ class $modify(SettingsBTN, EditorPauseLayer)
         return true;
     }
 };
+
+// -----------Particle-----------\\
+
+class $modify(PlayerObject){
+
+    void updateGlowColorD(float dt){
+        bool particle = Mod::get()->getSettingValue<bool>("particle");
+float saturation = Mod::get()->getSettingValue<double>("saturation");
+float brightness = Mod::get()->getSettingValue<double>("brightness");
+float speed = Mod::get()->getSettingValue<double>("speed");
+
+if (g >= 360)
+{
+    g = 0;
+}
+else
+{
+    g += speed / 10;
+}
+
+auto rainbowColor = getRainbow4B(0, saturation, brightness);
+
+if (particle)
+{
+    forceColor(m_unk6dc, rainbowColor);
+    forceColor(m_trailingParticles, rainbowColor);
+    forceColor(m_shipClickParticles, rainbowColor);
+    forceColor(m_unk6e8, rainbowColor);
+    forceColor(m_ufoClickParticles, rainbowColor);
+    forceColor(m_robotBurstParticles, rainbowColor);
+    forceColor(m_unk6f4, rainbowColor);
+    forceColor(m_swingBurstParticles1, rainbowColor);
+    forceColor(m_swingBurstParticles2, rainbowColor);
+    forceColor(m_unk704, rainbowColor);
+    forceColor(m_unk708, rainbowColor);
+}
+}
+
+void updateGlowColor()
+{
+    PlayerObject::updateGlowColor();
+    this->updateGlowColorD(0.f);
+}
+}
+;

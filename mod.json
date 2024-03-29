@@ -1,6 +1,6 @@
 {
 	"geode": "2.0.0-beta.19",
-	"version": "v1.1.3-beta.1",
+	"version": "v1.1.3-beta.7",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205",
@@ -72,6 +72,12 @@
 			"name": "Rainbow Glow",
 			"type": "bool",
 			"description": "Enable or disable the glow effect on the rainbow.",
+			"default": true
+		},
+		"particle": {
+			"name": "Rainbow Particle",
+			"type": "bool",
+			"description": "Enable or disable the particle effect on the rainbow.",
 			"default": true
 		},
 		"wave": {
