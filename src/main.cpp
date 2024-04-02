@@ -544,9 +544,8 @@ class $modify(PlayerObject){
 
     void updateGlowColorD(float dt){
         bool particle = Mod::get()->getSettingValue<bool>("particle");
-float saturation = Mod::get()->getSettingValue<double>("saturation");
-float brightness = Mod::get()->getSettingValue<double>("brightness");
 float speed = Mod::get()->getSettingValue<double>("speed");
+float offset_color_particle = Mod::get()->getSettingValue<int64_t>("offset_color_particle");
 
 if (g >= 360)
 {
@@ -557,7 +556,7 @@ else
     g += speed / 10;
 }
 
-auto rainbowColor = getRainbow4B(0, saturation, brightness);
+auto rainbowColor = getRainbow4B(offset_color_particle, 100, 100);
 
 if (particle)
 {

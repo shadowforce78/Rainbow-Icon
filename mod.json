@@ -1,6 +1,6 @@
 {
 	"geode": "2.0.0-beta.19",
-	"version": "v1.1.3",
+	"version": "v1.1.4",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205",
@@ -101,6 +101,17 @@
 			"type": "int",
 			"name": "Rainbow Offset Color Player 2",
 			"description": "The color of the offset effect on the rainbow for player 2.",
+			"default": 0,
+			"min": 0,
+			"max": 360,
+			"control": {
+				"slider-step": 1
+			}
+		},
+		"offset_color_particle": {
+			"type": "int",
+			"name": "Rainbow Offset Color Particle",
+			"description": "The color of the offset effect on the rainbow for the particle.",
 			"default": 0,
 			"min": 0,
 			"max": 360,
