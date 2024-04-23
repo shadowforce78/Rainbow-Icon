@@ -1,6 +1,6 @@
 {
 	"geode": "2.0.0-beta.19",
-	"version": "v1.1.4",
+	"version": "v1.1.5-beta.4",
 	"gd": {
 		"win": "2.204",
 		"android": "2.205",
@@ -150,6 +150,12 @@
 				"slider": false,
 				"input": false
 			}
+		},
+		"superSpeed":{
+			"name": "Rainbow Super Speed",
+			"type": "bool",
+			"description": "Enable or disable the super speed of the rainbow effect.",
+			"default": false
 		},
 		"speed": {
 			"name": "Rainbow Speed",

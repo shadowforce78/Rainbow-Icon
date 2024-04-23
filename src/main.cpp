@@ -139,14 +139,29 @@ class $modify(PlayLayer)
         bool bar = Mod::get()->getSettingValue<bool>("bar");
         bool trail = Mod::get()->getSettingValue<bool>("trail");
         float brightness = Mod::get()->getSettingValue<double>("brightness");
+        bool superSpeed = Mod::get()->getSettingValue<bool>("superSpeed");
 
-        if (g >= 360)
+        if (superSpeed)
         {
-            g = 0;
+            if (g >= 360)
+            {
+                g = 0;
+            }
+            else
+            {
+                g += 10;
+            }
         }
         else
         {
-            g += speed / 10;
+            if (g >= 360)
+            {
+                g = 0;
+            }
+            else
+            {
+                g += speed / 10;
+            }
         }
 
         if (enable == true)
@@ -357,14 +372,29 @@ float saturation = Mod::get()->getSettingValue<double>("saturation");
 int offset_color_p1 = Mod::get()->getSettingValue<int64_t>("offset_color_p1");
 int offset_color_p2 = Mod::get()->getSettingValue<int64_t>("offset_color_p2");
 float brightness = Mod::get()->getSettingValue<double>("brightness");
+bool superSpeed = Mod::get()->getSettingValue<bool>("superSpeed");
 
-if (g >= 360)
+if (superSpeed)
 {
-    g = 0;
+    if (g >= 360)
+    {
+        g = 0;
+    }
+    else
+    {
+        g += 10;
+    }
 }
 else
 {
-    g += speed / 10;
+    if (g >= 360)
+    {
+        g = 0;
+    }
+    else
+    {
+        g += speed / 10;
+    }
 }
 if (enabled)
 {
@@ -546,14 +576,29 @@ class $modify(PlayerObject){
         bool particle = Mod::get()->getSettingValue<bool>("particle");
 float speed = Mod::get()->getSettingValue<double>("speed");
 float offset_color_particle = Mod::get()->getSettingValue<int64_t>("offset_color_particle");
+bool superSpeed = Mod::get()->getSettingValue<bool>("superSpeed");
 
-if (g >= 360)
+if (superSpeed)
 {
-    g = 0;
+    if (g >= 360)
+    {
+        g = 0;
+    }
+    else
+    {
+        g += 10;
+    }
 }
 else
 {
-    g += speed / 10;
+    if (g >= 360)
+    {
+        g = 0;
+    }
+    else
+    {
+        g += speed / 10;
+    }
 }
 
 auto rainbowColor = getRainbow4B(offset_color_particle, 100, 100);
