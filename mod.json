@@ -1,10 +1,8 @@
 {
-	"geode": "2.0.0-beta.19",
+	"geode": "3.0.0-alpha.2",
 	"version": "v1.2.0-alpha.1",
 	"gd": {
-		"win": "2.204",
-		"android": "2.205",
-		"mac": "2.200"
+		"win": "2.206"
 	},
 	"id": "saumondeluxe.rainbow_icon",
 	"name": "Rainbow Icon",

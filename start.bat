@@ -5,7 +5,7 @@ echo "Stopping Geometry Dash...."
 taskkill /f /im GeometryDash.exe
 echo "Geometry Dash stopped!"
 echo "Starting build...."
-cmake --build build --config RelWithDebInfo
+geode build
 echo "Windows build complete!"
 echo "Do you want to start Geometry Dash? (y/n)"
 set /p choice=
