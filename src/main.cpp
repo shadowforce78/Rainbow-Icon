@@ -116,8 +116,6 @@ class $modify(PlayerObject){
 
 class $modify(PlayLayer)
 {
-	CCSprite *progressBar;
-	CCLabelBMFont *percentLabel;
 
 	void postUpdate(float p0)
 	{
@@ -131,8 +129,6 @@ class $modify(PlayLayer)
 		int playerPreset = Mod::get()->getSettingValue<int64_t>("playerPreset");
 		bool sync = Mod::get()->getSettingValue<bool>("sync");
 		bool wave = Mod::get()->getSettingValue<bool>("wave");
-		bool bar = Mod::get()->getSettingValue<bool>("bar");
-		bool trail = Mod::get()->getSettingValue<bool>("trail");
 		float brightness = Mod::get()->getSettingValue<double>("brightness");
 		bool superSpeed = Mod::get()->getSettingValue<bool>("superSpeed");
 
@@ -221,11 +217,6 @@ class $modify(PlayLayer)
 					m_player1->updateGlowColor();
 					m_player2->updateGlowColor();
 				}
-			}
-
-			if (trail == true)
-			{
-				// TODO: Add trail color
 			}
 			if (wave == true)
 			{

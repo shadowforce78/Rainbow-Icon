@@ -72,12 +72,6 @@
 			"description": "Enable or disable the glow effect on the rainbow.",
 			"default": true
 		},
-		"particle": {
-			"name": "Rainbow Particle",
-			"type": "bool",
-			"description": "Enable or disable the particle effect on the rainbow.",
-			"default": true
-		},
 		"wave": {
 			"name": "Rainbow Wave Trail",
 			"type": "bool",
@@ -116,12 +110,6 @@
 			"control": {
 				"slider-step": 1
 			}
-		},
-		"bar": {
-			"name": "Rainbow Bar",
-			"type": "bool",
-			"description": "Enable or disable the bar effect on the rainbow.",
-			"default": true
 		},
 		"preset": {
 			"name": "Rainbow Preset",
