@@ -1,3 +1,7 @@
+# 1.2.0
+- 2.206 support (partially)
+- Every thing is now rainbowable (except progress bar and particle system)
+
 # 1.1.4
 - Added offset control for particle rainbow effect
 - Removed brightness and saturation settings for the particle rainbow effect (not visible)
