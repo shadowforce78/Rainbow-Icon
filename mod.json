@@ -1,9 +1,9 @@
 {
 	"geode": "3.0.0-alpha.2",
-	"version": "v1.2.0-alpha.1",
 	"gd": {
 		"win": "2.206"
 	},
+	"version": "1.2.0-alpha.1",
 	"id": "saumondeluxe.rainbow_icon",
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
@@ -72,12 +72,6 @@
 			"description": "Enable or disable the glow effect on the rainbow.",
 			"default": true
 		},
-		"particle": {
-			"name": "Rainbow Particle",
-			"type": "bool",
-			"description": "Enable or disable the particle effect on the rainbow.",
-			"default": true
-		},
 		"wave": {
 			"name": "Rainbow Wave Trail",
 			"type": "bool",
@@ -117,12 +111,6 @@
 				"slider-step": 1
 			}
 		},
-		"bar": {
-			"name": "Rainbow Bar",
-			"type": "bool",
-			"description": "Enable or disable the bar effect on the rainbow.",
-			"default": true
-		},
 		"preset": {
 			"name": "Rainbow Preset",
 			"type": "int",
@@ -149,7 +137,7 @@
 				"input": false
 			}
 		},
-		"superSpeed":{
+		"superSpeed": {
 			"name": "Rainbow Super Speed",
 			"type": "bool",
 			"description": "Enable or disable the super speed of the rainbow effect.",
