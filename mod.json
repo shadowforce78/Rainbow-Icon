@@ -1,9 +1,9 @@
 {
 	"geode": "3.0.0-alpha.2",
-	"version": "v1.2.0-alpha.1",
 	"gd": {
 		"win": "2.206"
 	},
+	"version": "1.2.0-alpha.1",
 	"id": "saumondeluxe.rainbow_icon",
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
@@ -149,7 +149,7 @@
 				"input": false
 			}
 		},
-		"superSpeed":{
+		"superSpeed": {
 			"name": "Rainbow Super Speed",
 			"type": "bool",
 			"description": "Enable or disable the super speed of the rainbow effect.",
