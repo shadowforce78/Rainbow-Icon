@@ -7,8 +7,6 @@
 #include <map>
 #include <string>
 
-#include "Utils.hpp"
-
 using namespace geode::prelude;
 using namespace std::chrono;
 
@@ -164,40 +162,6 @@ if (enable == true)
 
     auto rainbowColor = getRainbow(0, saturation, brightness);
     auto rainbowColor2 = getRainbow(180, saturation, brightness);
-
-    // if (m_fields->progressBar == nullptr ||
-    // 	m_fields->percentLabel == nullptr)
-    // {
-    // 	for (size_t i = 0; i < this->getChildrenCount(); i++)
-    // 	{
-    // 		auto obj = this->getChildren()->objectAtIndex(i);
-    // 		if (Utils::getNodeName(obj) ==
-    // 				"cocos2d::CCLabelBMFont" &&
-    // 			m_fields->percentLabel == nullptr)
-    // 		{
-    // 			auto labelTest =
-    // 				static_cast<CCLabelBMFont *>(obj);
-    // 			if (strlen(labelTest->getString()) < 6)
-    // 			{
-    // 				m_fields->percentLabel = labelTest;
-    // 			}
-    // 		}
-    // 		else if (Utils::getNodeName(obj) ==
-    // 					 "cocos2d::CCSprite" &&
-    // 				 m_fields->progressBar == nullptr)
-    // 		{
-    // 			m_fields->progressBar =
-    // 				static_cast<CCSprite *>(obj);
-    // 		}
-    // 	}
-    // }
-    // else
-    // {
-    // 	if (bar == true)
-    // 	{
-    // 		m_fields->progressBar->setChildColor(rainbowColor);
-    // 	}
-    // }
 
     if (glow == true)
     {
