@@ -4,7 +4,7 @@
 		"win": "2.206",
 		"android": "2.206"
 	},
-	"version": "1.2.0-beta.2",
+	"version": "1.2.0-beta.3",
 	"id": "saumondeluxe.rainbow_icon",
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
@@ -22,7 +22,7 @@
 	],
 	"incompatibilities": [
 		{
-			"id": "TheSillyDoggo.Cheats",
+			"id": "thesillydoggo.qolmod",
 			"importance": "breaking",
 			"version": "*"
 		},
