@@ -22,7 +22,7 @@
 	],
 	"incompatibilities": [
 		{
-			"id": "TheSillyDoggo.Cheats",
+			"id": "thesillydoggo.qolmod",
 			"importance": "breaking",
 			"version": "*"
 		},
