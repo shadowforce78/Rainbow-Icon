@@ -64,7 +64,7 @@
 		"pastel":{
 			"name": "Pastel Rainbow",
 			"type": "bool",
-			"description": "Enable or disable the pastel rainbow effect.",
+			"description": "Enable or disable the pastel rainbow effect (This setting will override saturation).",
 			"default": false
 		},
 		"sync": {

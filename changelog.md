@@ -1,5 +1,5 @@
 # 1.2.1
-- Added pastel rainbow effect
+- Added pastel rainbow effect (toggleable) (this overrides the saturation and brightness settings)
 
 # 1.2.0
 - 2.206 support (partially)

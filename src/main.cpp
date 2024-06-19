@@ -155,6 +155,12 @@ else
 if (enable == true)
 {
 
+    if (pastel == true)
+    {
+        saturation = 50;
+        brightness = 90;
+    }
+
     auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation, brightness);
     auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation, brightness);
 
