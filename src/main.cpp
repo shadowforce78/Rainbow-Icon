@@ -127,6 +127,7 @@ bool sync = Mod::get()->getSettingValue<bool>("sync");
 bool wave = Mod::get()->getSettingValue<bool>("wave");
 float brightness = Mod::get()->getSettingValue<double>("brightness");
 bool superSpeed = Mod::get()->getSettingValue<bool>("superSpeed");
+bool pastel = Mod::get()->getSettingValue<bool>("pastel");
 
 if (superSpeed)
 {
@@ -153,6 +154,12 @@ else
 
 if (enable == true)
 {
+
+    if (pastel == true)
+    {
+        saturation = 50;
+        brightness = 90;
+    }
 
     auto rainbowColorMainP1 = getRainbow(offset_color_p1, saturation, brightness);
     auto rainbowColorInvertedP1 = getRainbow(offset_color_p1 + 180, saturation, brightness);

@@ -61,6 +61,12 @@
 			"description": "Enable or disable shortcut button on the pause menu",
 			"default": true
 		},
+		"pastel":{
+			"name": "Pastel Rainbow",
+			"type": "bool",
+			"description": "Enable or disable the pastel rainbow effect (This setting will override saturation).",
+			"default": false
+		},
 		"sync": {
 			"name": "Sync Rainbow",
 			"type": "bool",
