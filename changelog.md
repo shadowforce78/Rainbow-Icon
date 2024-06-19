@@ -1,3 +1,6 @@
+# 1.2.1
+- Added pastel rainbow effect
+
 # 1.2.0
 - 2.206 support (partially)
 - Every thing is now rainbowable (except progress bar and particle system)

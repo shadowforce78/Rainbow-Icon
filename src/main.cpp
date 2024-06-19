@@ -127,6 +127,7 @@ bool sync = Mod::get()->getSettingValue<bool>("sync");
 bool wave = Mod::get()->getSettingValue<bool>("wave");
 float brightness = Mod::get()->getSettingValue<double>("brightness");
 bool superSpeed = Mod::get()->getSettingValue<bool>("superSpeed");
+bool pastel = Mod::get()->getSettingValue<bool>("pastel");
 
 if (superSpeed)
 {
