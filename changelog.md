@@ -1,5 +1,5 @@
 # 1.2.2
-- Added MacOS support for 2.206 ?
+- Added MacOS support for 2.206
 
 # 1.2.1
 - Added pastel rainbow effect (toggleable) (this overrides the saturation and brightness settings)
