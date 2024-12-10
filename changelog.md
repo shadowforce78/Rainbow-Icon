@@ -1,3 +1,7 @@
+# 1.3.0
+- Added support for 2.2074
+- Fixed flashing effect on the player (For real this time)
+
 # 1.2.2
 - Added MacOS support for 2.206
 - Cleaned the code for better performance (again)
