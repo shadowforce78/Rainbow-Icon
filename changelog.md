@@ -1,5 +1,5 @@
 # 1.3.0
-- Added support for 2.2074
+- Added support for 2.2074 on Windows and Android (Not tested on MacOS but should work)
 - Fixed flashing effect on the player (For real this time)
 
 # 1.2.2
