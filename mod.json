@@ -1,9 +1,9 @@
 {
 	"geode": "4.0.1",
 	"gd": {
-		"win": "2.207",
-		"android": "2.207",
-		"mac": "2.207"
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074"
 	},
 	"version": "1.3.0-beta",
 	"id": "saumondeluxe.rainbow_icon",
