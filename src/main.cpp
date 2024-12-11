@@ -16,51 +16,44 @@ using namespace std::chrono;
 void HSVtoRGB(float &r, float &g, float &b, float h, float s, float v)
 {
     float c = v * s;
-    float hPrime = fmod(h / 60.0, 6);
-    float x = c * (1 - fabs(fmod(hPrime, 2) - 1));
+    float x = c * (1 - fabs(fmod(h / 60.0, 2) - 1));
     float m = v - c;
 
-    if (0 <= hPrime && hPrime < 1)
+    if (h < 60)
     {
         r = c;
         g = x;
         b = 0;
     }
-    else if (1 <= hPrime && hPrime < 2)
+    else if (h < 120)
     {
         r = x;
         g = c;
         b = 0;
     }
-    else if (2 <= hPrime && hPrime < 3)
+    else if (h < 180)
     {
         r = 0;
         g = c;
         b = x;
     }
-    else if (3 <= hPrime && hPrime < 4)
+    else if (h < 240)
     {
         r = 0;
         g = x;
         b = c;
     }
-    else if (4 <= hPrime && hPrime < 5)
+    else if (h < 300)
     {
         r = x;
         g = 0;
         b = c;
-    }
-    else if (5 <= hPrime && hPrime < 6)
-    {
-        r = c;
-        g = 0;
-        b = x;
     }
     else
     {
-        r = 0;
+        r = c;
         g = 0;
-        b = 0;
+        b = x;
     }
 
     r += m;
