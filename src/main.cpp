@@ -5,6 +5,8 @@
 #include <Geode/modify/LevelEditorLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
 #include <Geode/modify/EditorPauseLayer.hpp>
+#include <Geode/modify/MenuLayer.hpp>
+#include <Geode/utils/web.hpp>
 #include <chrono>
 #include <functional>
 #include <map>
@@ -385,3 +387,33 @@ class $modify(OpenSettings, PauseLayer)
         }
     };
 };
+// Some AI self generated code
+// class $modify(myNewMenu, MenuLayer)
+// {
+//     void onGoogle(CCObject* sender) {
+//         geode::utils::web::openLinkInBrowser("https://www.google.com");
+//     }
+
+//     bool init() {
+//         if (!MenuLayer::init())
+//             return false;
+
+//         auto winSize = CCDirector::sharedDirector()->getWinSize();
+        
+//         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
+//         btnSprite->setScale(0.8f);
+        
+//         auto googleBtn = CCMenuItemSpriteExtra::create(
+//             btnSprite,
+//             this,
+//             menu_selector(myNewMenu::onGoogle)
+//         );
+        
+//         auto menu = CCMenu::create();
+//         menu->addChild(googleBtn);
+//         menu->setPosition({winSize.width - 50, winSize.height - 50});
+//         this->addChild(menu);
+        
+//         return true;
+//     }
+// };
