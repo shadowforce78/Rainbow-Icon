@@ -387,33 +387,56 @@ class $modify(OpenSettings, PauseLayer)
         }
     };
 };
-// Some AI self generated code
-// class $modify(myNewMenu, MenuLayer)
-// {
-//     void onGoogle(CCObject* sender) {
-//         geode::utils::web::openLinkInBrowser("https://www.google.com");
+
+// Some shitty test code
+// class MenuLayer_Fields {
+// public:
+//     static inline CCLayerGradient* backgroundLayer = nullptr;
+//     static inline CCMenu* menu = nullptr;
+
+//     static void setupBackground(MenuLayer* self) {
+//         if (!backgroundLayer) {
+//             backgroundLayer = CCLayerGradient::create();
+//             backgroundLayer->setZOrder(-1);
+//             self->addChild(backgroundLayer);
+//             self->scheduleUpdate();
+//         }
 //     }
 
+//     static void updateBackground() {
+//         if (backgroundLayer) {
+//             auto mod = Mod::get();
+//             auto speed = mod->getSettingValue<double>("speed");
+//             auto saturation = mod->getSettingValue<double>("saturation");
+//             auto brightness = mod->getSettingValue<double>("brightness");
+            
+//             if (::g >= 360) {
+//                 ::g = 0;
+//             } else {
+//                 ::g += speed / 10;
+//             }
+
+//             auto color1 = getRainbow4B(0, saturation, brightness);
+//             auto color2 = getRainbow4B(180, saturation, brightness);
+            
+//             backgroundLayer->setStartColor(ccc3(color1.r, color1.g, color1.b));
+//             backgroundLayer->setEndColor(ccc3(color2.r, color2.g, color2.b));
+//             backgroundLayer->setVector(ccp(0, 1));
+//         }
+//     }
+// };
+
+// class $modify(MenuLayer) {
 //     bool init() {
 //         if (!MenuLayer::init())
 //             return false;
-
-//         auto winSize = CCDirector::sharedDirector()->getWinSize();
-        
-//         auto btnSprite = CCSprite::create("btnSprite.png"_spr);
-//         btnSprite->setScale(0.8f);
-        
-//         auto googleBtn = CCMenuItemSpriteExtra::create(
-//             btnSprite,
-//             this,
-//             menu_selector(myNewMenu::onGoogle)
-//         );
-        
-//         auto menu = CCMenu::create();
-//         menu->addChild(googleBtn);
-//         menu->setPosition({winSize.width - 50, winSize.height - 50});
-//         this->addChild(menu);
-        
+            
+//         MenuLayer_Fields::setupBackground(this);
 //         return true;
+//     }
+
+//     void update(float dt) {
+//         MenuLayer::update(dt);
+//         MenuLayer_Fields::updateBackground();
 //     }
 // };
