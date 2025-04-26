@@ -4,6 +4,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
+# At the beginning of your CMakeLists.txt, change this:
+#  set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+# into:
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS" OR IOS)
+    set(CMAKE_OSX_ARCHITECTURES "arm64")
+else()
+    set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+endif()
+
+
 project(RainbowIcon VERSION 1.0.0)
 
 add_library(${PROJECT_NAME} SHARED

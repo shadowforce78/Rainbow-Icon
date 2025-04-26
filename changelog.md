@@ -1,3 +1,7 @@
+# 1.3.1
+- Optimized the code
+- Added partial support for iOS (not tested, yet)
+
 # 1.3.0
 - Added support for 2.2074 on Windows and Android (Not tested on MacOS but should work)
 - Fixed flashing effect on the player (For real this time)

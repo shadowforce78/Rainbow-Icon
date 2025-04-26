@@ -15,6 +15,46 @@
 using namespace geode::prelude;
 using namespace std::chrono;
 
+// Structure to hold mod settings
+struct RainbowSettings {
+    double speed;
+    double saturation;
+    double brightness;
+    int64_t offset_color_p1;
+    int64_t offset_color_p2;
+    bool enable;
+    bool glow;
+    int64_t preset;
+    int64_t playerPreset;
+    bool sync;
+    bool wave;
+    bool superSpeed;
+    bool pastel;
+    bool editorEnable; // Added for editor specific enable
+};
+
+// Fetches all settings at once
+RainbowSettings getModSettings() {
+    auto mod = Mod::get();
+    return {
+        mod->getSettingValue<double>("speed"),
+        mod->getSettingValue<double>("saturation"),
+        mod->getSettingValue<double>("brightness"),
+        mod->getSettingValue<int64_t>("offset_color_p1"),
+        mod->getSettingValue<int64_t>("offset_color_p2"),
+        mod->getSettingValue<bool>("enable"),
+        mod->getSettingValue<bool>("glow"),
+        mod->getSettingValue<int64_t>("preset"),
+        mod->getSettingValue<int64_t>("playerPreset"),
+        mod->getSettingValue<bool>("sync"),
+        mod->getSettingValue<bool>("wave"),
+        mod->getSettingValue<bool>("superSpeed"),
+        mod->getSettingValue<bool>("pastel"),
+        mod->getSettingValue<bool>("editorEnable") // Fetch editor setting
+    };
+}
+
+
 void HSVtoRGB(float &r, float &g, float &b, float h, float s, float v)
 {
     float c = v * s;
@@ -63,268 +103,138 @@ void HSVtoRGB(float &r, float &g, float &b, float h, float s, float v)
     b += m;
 }
 
-float g = 0;
+float g_hue = 0; // Renamed global variable for clarity
 
 cocos2d::_ccColor3B getRainbow(float offset, float saturation, float value)
 {
     float r, g, b;
-    HSVtoRGB(r, g, b, fmod(::g + offset, 360), saturation / 100.0, value / 100.0);
+    // Use g_hue instead of ::g
+    HSVtoRGB(r, g, b, fmod(g_hue + offset, 360), saturation / 100.0, value / 100.0);
 
     cocos2d::_ccColor3B out;
-    out.r = r * 255;
-    out.g = g * 255;
-    out.b = b * 255;
+    out.r = static_cast<unsigned char>(r * 255); // Use static_cast for clarity
+    out.g = static_cast<unsigned char>(g * 255);
+    out.b = static_cast<unsigned char>(b * 255);
     return out;
 }
 
-cocos2d::_ccColor4F getRainbow4B(float offset, float saturation, float value)
-{
-    float r, g, b;
-    HSVtoRGB(r, g, b, fmod(::g + offset, 360), saturation / 100.0, value / 100.0);
+// Removed getRainbow4B as it wasn't used
 
-    cocos2d::_ccColor4F out;
-    out.r = r * 255;
-    out.g = g * 255;
-    out.b = b * 255;
-    out.a = 255;
-    return out;
+// Helper function to apply colors to a player
+void applyRainbowColors(PlayerObject* player, bool isPlayer1, RainbowSettings& settings, const cocos2d::_ccColor3B& mainColor, const cocos2d::_ccColor3B& invertedColor) {
+    if (!player) return;
+
+    int64_t playerPreset = settings.playerPreset;
+    bool applyToThisPlayer = (playerPreset == 1) || (isPlayer1 && playerPreset == 2) || (!isPlayer1 && playerPreset == 3);
+
+    if (!applyToThisPlayer) return;
+
+    // Apply Wave Trail Color
+    if (settings.wave && player->m_waveTrail) {
+        player->m_waveTrail->setColor(mainColor);
+    }
+
+    // Apply Player Colors based on preset
+    if (settings.preset == 1) // Both colors
+    {
+        player->setColor(mainColor);
+        player->setSecondColor(settings.sync ? mainColor : invertedColor);
+    }
+    else if (settings.preset == 2) // Primary color only
+    {
+        player->setColor(mainColor);
+    }
+    else if (settings.preset == 3) // Secondary color only
+    {
+        player->setSecondColor(mainColor);
+    }
+
+    // Apply Glow Color
+    if (settings.glow) {
+        player->m_glowColor = settings.sync ? mainColor : invertedColor;
+        player->updateGlowColor();
+    }
 }
+
+// Helper function to update hue
+void updateHue(const RainbowSettings& settings) {
+     if (g_hue >= 360)
+    {
+        g_hue = 0;
+    }
+    else
+    {
+        // Use settings directly
+        g_hue += settings.superSpeed ? 10.0f : static_cast<float>(settings.speed) / 10.0f;
+    }
+}
+
 
 class $modify(PlayerObject)
 {
-    // Removed flashPlayer method
+    // Removed flashPlayer method (already done)
 };
 
-class $modify(PlayLayer)
+class $modify(MyPlayLayer, PlayLayer) // Added a name for clarity
 {
     void postUpdate(float p0)
     {
-        auto mod = Mod::get();
-        auto speed = mod->getSettingValue<double>("speed");
-        auto saturation = mod->getSettingValue<double>("saturation");
-        auto brightness = mod->getSettingValue<double>("brightness");
-        auto offset_color_p1 = mod->getSettingValue<int64_t>("offset_color_p1");
-        auto offset_color_p2 = mod->getSettingValue<int64_t>("offset_color_p2");
-        auto enable = mod->getSettingValue<bool>("enable");
-        auto glow = mod->getSettingValue<bool>("glow");
-        auto preset = mod->getSettingValue<int64_t>("preset");
-        auto playerPreset = mod->getSettingValue<int64_t>("playerPreset");
-        auto sync = mod->getSettingValue<bool>("sync");
-        auto wave = mod->getSettingValue<bool>("wave");
-        auto superSpeed = mod->getSettingValue<bool>("superSpeed");
-        auto pastel = mod->getSettingValue<bool>("pastel");
+        PlayLayer::postUpdate(p0); // Call base function first
 
-        if (::g >= 360)
+        auto settings = getModSettings();
+        updateHue(settings); // Update global hue based on settings
+
+        if (settings.enable)
         {
-            ::g = 0;
+            if (settings.pastel)
+            {
+                settings.saturation = 50;
+                settings.brightness = 90;
+            }
+
+            auto mainColorP1 = getRainbow(settings.offset_color_p1, settings.saturation, settings.brightness);
+            auto invertedColorP1 = getRainbow(settings.offset_color_p1 + 180, settings.saturation, settings.brightness);
+            auto mainColorP2 = getRainbow(settings.offset_color_p2, settings.saturation, settings.brightness);
+            auto invertedColorP2 = getRainbow(settings.offset_color_p2 + 180, settings.saturation, settings.brightness);
+
+            // Apply colors using the helper function
+            applyRainbowColors(m_player1, true, settings, mainColorP1, invertedColorP1);
+            applyRainbowColors(m_player2, false, settings, mainColorP2, invertedColorP2);
         }
-        else
-        {
-            ::g += superSpeed ? 10 : speed / 10;
-        }
-
-        if (enable)
-        {
-
-            if (pastel)
-            {
-                saturation = 50;
-                brightness = 90;
-            }
-
-            auto mainColorP1 = getRainbow(offset_color_p1, saturation, brightness);
-            auto invertedColorP1 = getRainbow(offset_color_p1 + 180, saturation, brightness);
-            auto mainColorP2 = getRainbow(offset_color_p2, saturation, brightness);
-            auto invertedColorP2 = getRainbow(offset_color_p2 + 180, saturation, brightness);
-
-            if (glow)
-            {
-                auto glowColor1 = sync ? mainColorP1 : invertedColorP1;
-                auto glowColor2 = sync ? mainColorP2 : invertedColorP2;
-
-                m_player1->m_glowColor = glowColor1;
-                m_player2->m_glowColor = glowColor2;
-                m_player1->updateGlowColor();
-                m_player2->updateGlowColor();
-            }
-
-            if (wave)
-            {
-                if (playerPreset == 1 || playerPreset == 2)
-                {
-                    if (m_player1->m_waveTrail)
-                        m_player1->m_waveTrail->setColor(mainColorP1);
-                }
-                if (playerPreset == 1 || playerPreset == 3)
-                {
-                    if (m_player2->m_waveTrail)
-                        m_player2->m_waveTrail->setColor(mainColorP2);
-                }
-            }
-
-            bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
-            if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
-            {
-                if (preset == 1)
-                {
-                    if (sync)
-                    {
-                        auto color1 = playerPreset != 3 ? mainColorP1 : mainColorP2;
-                        auto color2 = playerPreset != 2 ? mainColorP2 : mainColorP1;
-
-                        if (playerPreset == 1 || playerPreset == 2)
-                        {
-                            m_player1->setColor(color1);
-                            m_player1->setSecondColor(color1);
-                        }
-                        if (playerPreset == 1 || playerPreset == 3)
-                        {
-                            m_player2->setColor(color2);
-                            m_player2->setSecondColor(color2);
-                        }
-                    }
-                    else
-                    {
-                        auto color1 = playerPreset != 3 ? mainColorP1 : mainColorP2;
-                        auto color2 = playerPreset != 2 ? mainColorP2 : mainColorP1;
-
-                        if (playerPreset == 1 || playerPreset == 2)
-                        {
-                            m_player1->setColor(color1);
-                            m_player1->setSecondColor(invertedColorP1);
-                        }
-                        if (playerPreset == 1 || playerPreset == 3)
-                        {
-                            m_player2->setColor(color2);
-                            m_player2->setSecondColor(invertedColorP2);
-                        }
-                    }
-                }
-                else if (preset == 2)
-                {
-                    if (playerPreset == 1 || playerPreset == 2)
-                    {
-                        m_player1->setColor(mainColorP1);
-                    }
-                    if (playerPreset == 1 || playerPreset == 3)
-                    {
-                        m_player2->setColor(mainColorP2);
-                    }
-                }
-                else if (preset == 3)
-                {
-                    if (playerPreset == 1 || playerPreset == 2)
-                    {
-                        m_player1->setSecondColor(mainColorP1);
-                    }
-                    if (playerPreset == 1 || playerPreset == 3)
-                    {
-                        m_player2->setSecondColor(mainColorP2);
-                    }
-                }
-            }
-        }
-
-        PlayLayer::postUpdate(p0);
     }
 };
 
-class $modify(LevelEditorLayer)
+class $modify(MyLevelEditorLayer, LevelEditorLayer) // Added a name for clarity
 {
     void postUpdate(float p0)
     {
-        auto mod = Mod::get();
-        auto speed = mod->getSettingValue<double>("speed");
-        auto saturation = mod->getSettingValue<double>("saturation");
-        auto brightness = mod->getSettingValue<double>("brightness");
-        auto offset_color_p1 = mod->getSettingValue<int64_t>("offset_color_p1");
-        auto offset_color_p2 = mod->getSettingValue<int64_t>("offset_color_p2");
-        auto enable = mod->getSettingValue<bool>("editorEnable");
-        auto preset = mod->getSettingValue<int64_t>("preset");
-        auto playerPreset = mod->getSettingValue<int64_t>("playerPreset");
-        auto sync = mod->getSettingValue<bool>("sync");
-        auto superSpeed = mod->getSettingValue<bool>("superSpeed");
-        if (::g >= 360)
+        LevelEditorLayer::postUpdate(p0); // Call base function first
+
+        auto settings = getModSettings();
+         // Use editorEnable setting here
+        if (!settings.editorEnable) return;
+
+        updateHue(settings); // Update global hue based on settings
+
+        // No pastel setting check in editor? Assuming same logic as PlayLayer for now.
+        // If editor should ignore pastel, add a check here.
+        if (settings.pastel)
         {
-            ::g = 0;
-        }
-        else
-        {
-            ::g += superSpeed ? 10 : speed / 10;
+            settings.saturation = 50;
+            settings.brightness = 90;
         }
 
-        if (enable)
-        {
+        auto mainColorP1 = getRainbow(settings.offset_color_p1, settings.saturation, settings.brightness);
+        auto invertedColorP1 = getRainbow(settings.offset_color_p1 + 180, settings.saturation, settings.brightness);
+        auto mainColorP2 = getRainbow(settings.offset_color_p2, settings.saturation, settings.brightness);
+        auto invertedColorP2 = getRainbow(settings.offset_color_p2 + 180, settings.saturation, settings.brightness);
 
-            auto mainColorP1 = getRainbow(offset_color_p1, saturation, brightness);
-            auto invertedColorP1 = getRainbow(offset_color_p1 + 180, saturation, brightness);
-            auto mainColorP2 = getRainbow(offset_color_p2, saturation, brightness);
-            auto invertedColorP2 = getRainbow(offset_color_p2 + 180, saturation, brightness);
-
-            bool isCube = !m_player1->m_isShip && !m_player1->m_isBall && !m_player1->m_isBird && !m_player1->m_isDart && !m_player1->m_isRobot && !m_player1->m_isSpider && !m_player1->m_isSwing;
-            if (isCube || m_player1->m_isShip || m_player1->m_isBall || m_player1->m_isBird || m_player1->m_isDart || m_player1->m_isRobot || m_player1->m_isSpider || m_player1->m_isSwing)
-            {
-                if (preset == 1)
-                {
-                    if (sync)
-                    {
-                        auto color1 = playerPreset != 3 ? mainColorP1 : mainColorP2;
-                        auto color2 = playerPreset != 2 ? mainColorP2 : mainColorP1;
-
-                        if (playerPreset == 1 || playerPreset == 2)
-                        {
-                            m_player1->setColor(color1);
-                            m_player1->setSecondColor(color1);
-                        }
-                        if (playerPreset == 1 || playerPreset == 3)
-                        {
-                            m_player2->setColor(color2);
-                            m_player2->setSecondColor(color2);
-                        }
-                    }
-                    else
-                    {
-                        auto color1 = playerPreset != 3 ? mainColorP1 : mainColorP2;
-                        auto color2 = playerPreset != 2 ? mainColorP2 : mainColorP1;
-
-                        if (playerPreset == 1 || playerPreset == 2)
-                        {
-                            m_player1->setColor(color1);
-                            m_player1->setSecondColor(invertedColorP1);
-                        }
-                        if (playerPreset == 1 || playerPreset == 3)
-                        {
-                            m_player2->setColor(color2);
-                            m_player2->setSecondColor(invertedColorP2);
-                        }
-                    }
-                }
-                else if (preset == 2)
-                {
-                    if (playerPreset == 1 || playerPreset == 2)
-                    {
-                        m_player1->setColor(mainColorP1);
-                    }
-                    if (playerPreset == 1 || playerPreset == 3)
-                    {
-                        m_player2->setColor(mainColorP2);
-                    }
-                }
-                else if (preset == 3)
-                {
-                    if (playerPreset == 1 || playerPreset == 2)
-                    {
-                        m_player1->setSecondColor(mainColorP1);
-                    }
-                    if (playerPreset == 1 || playerPreset == 3)
-                    {
-                        m_player2->setSecondColor(mainColorP2);
-                    }
-                }
-            }
+        // Apply colors using the helper function
+        // Note: Editor might only have m_player1, check needed if m_player2 usage is intended
+        applyRainbowColors(m_player1, true, settings, mainColorP1, invertedColorP1);
+        if(m_player2) { // Check if player 2 exists in editor context
+             applyRainbowColors(m_player2, false, settings, mainColorP2, invertedColorP2);
         }
-
-        LevelEditorLayer::postUpdate(p0);
     }
 };
 
@@ -338,19 +248,22 @@ class $modify(SettingsBTN, EditorPauseLayer)
     {
         if (!EditorPauseLayer::init(lel))
             return false;
+
+        // Fetch setting only once
         bool shortcut = Mod::get()->getSettingValue<bool>("shortcut");
 
-        auto btnSprite = CCSprite::create("btnSprite.png"_spr);
-        auto menu = this->getChildByID("guidelines-menu");
-        auto btn = CCMenuItemSpriteExtra::create(
-            btnSprite, this, menu_selector(SettingsBTN::btnSettings));
-        btn->setID("settings-button"_spr);
-        btn->setZOrder(10);
-
-        if (shortcut == true)
+        if (shortcut) // Check before creating sprites/menus
         {
-            menu->addChild(btn);
-            menu->updateLayout();
+            auto btnSprite = CCSprite::create("btnSprite.png"_spr);
+            auto menu = this->getChildByID("guidelines-menu");
+             if (menu && btnSprite) { // Check if menu and sprite exist
+                auto btn = CCMenuItemSpriteExtra::create(
+                    btnSprite, this, menu_selector(SettingsBTN::btnSettings));
+                btn->setID("settings-button"_spr);
+                btn->setZOrder(10); // Consider if ZOrder is necessary if it's the only item added
+                menu->addChild(btn);
+                menu->updateLayout();
+             }
         }
 
         return true;
@@ -366,77 +279,25 @@ class $modify(OpenSettings, PauseLayer)
 
     void customSetup()
     {
+        PauseLayer::customSetup(); // Call base function first
+
+        // Fetch setting only once
         bool shortcut = Mod::get()->getSettingValue<bool>("shortcut");
-        auto winSize = CCDirector::sharedDirector()->getWinSize();
 
-        auto bottomRightPos =
-            ccp((winSize.width / 2) - 41, (winSize.height / 2) - 181);
+        // Removed unused winSize and bottomRightPos variables
 
-        PauseLayer::customSetup();
-        auto btnSprite = CCSprite::create("btnSprite.png"_spr);
-        auto menu = this->getChildByID("right-button-menu");
-        auto btn = CCMenuItemSpriteExtra::create(
-            btnSprite, this, menu_selector(OpenSettings::btnSettings));
-        btn->setID("settings-button"_spr);
-        btn->setZOrder(10);
-
-        if (shortcut == true)
+        if (shortcut) // Check before creating sprites/menus
         {
-            menu->addChild(btn);
-            menu->updateLayout();
+             auto btnSprite = CCSprite::create("btnSprite.png"_spr);
+             auto menu = this->getChildByID("right-button-menu");
+             if (menu && btnSprite) { // Check if menu and sprite exist
+                auto btn = CCMenuItemSpriteExtra::create(
+                    btnSprite, this, menu_selector(OpenSettings::btnSettings));
+                btn->setID("settings-button"_spr);
+                btn->setZOrder(10); // Consider if ZOrder is necessary
+                menu->addChild(btn);
+                menu->updateLayout();
+             }
         }
     };
 };
-
-// Some shitty test code
-// class MenuLayer_Fields {
-// public:
-//     static inline CCLayerGradient* backgroundLayer = nullptr;
-//     static inline CCMenu* menu = nullptr;
-
-//     static void setupBackground(MenuLayer* self) {
-//         if (!backgroundLayer) {
-//             backgroundLayer = CCLayerGradient::create();
-//             backgroundLayer->setZOrder(-1);
-//             self->addChild(backgroundLayer);
-//             self->scheduleUpdate();
-//         }
-//     }
-
-//     static void updateBackground() {
-//         if (backgroundLayer) {
-//             auto mod = Mod::get();
-//             auto speed = mod->getSettingValue<double>("speed");
-//             auto saturation = mod->getSettingValue<double>("saturation");
-//             auto brightness = mod->getSettingValue<double>("brightness");
-            
-//             if (::g >= 360) {
-//                 ::g = 0;
-//             } else {
-//                 ::g += speed / 10;
-//             }
-
-//             auto color1 = getRainbow4B(0, saturation, brightness);
-//             auto color2 = getRainbow4B(180, saturation, brightness);
-            
-//             backgroundLayer->setStartColor(ccc3(color1.r, color1.g, color1.b));
-//             backgroundLayer->setEndColor(ccc3(color2.r, color2.g, color2.b));
-//             backgroundLayer->setVector(ccp(0, 1));
-//         }
-//     }
-// };
-
-// class $modify(MenuLayer) {
-//     bool init() {
-//         if (!MenuLayer::init())
-//             return false;
-            
-//         MenuLayer_Fields::setupBackground(this);
-//         return true;
-//     }
-
-//     void update(float dt) {
-//         MenuLayer::update(dt);
-//         MenuLayer_Fields::updateBackground();
-//     }
-// };
