@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# At the beginning of your CMakeLists.txt, change this:
-#  set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
-# into:
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS" OR IOS)
     set(CMAKE_OSX_ARCHITECTURES "arm64")
 else()
@@ -11,17 +8,14 @@ else()
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-
-
-
-project(RainbowIcon VERSION 1.0.0)
+project(RainbowIcon VERSION 1.3.1)
 
 add_library(${PROJECT_NAME} SHARED
     src/main.cpp
 )
 
 if (NOT DEFINED ENV{GEODE_SDK})
-    message(FATAL_ERROR "Unable to find Geode SDK! Please define GEODE_SDK environment variable to point to Geode")
+    message(FATAL_ERROR "Unable to find Geode SDK ! Please define GEODE_SDK environment variable to point to Geode")
 else()
     message(STATUS "Found Geode: $ENV{GEODE_SDK}")
 endif()
