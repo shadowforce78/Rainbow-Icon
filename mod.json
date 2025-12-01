@@ -1,12 +1,12 @@
 {
-	"geode": "4.3.1",
+	"geode": "4.10.0",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
 		"mac": "2.2074",
 		"ios": "2.2074"
 	},
-	"version": "1.3.1",
+	"version": "1.4.0",
 	"id": "saumondeluxe.rainbow_icon",
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
