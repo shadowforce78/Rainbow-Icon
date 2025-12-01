@@ -118,8 +118,6 @@ cocos2d::_ccColor3B getRainbow(float offset, float saturation, float value)
     return out;
 }
 
-// Removed getRainbow4B as it wasn't used
-
 // Helper function to apply colors to a player
 void applyRainbowColors(PlayerObject* player, bool isPlayer1, RainbowSettings& settings, const cocos2d::_ccColor3B& mainColor, const cocos2d::_ccColor3B& invertedColor) {
     if (!player) return;
@@ -139,20 +137,6 @@ void applyRainbowColors(PlayerObject* player, bool isPlayer1, RainbowSettings& s
     {
         player->setColor(mainColor);
         player->setSecondColor(settings.sync ? mainColor : invertedColor);
-    }
-    else if (settings.preset == 2) // Primary color only
-    {
-        player->setColor(mainColor);
-    }
-    else if (settings.preset == 3) // Secondary color only
-    {
-        player->setSecondColor(mainColor);
-    }
-
-    // Apply Glow Color
-    if (settings.glow) {
-        player->m_glowColor = settings.sync ? mainColor : invertedColor;
-        player->updateGlowColor();
     }
 }
 
