@@ -132,11 +132,29 @@ void applyRainbowColors(PlayerObject* player, bool isPlayer1, RainbowSettings& s
         player->m_waveTrail->setColor(mainColor);
     }
 
+    auto gm = GameManager::sharedState();
+
     // Apply Player Colors based on preset
     if (settings.preset == 1) // Both colors
     {
         player->setColor(mainColor);
         player->setSecondColor(settings.sync ? mainColor : invertedColor);
+    }
+    else if (settings.preset == 2) // Primary color only
+    {
+        player->setColor(mainColor);
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+    }
+    else if (settings.preset == 3) // Secondary color only
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(mainColor);
+    }
+
+    // Apply Glow Color
+    if (settings.glow) {
+        player->m_glowColor = settings.sync ? mainColor : invertedColor;
+        player->updateGlowColor();
     }
 }
 
