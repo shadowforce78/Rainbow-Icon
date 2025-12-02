@@ -1,3 +1,6 @@
+# 1.4.0
+- Fixed the flashPlayer wich was making the icon white permanently
+
 # 1.3.1
 - Optimized the code
 - Added partial support for iOS (not tested, yet)

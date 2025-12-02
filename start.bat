@@ -5,7 +5,7 @@ echo "Stopping Geometry Dash...."
 taskkill /f /im GeometryDash.exe
 echo "Geometry Dash stopped!"
 echo "Starting build...."
-geode build
+geode build -- -G "Visual Studio 17 2022" -D CMAKE_TLS_VERIFY=OFF
 echo "Windows build complete!"
 echo "Do you want to start Geometry Dash? (y/n)"
 set /p choice=
