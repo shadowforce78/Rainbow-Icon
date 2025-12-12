@@ -6,6 +6,8 @@
 #include <Geode/modify/PauseLayer.hpp>
 #include <Geode/modify/EditorPauseLayer.hpp>
 #include <Geode/modify/MenuLayer.hpp>
+#include <Geode/modify/GJGarageLayer.hpp>
+#include <Geode/binding/SimplePlayer.hpp>
 #include <Geode/utils/web.hpp>
 #include <chrono>
 #include <functional>
@@ -158,6 +160,46 @@ void applyRainbowColors(PlayerObject* player, bool isPlayer1, RainbowSettings& s
     }
 }
 
+// Helper function to apply colors to a SimplePlayer (for Garage)
+void applyRainbowColorsSimple(SimplePlayer* player, bool isPlayer1, RainbowSettings& settings, const cocos2d::_ccColor3B& mainColor, const cocos2d::_ccColor3B& invertedColor) {
+    if (!player) return;
+
+    int64_t playerPreset = settings.playerPreset;
+    bool applyToThisPlayer = (playerPreset == 1) || (isPlayer1 && playerPreset == 2) || (!isPlayer1 && playerPreset == 3);
+
+    if (!applyToThisPlayer) return;
+
+    auto gm = GameManager::sharedState();
+
+    // Apply Player Colors based on preset
+    // SimplePlayer usually treats setColor as the primary color and setSecondColor as secondary.
+    // However, we need to be careful with how SimplePlayer logic works.
+    
+    if (settings.preset == 1) // Both colors
+    {
+        player->setColor(mainColor);
+        player->setSecondColor(settings.sync ? mainColor : invertedColor);
+    }
+    else if (settings.preset == 2) // Primary color only
+    {
+        player->setColor(mainColor);
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+    }
+    else if (settings.preset == 3) // Secondary color only
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(mainColor);
+    }
+
+    // SimplePlayer might support glow, usually via setGlowOutline
+    if (settings.glow) {
+         player->setGlowOutline(settings.sync ? mainColor : invertedColor);
+    }
+    
+    // Explicitly update colors to ensure changes take effect immediately
+    player->updateColors();
+}
+
 // Helper function to update hue
 void updateHue(const RainbowSettings& settings) {
      if (g_hue >= 360)
@@ -170,7 +212,6 @@ void updateHue(const RainbowSettings& settings) {
         g_hue += settings.superSpeed ? 10.0f : static_cast<float>(settings.speed) / 10.0f;
     }
 }
-
 
 class $modify(PlayerObject)
 {
@@ -302,4 +343,108 @@ class $modify(OpenSettings, PauseLayer)
              }
         }
     };
+};
+
+class $modify(MyGarageLayer, GJGarageLayer) {
+    bool init() {
+        if (!GJGarageLayer::init()) return false;
+        
+        geode::log::info("MyGarageLayer::init called - Hook is working!");
+        
+        // Use a custom selector to avoid potential conflicts or suppression of the default update
+        this->schedule(schedule_selector(MyGarageLayer::rainbowUpdate));
+        return true;
+    }
+
+    void rainbowUpdate(float dt) {
+        // No need to call GJGarageLayer::update(dt) here as we are a separate schedule
+        
+        // Throttle logging to avoid spam
+        static int logCounter = 0;
+        bool doLog = (logCounter++ % 180) == 0; // Log roughly every 3 seconds (60fps)
+
+        auto settings = getModSettings();
+        
+        if (doLog) {
+             geode::log::info("MyGarageLayer::rainbowUpdate - Enable: {}, Preset: {}", settings.enable, settings.preset);
+        }
+
+        if (!settings.enable) return;
+
+        updateHue(settings); 
+
+        if (settings.pastel)
+        {
+            settings.saturation = 50;
+            settings.brightness = 90;
+        }
+
+        auto mainColorP1 = getRainbow(settings.offset_color_p1, settings.saturation, settings.brightness);
+        auto invertedColorP1 = getRainbow(settings.offset_color_p1 + 180, settings.saturation, settings.brightness);
+        
+        SimplePlayer* player = m_playerObject;
+        if (!player) {
+            player = typeinfo_cast<SimplePlayer*>(this->getChildByID("player-icon"));
+        }
+
+        if (player) {
+             if (doLog) {
+                geode::log::info("GaragePlayer Found: {}", player);
+             }
+
+            // User info: "Color 1 node" contains Glow [0] and Secondary [2].
+            // We assume "Color 1 node" is one of the direct children of SimplePlayer.
+            // We will iterate ALL direct children and treat them as potential "Color 1 nodes".
+            
+            auto children = player->getChildren();
+            if (children) {
+                for (int i = 0; i < children->count(); ++i) {
+                    auto mainNode = static_cast<CCNode*>(children->objectAtIndex(i));
+                    auto mainSprite = typeinfo_cast<CCSprite*>(mainNode);
+                    
+                    if (mainSprite) {
+                        // 1. This is "Color 1" (Parent Node). Apply Main Color.
+                        mainSprite->setColor(mainColorP1);
+                        
+                        // 2. Check its children for Glow [0] and Secondary [2]
+                        if (mainSprite->getChildrenCount() > 0) {
+                             auto subChildren = mainSprite->getChildren();
+                             if (doLog && i == 0) geode::log::info("SubChild Count for Child 0: {}", subChildren->count());
+
+                             // Child [0] -> Glow
+                             if (settings.glow && subChildren->count() > 0) {
+                                 auto glowNode = static_cast<CCNode*>(subChildren->objectAtIndex(0));
+                                 if (auto glowSprite = typeinfo_cast<CCSprite*>(glowNode)) {
+                                     glowSprite->setColor(settings.sync ? mainColorP1 : invertedColorP1);
+                                 }
+                             }
+                             
+                             // Child [2] -> Secondary
+                             if (subChildren->count() > 2) {
+                                 auto secNode = static_cast<CCNode*>(subChildren->objectAtIndex(2));
+                                 if (auto secSprite = typeinfo_cast<CCSprite*>(secNode)) {
+                                      // Secondary Logic
+                                      ccColor3B secondaryColor;
+                                      if (settings.preset == 0 || settings.preset == 1) // Both
+                                          secondaryColor = settings.sync ? mainColorP1 : invertedColorP1;
+                                      else if (settings.preset == 3) // Secondary only (Main is rainbow)
+                                          secondaryColor = mainColorP1;
+                                      else 
+                                          secondaryColor = GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor2());
+
+                                      if (settings.preset == 0 || settings.preset == 1 || settings.preset == 3) {
+                                           secSprite->setColor(secondaryColor);
+                                      }
+                                 }
+                             }
+                        }
+                    }
+                }
+            }
+            
+             player->updateColors();
+        } else {
+            if (doLog) geode::log::info("GaragePlayer NOT FOUND");
+        }
+    }
 };
