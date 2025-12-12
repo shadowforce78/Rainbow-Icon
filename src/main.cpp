@@ -347,6 +347,107 @@ class $modify(OpenSettings, PauseLayer)
     };
 };
 
+class $modify(MyMenuLayer, MenuLayer) {
+    bool init() {
+        if (!MenuLayer::init()) return false;
+        
+        if (Loader::get()->isModLoaded("capeling.icon_profile")) {
+            geode::log::info("Rainbow Icon: 'capeling.icon_profile' is LOADED");
+            this->schedule(schedule_selector(MyMenuLayer::updateProfileRainbow));
+        }
+        
+        return true;
+    }
+
+    void updateProfileRainbow(float dt) {
+        auto settings = getModSettings();
+        if (!settings.enable) return;
+
+        // Note: Global hue is updated in PlayLayer/Editor/Garage. 
+        // In MenuLayer, we might need to update it ourselves if it's not running elsewhere?
+        // But usually updateHue is called in general loops. 
+        // Let's call it here just in case, it's safe (time based).
+        updateHue(settings);
+
+        if (settings.pastel) {
+            settings.saturation = 50;
+            settings.brightness = 90;
+        }
+        
+        auto mainColor = getRainbow(settings.offset_color_p1, settings.saturation, settings.brightness);
+        auto invertedColor = getRainbow(settings.offset_color_p1 + 180, settings.saturation, settings.brightness);
+
+        // Hierarchy: profile-menu -> profile-button -> profile-icon -> SimplePlayer
+        auto menu = this->getChildByID("profile-menu");
+        if (!menu) return;
+
+        auto btn = static_cast<CCMenuItemSpriteExtra*>(menu->getChildByID("profile-button"));
+        if (!btn) return;
+
+        // "profile-icon" is likely the normal image of the button, or a child of it if the structure is complex.
+        // User said: "renferme un CCSprite profile-icon".
+        // Let's look for child by ID just to be safe, or check the NormalImage.
+        // CCMenuItemSpriteExtra's normal image is usually a CCSprite but not always named.
+        // However, if the mod sets IDs, we can look for it.
+        
+        CCNode* iconNode = btn->getChildByID("profile-icon");
+        if (!iconNode) {
+            // Fallback: Check NormalImage if ID finding fails, though user specified ID.
+            // But user said "renferme", so it's a child.
+             auto normalImg = btn->getNormalImage();
+             if (normalImg && std::string(normalImg->getID()) == "profile-icon") {
+                 iconNode = normalImg;
+             }
+        }
+
+        if (!iconNode) return;
+
+        // Now find SimplePlayer inside profile-icon
+        // It might be a direct child.
+        SimplePlayer* player = nullptr;
+        
+        // Try finding by type helper if possible, or iterate children
+        auto children = iconNode->getChildren();
+        if (children) {
+            for (int i=0; i<children->count(); ++i) {
+                auto child = static_cast<CCNode*>(children->objectAtIndex(i));
+                player = typeinfo_cast<SimplePlayer*>(child);
+                if (player) break;
+            }
+        }
+
+        if (player) {
+            // Re-use logic for color application
+            // Similar to Garage logic: Apply main color to player and handle children for GLOW/Secondary
+            
+            player->setColor(mainColor);
+            
+            // NOTE: SimplePlayer in menus often works correctly with setSecondColor/updateColors
+            // unlike the Garage one which needed manual brute-forcing. 
+            // We'll try standard methods first.
+            
+             // Apply Player Colors based on preset
+            auto gm = GameManager::sharedState();
+            ccColor3B secondaryColor;
+             
+            if (settings.preset == 0 || settings.preset == 1) // Both
+                secondaryColor = settings.sync ? mainColor : invertedColor;
+            else if (settings.preset == 3) // Secondary only
+                secondaryColor = mainColor;
+            else 
+                secondaryColor = gm->colorForIdx(gm->getPlayerColor2());
+
+            player->setSecondColor(secondaryColor);
+
+            if (settings.glow) {
+                player->setGlowOutline(settings.sync ? mainColor : invertedColor);
+            }
+            
+            player->updateColors();
+        }
+    }
+};
+
 class $modify(MyGarageLayer, GJGarageLayer) {
     void onSettings(CCObject*) {
         geode::openSettingsPopup(Mod::get());
