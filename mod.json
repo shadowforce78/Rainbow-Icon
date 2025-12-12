@@ -6,7 +6,7 @@
 		"mac": "2.2074",
 		"ios": "2.2074"
 	},
-	"version": "1.4.0",
+	"version": "1.4.1-beta",
 	"id": "saumondeluxe.rainbow_icon",
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
@@ -55,6 +55,12 @@
 			"name": "Enable Rainbow Icon in Editor",
 			"type": "bool",
 			"description": "Enable or disable the rainbow effect on your icons in the editor.",
+			"default": true
+		},
+		"garagePreview": {
+			"name": "Rainbow in Garage",
+			"type": "bool",
+			"description": "Enable or disable the rainbow effect in the garage/icon kit.",
 			"default": true
 		},
 		"shortcut": {

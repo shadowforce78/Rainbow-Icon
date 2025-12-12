@@ -1,3 +1,6 @@
+# 1.4.1
+- Added garage preview support (toggleable)
+
 # 1.4.0
 - Fixed the flashPlayer wich was making the icon white permanently
 

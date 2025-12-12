@@ -33,27 +33,29 @@ struct RainbowSettings {
     bool superSpeed;
     bool pastel;
     bool editorEnable; // Added for editor specific enable
+    bool garagePreview;
 };
 
 // Fetches all settings at once
 RainbowSettings getModSettings() {
+    RainbowSettings settings;
     auto mod = Mod::get();
-    return {
-        mod->getSettingValue<double>("speed"),
-        mod->getSettingValue<double>("saturation"),
-        mod->getSettingValue<double>("brightness"),
-        mod->getSettingValue<int64_t>("offset_color_p1"),
-        mod->getSettingValue<int64_t>("offset_color_p2"),
-        mod->getSettingValue<bool>("enable"),
-        mod->getSettingValue<bool>("glow"),
-        mod->getSettingValue<int64_t>("preset"),
-        mod->getSettingValue<int64_t>("playerPreset"),
-        mod->getSettingValue<bool>("sync"),
-        mod->getSettingValue<bool>("wave"),
-        mod->getSettingValue<bool>("superSpeed"),
-        mod->getSettingValue<bool>("pastel"),
-        mod->getSettingValue<bool>("editorEnable") // Fetch editor setting
-    };
+    settings.speed = mod->getSettingValue<double>("speed");
+    settings.saturation = mod->getSettingValue<double>("saturation");
+    settings.brightness = mod->getSettingValue<double>("brightness");
+    settings.offset_color_p1 = mod->getSettingValue<int64_t>("offset_color_p1");
+    settings.offset_color_p2 = mod->getSettingValue<int64_t>("offset_color_p2");
+    settings.enable = mod->getSettingValue<bool>("enable");
+    settings.glow = mod->getSettingValue<bool>("glow");
+    settings.preset = mod->getSettingValue<int64_t>("preset");
+    settings.playerPreset = mod->getSettingValue<int64_t>("playerPreset");
+    settings.sync = mod->getSettingValue<bool>("sync");
+    settings.wave = mod->getSettingValue<bool>("wave");
+    settings.pastel = mod->getSettingValue<bool>("pastel");
+    settings.superSpeed = mod->getSettingValue<bool>("superSpeed");
+    settings.editorEnable = mod->getSettingValue<bool>("editorEnable"); // Fetch editor setting
+    settings.garagePreview = mod->getSettingValue<bool>("garagePreview");
+    return settings;
 }
 
 
@@ -346,11 +348,31 @@ class $modify(OpenSettings, PauseLayer)
 };
 
 class $modify(MyGarageLayer, GJGarageLayer) {
+    void onSettings(CCObject*) {
+        geode::openSettingsPopup(Mod::get());
+    }
+
     bool init() {
         if (!GJGarageLayer::init()) return false;
         
         geode::log::info("MyGarageLayer::init called - Hook is working!");
         
+        // Add settings button to shards-menu if shortcut is enabled
+        if (Mod::get()->getSettingValue<bool>("shortcut")) {
+            auto menu = this->getChildByID("shards-menu");
+            if (menu) {
+                auto btnSprite = CCSprite::create("btnSprite.png"_spr);
+                if (btnSprite) {
+                    auto btn = CCMenuItemSpriteExtra::create(
+                        btnSprite, this, menu_selector(MyGarageLayer::onSettings)
+                    );
+                    btn->setID("rainbow-settings-button"_spr);
+                    menu->addChild(btn);
+                    menu->updateLayout();
+                }
+            }
+        }
+
         // Use a custom selector to avoid potential conflicts or suppression of the default update
         this->schedule(schedule_selector(MyGarageLayer::rainbowUpdate));
         return true;
@@ -366,10 +388,10 @@ class $modify(MyGarageLayer, GJGarageLayer) {
         auto settings = getModSettings();
         
         if (doLog) {
-             geode::log::info("MyGarageLayer::rainbowUpdate - Enable: {}, Preset: {}", settings.enable, settings.preset);
+             geode::log::info("MyGarageLayer::rainbowUpdate - Enable: {}, GaragePreview: {}", settings.enable, settings.garagePreview);
         }
 
-        if (!settings.enable) return;
+        if (!settings.enable || !settings.garagePreview) return;
 
         updateHue(settings); 
 
