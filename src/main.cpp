@@ -34,6 +34,7 @@ struct RainbowSettings {
     bool pastel;
     bool editorEnable; // Added for editor specific enable
     bool garagePreview;
+    bool menuEnable;
 };
 
 // Fetches all settings at once
@@ -55,6 +56,7 @@ RainbowSettings getModSettings() {
     settings.superSpeed = mod->getSettingValue<bool>("superSpeed");
     settings.editorEnable = mod->getSettingValue<bool>("editorEnable"); // Fetch editor setting
     settings.garagePreview = mod->getSettingValue<bool>("garagePreview");
+    settings.menuEnable = mod->getSettingValue<bool>("menuEnable");
     return settings;
 }
 
@@ -361,7 +363,7 @@ class $modify(MyMenuLayer, MenuLayer) {
 
     void updateProfileRainbow(float dt) {
         auto settings = getModSettings();
-        if (!settings.enable) return;
+        if (!settings.enable || !settings.menuEnable) return;
 
         // Note: Global hue is updated in PlayLayer/Editor/Garage. 
         // In MenuLayer, we might need to update it ourselves if it's not running elsewhere?

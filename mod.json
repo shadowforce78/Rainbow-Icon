@@ -63,6 +63,12 @@
 			"description": "Enable or disable the rainbow effect in the garage/icon kit.",
 			"default": true
 		},
+		"menuEnable": {
+			"name": "Rainbow in Menu",
+			"type": "bool",
+			"description": "Enable or disable the rainbow effect on the profile icon in the main menu.",
+			"default": true
+		},
 		"shortcut": {
 			"name": "Rainbow Shortcut",
 			"type": "bool",
