@@ -7,6 +7,7 @@
 #include <Geode/modify/EditorPauseLayer.hpp>
 #include <Geode/modify/MenuLayer.hpp>
 #include <Geode/modify/GJGarageLayer.hpp>
+#include <Geode/modify/ProfilePage.hpp>
 #include <Geode/binding/SimplePlayer.hpp>
 #include <Geode/utils/web.hpp>
 #include <chrono>
@@ -35,6 +36,7 @@ struct RainbowSettings {
     bool editorEnable; // Added for editor specific enable
     bool garagePreview;
     bool menuEnable;
+    bool profileEnable;
 };
 
 // Fetches all settings at once
@@ -57,6 +59,7 @@ RainbowSettings getModSettings() {
     settings.editorEnable = mod->getSettingValue<bool>("editorEnable"); // Fetch editor setting
     settings.garagePreview = mod->getSettingValue<bool>("garagePreview");
     settings.menuEnable = mod->getSettingValue<bool>("menuEnable");
+    settings.profileEnable = mod->getSettingValue<bool>("profileEnable");
     return settings;
 }
 
@@ -387,7 +390,6 @@ class $modify(MyMenuLayer, MenuLayer) {
         if (!btn) return;
 
         // "profile-icon" is likely the normal image of the button, or a child of it if the structure is complex.
-        // User said: "renferme un CCSprite profile-icon".
         // Let's look for child by ID just to be safe, or check the NormalImage.
         // CCMenuItemSpriteExtra's normal image is usually a CCSprite but not always named.
         // However, if the mod sets IDs, we can look for it.
@@ -395,7 +397,6 @@ class $modify(MyMenuLayer, MenuLayer) {
         CCNode* iconNode = btn->getChildByID("profile-icon");
         if (!iconNode) {
             // Fallback: Check NormalImage if ID finding fails, though user specified ID.
-            // But user said "renferme", so it's a child.
              auto normalImg = btn->getNormalImage();
              if (normalImg && std::string(normalImg->getID()) == "profile-icon") {
                  iconNode = normalImg;
@@ -446,6 +447,148 @@ class $modify(MyMenuLayer, MenuLayer) {
             }
             
             player->updateColors();
+        }
+    }
+};
+
+class $modify(MyProfilePage, ProfilePage) {
+    bool init(int accountID, bool ownProfile) {
+        if (!ProfilePage::init(accountID, ownProfile)) return false;
+
+        this->schedule(schedule_selector(MyProfilePage::updateProfileRainbow));
+        return true;
+    }
+
+    void updateProfileRainbow(float dt) {
+        static int logCounter = 0;
+        bool doLog = (logCounter++ % 180) == 0; 
+        
+        auto settings = getModSettings();
+        if (!settings.enable || !settings.profileEnable) return;
+
+        updateHue(settings);
+
+        if (settings.pastel) {
+            settings.saturation = 50;
+            settings.brightness = 90;
+        }
+
+        auto mainColor = getRainbow(settings.offset_color_p1, settings.saturation, settings.brightness);
+        auto invertedColor = getRainbow(settings.offset_color_p1 + 180, settings.saturation, settings.brightness);
+
+        CCNode* menu = nullptr;
+        auto children = this->getChildren();
+        
+        if (children) {
+            for (int i = 0; i < children->count(); ++i) {
+                auto child = static_cast<CCNode*>(children->objectAtIndex(i));
+                if (typeinfo_cast<CCLayer*>(child)) {
+                    auto potentialMenu = child->getChildByID("player-menu");
+                    if (potentialMenu) {
+                        menu = potentialMenu;
+                        if (doLog) geode::log::info("ProfilePage: Found 'player-menu' in child layer {}, ID: {}", i, child->getID());
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!menu) {
+             if (doLog) {
+                 geode::log::info("ProfilePage: 'player-menu' not found in any child layer");
+                 if (children) {
+                     for (int i = 0; i < children->count(); ++i) {
+                         auto child = static_cast<CCNode*>(children->objectAtIndex(i));
+                         geode::log::info("ProfilePage Child {}: ID='{}', Type={}", i, child->getID(), typeid(*child).name());
+                     }
+                 }
+             }
+             return;
+        }
+
+        auto menuChildren = menu->getChildren();
+        if (!menuChildren) {
+             if (doLog) geode::log::info("ProfilePage: 'player-menu' has no children");
+             return;
+        }
+        
+        if (doLog) geode::log::info("ProfilePage: 'player-menu' child count: {}", menuChildren->count());
+
+        for (int i = 0; i < menuChildren->count(); ++i) {
+             auto node = static_cast<CCNode*>(menuChildren->objectAtIndex(i));
+             
+             // Find SimplePlayer in the node
+             SimplePlayer* player = nullptr;
+             auto nodeChildren = node->getChildren();
+             if (nodeChildren) {
+                 for (int j = 0; j < nodeChildren->count(); ++j) {
+                     auto child = static_cast<CCNode*>(nodeChildren->objectAtIndex(j));
+                     player = typeinfo_cast<SimplePlayer*>(child);
+                     if (player) break;
+                 }
+             }
+
+             if (player) {
+                  // applyRainbowColorsSimple(player, true, settings, mainColor, invertedColor); // Replaced with manual logic below
+                  
+                  auto playerChildren = player->getChildren();
+                  if (playerChildren) {
+                    for (int k = 0; k < playerChildren->count(); ++k) {
+                        auto mainNode = static_cast<CCNode*>(playerChildren->objectAtIndex(k));
+                        auto mainSprite = typeinfo_cast<CCSprite*>(mainNode);
+                        
+                        if (mainSprite) {
+                            // 1. Main Color
+                            mainSprite->setColor(mainColor);
+                            
+                            // 2. Children: Glow [0], Secondary [2]
+                            if (mainSprite->getChildrenCount() > 0) {
+                                 auto subChildren = mainSprite->getChildren();
+                                 
+                                 // Child [0] -> Glow
+                                 if (settings.glow && subChildren->count() > 0) {
+                                     auto glowNode = static_cast<CCNode*>(subChildren->objectAtIndex(0));
+                                     if (auto glowSprite = typeinfo_cast<CCSprite*>(glowNode)) {
+                                         glowSprite->setColor(settings.sync ? mainColor : invertedColor);
+                                     }
+                                 }
+                                 
+                                 // Child [2] -> Secondary
+                                 if (subChildren->count() > 2) {
+                                     auto secNode = static_cast<CCNode*>(subChildren->objectAtIndex(2));
+                                     if (auto secSprite = typeinfo_cast<CCSprite*>(secNode)) {
+                                          // Secondary Logic
+                                          ccColor3B secondaryColor;
+                                          if (settings.preset == 0 || settings.preset == 1) // Both
+                                              secondaryColor = settings.sync ? mainColor : invertedColor;
+                                          else if (settings.preset == 3) // Secondary only
+                                              secondaryColor = mainColor;
+                                          else 
+                                              secondaryColor = GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor2()); // Fallback to normal color 2
+                                          
+                                          // Note: ProfilePage icons might use specific colors from the user profile being viewed, 
+                                          // but finding that specific user's color 2 might be complex. 
+                                          // For now, if we are rainbow-ing, we use the rainbow color.
+                                          // If we fall back (preset 2), we might be setting it to 'GameManager's color 2' which is the logged in user's color.
+                                          // This might be incorrect if looking at ANOTHER user's profile.
+                                          // But for the purpose of "Rainbow Icon", we usually overwrite the color anyway.
+                                          
+                                          if (settings.preset == 0 || settings.preset == 1 || settings.preset == 3) {
+                                               secSprite->setColor(secondaryColor);
+                                          }
+                                     }
+                                 }
+                            }
+                        }
+                    }
+                  }
+                  
+                  // Still call updateColors to handle other states/ensuring strictness if possible
+                  player->updateColors();
+
+             } else {
+                 if (doLog) geode::log::info("ProfilePage: SimplePlayer not found in child {}", i);
+             }
         }
     }
 };

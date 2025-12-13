@@ -63,6 +63,12 @@
 			"description": "Enable or disable the rainbow effect in the garage/icon kit.",
 			"default": true
 		},
+		"profileEnable": {
+			"name": "Rainbow in Profile",
+			"type": "bool",
+			"description": "Enable or disable the rainbow effect on the icons in the profile page.",
+			"default": true
+		},
 		"menuEnable": {
 			"name": "Rainbow in Menu",
 			"type": "bool",
