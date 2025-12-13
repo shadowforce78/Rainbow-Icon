@@ -529,8 +529,14 @@ class $modify(MyProfilePage, ProfilePage) {
              }
 
              if (player) {
-                  // applyRainbowColorsSimple(player, true, settings, mainColor, invertedColor); // Replaced with manual logic below
-                  
+                  // Move updateColors to BEFORE manual changes so we don't overwrite them
+                  player->updateColors();
+
+                  // Explicitly set glow outline using the helper method if available (most robust)
+                  if (settings.glow) {
+                       player->setGlowOutline(settings.sync ? mainColor : invertedColor);
+                  }
+
                   auto playerChildren = player->getChildren();
                   if (playerChildren) {
                     for (int k = 0; k < playerChildren->count(); ++k) {
@@ -541,15 +547,19 @@ class $modify(MyProfilePage, ProfilePage) {
                             // 1. Main Color
                             mainSprite->setColor(mainColor);
                             
-                            // 2. Children: Glow [0], Secondary [2]
-                            if (mainSprite->getChildrenCount() > 0) {
-                                 auto subChildren = mainSprite->getChildren();
-                                 
+                            // 2. Children loop
+                            auto subChildren = mainSprite->getChildren();
+                            if (subChildren) {
+                                 if (doLog && k == 0) geode::log::info("ProfilePage Player Child {}: SubChildren Count: {}", k, subChildren->count());
+
                                  // Child [0] -> Glow
+                                 // Even if setGlowOutline is called, we can try to force it here too just in case
                                  if (settings.glow && subChildren->count() > 0) {
                                      auto glowNode = static_cast<CCNode*>(subChildren->objectAtIndex(0));
                                      if (auto glowSprite = typeinfo_cast<CCSprite*>(glowNode)) {
                                          glowSprite->setColor(settings.sync ? mainColor : invertedColor);
+                                     } else {
+                                         if (doLog) geode::log::info("ProfilePage: Child 0 is NOT CCSprite");
                                      }
                                  }
                                  
@@ -557,34 +567,25 @@ class $modify(MyProfilePage, ProfilePage) {
                                  if (subChildren->count() > 2) {
                                      auto secNode = static_cast<CCNode*>(subChildren->objectAtIndex(2));
                                      if (auto secSprite = typeinfo_cast<CCSprite*>(secNode)) {
-                                          // Secondary Logic
                                           ccColor3B secondaryColor;
                                           if (settings.preset == 0 || settings.preset == 1) // Both
                                               secondaryColor = settings.sync ? mainColor : invertedColor;
                                           else if (settings.preset == 3) // Secondary only
                                               secondaryColor = mainColor;
                                           else 
-                                              secondaryColor = GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor2()); // Fallback to normal color 2
-                                          
-                                          // Note: ProfilePage icons might use specific colors from the user profile being viewed, 
-                                          // but finding that specific user's color 2 might be complex. 
-                                          // For now, if we are rainbow-ing, we use the rainbow color.
-                                          // If we fall back (preset 2), we might be setting it to 'GameManager's color 2' which is the logged in user's color.
-                                          // This might be incorrect if looking at ANOTHER user's profile.
-                                          // But for the purpose of "Rainbow Icon", we usually overwrite the color anyway.
-                                          
+                                              secondaryColor = GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor2());
+
                                           if (settings.preset == 0 || settings.preset == 1 || settings.preset == 3) {
                                                secSprite->setColor(secondaryColor);
                                           }
+                                     } else {
+                                          if (doLog) geode::log::info("ProfilePage: Child 2 is NOT CCSprite");
                                      }
                                  }
                             }
                         }
                     }
                   }
-                  
-                  // Still call updateColors to handle other states/ensuring strictness if possible
-                  player->updateColors();
 
              } else {
                  if (doLog) geode::log::info("ProfilePage: SimplePlayer not found in child {}", i);
@@ -664,6 +665,14 @@ class $modify(MyGarageLayer, GJGarageLayer) {
             // We assume "Color 1 node" is one of the direct children of SimplePlayer.
             // We will iterate ALL direct children and treat them as potential "Color 1 nodes".
             
+            // Move updateColors to BEFORE manual changes so we don't overwrite them
+            player->updateColors();
+
+             // Explicitly set glow outline using the helper method if available (most robust)
+            if (settings.glow) {
+                 player->setGlowOutline(settings.sync ? mainColorP1 : invertedColorP1);
+            }
+
             auto children = player->getChildren();
             if (children) {
                 for (int i = 0; i < children->count(); ++i) {
@@ -710,7 +719,6 @@ class $modify(MyGarageLayer, GJGarageLayer) {
                 }
             }
             
-             player->updateColors();
         } else {
             if (doLog) geode::log::info("GaragePlayer NOT FOUND");
         }
