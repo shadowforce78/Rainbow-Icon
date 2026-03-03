@@ -7,7 +7,7 @@
 
 # Warning
 
-<cr>THIS MOD DON'T WORK PROPERLY WITH THE "AmbientIcons" OR "Same Dual Color" ENABLED</cr>
+<cr>THIS MOD DON'T WORK PROPERLY WITH THE "AmbientIcons", "Same Dual Color" AND "QOLMod" ENABLED</cr>
 
 # Credits
 

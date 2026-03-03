@@ -1,8 +1,11 @@
+# 1.4.2
+- Updated the mod to be compatible with 2.2081 
+- Added QOLMod as breaking in about.md because people are too lazy to read errors
+
 # 1.4.1
 - Added garage preview support
 - Added profile icon mod support and compatibility
 - Added rainbow effect to profile icons and fixed glow in garage
-
 
 # 1.4.0
 - Fixed the flashPlayer wich was making the icon white permanently
