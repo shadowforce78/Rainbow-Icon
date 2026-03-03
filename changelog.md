@@ -1,3 +1,6 @@
+# 1.5.0
+- Refactored the code to be more efficient and less spaghetti (like completely remade the mod)
+
 # 1.4.2
 - Updated the mod to be compatible with 2.2081 
 - Added QOLMod as breaking in about.md because people are too lazy to read errors
