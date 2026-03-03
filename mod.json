@@ -25,15 +25,15 @@
 	"incompatibilities": {
 		"thesillydoggo.qolmod": {
 			"breaking": true,
-			"version": "*"
+			"version": ">=2.7.3"
 		},
 		"ninkaz.blending_glow": {
 			"breaking": true,
-			"version": "*"
+			"version": ">=1.2.2"
 		},
 		"weebify.separate_dual_icons": {
 			"breaking": true,
-			"version": "*"
+			"version": ">=1.4.0"
 		}
 	},
 	"tags": [
