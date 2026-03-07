@@ -106,75 +106,30 @@ class $modify(MyProfilePage, ProfilePage)
 
             if (player)
             {
-                player->updateColors();
+                auto gm = GameManager::sharedState();
+
+                if (settings.preset == 1) // Both colors
+                {
+                    player->setColor(mainColor);
+                    player->setSecondColor(settings.sync ? mainColor : invertedColor);
+                }
+                else if (settings.preset == 2) // Primary color only
+                {
+                    player->setColor(mainColor);
+                    player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+                }
+                else if (settings.preset == 3) // Secondary color only
+                {
+                    player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+                    player->setSecondColor(mainColor);
+                }
 
                 if (settings.glow)
                 {
                     player->setGlowOutline(settings.sync ? mainColor : invertedColor);
                 }
 
-                auto playerChildren = player->getChildren();
-                if (playerChildren)
-                {
-                    for (int k = 0; k < playerChildren->count(); ++k)
-                    {
-                        auto mainNode = static_cast<CCNode *>(playerChildren->objectAtIndex(k));
-                        auto mainSprite = typeinfo_cast<CCSprite *>(mainNode);
-
-                        if (mainSprite)
-                        {
-                            mainSprite->setColor(mainColor);
-
-                            auto subChildren = mainSprite->getChildren();
-                            if (subChildren)
-                            {
-                                if (doLog && k == 0)
-                                    geode::log::info("ProfilePage Player Child {}: SubChildren Count: {}", k, subChildren->count());
-
-                                // Child [0] -> Glow
-                                if (settings.glow && subChildren->count() > 0)
-                                {
-                                    auto glowNode = static_cast<CCNode *>(subChildren->objectAtIndex(0));
-                                    if (auto glowSprite = typeinfo_cast<CCSprite *>(glowNode))
-                                    {
-                                        glowSprite->setColor(settings.sync ? mainColor : invertedColor);
-                                    }
-                                    else
-                                    {
-                                        if (doLog)
-                                            geode::log::info("ProfilePage: Child 0 is NOT CCSprite");
-                                    }
-                                }
-
-                                // Child [2] -> Secondary
-                                if (subChildren->count() > 2)
-                                {
-                                    auto secNode = static_cast<CCNode *>(subChildren->objectAtIndex(2));
-                                    if (auto secSprite = typeinfo_cast<CCSprite *>(secNode))
-                                    {
-                                        ccColor3B secondaryColor;
-                                        if (settings.preset == 0 || settings.preset == 1)
-                                            secondaryColor = settings.sync ? mainColor : invertedColor;
-                                        else if (settings.preset == 3)
-                                            secondaryColor = mainColor;
-                                        else
-                                            secondaryColor = GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor2());
-
-                                        if (settings.preset == 0 || settings.preset == 1 || settings.preset == 3)
-                                        {
-                                            secSprite->setColor(secondaryColor);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (doLog)
-                                            geode::log::info("ProfilePage: Child 2 is NOT CCSprite");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                player->updateColors();
             }
             else
             {
