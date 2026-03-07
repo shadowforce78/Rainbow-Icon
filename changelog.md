@@ -1,3 +1,8 @@
+# 1.5.0
+- Remade the mod with better code and better performance (nerdy stuff)
+- Fixed Garage preview and profile icon support for presets
+- Removed stupid logging for the profile icon mod support because it was just spamming the console and it was really dumb
+
 # 1.4.2
 - Updated the mod to be compatible with 2.2081 
 - Added QOLMod as breaking in about.md because people are too lazy to read errors

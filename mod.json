@@ -6,7 +6,7 @@
 		"ios": "2.2081",
 		"mac":"2.2081"
 	},
-	"version": "1.4.2",
+	"version": "1.5.0",
 	"id": "saumondeluxe.rainbow_icon",
 	"name": "Rainbow Icon",
 	"developer": "SaumonDeLuxe",
@@ -63,7 +63,7 @@
 		"profileEnable": {
 			"name": "Rainbow in Profile",
 			"type": "bool",
-			"description": "Enable or disable the rainbow effect on the icons in the profile page.",
+			"description": "Enable or disable the rainbow effect on the icons in the profile page. (Requires 'dasshu.icon_profile' mod)",
 			"default": true
 		},
 		"menuEnable": {
