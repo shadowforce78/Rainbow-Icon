@@ -81,65 +81,30 @@ class $modify(MyGarageLayer, GJGarageLayer)
                 geode::log::info("GaragePlayer Found: {}", player);
             }
 
-            player->updateColors();
+            auto gm = GameManager::sharedState();
+
+            if (settings.preset == 1) // Both colors
+            {
+                player->setColor(mainColorP1);
+                player->setSecondColor(settings.sync ? mainColorP1 : invertedColorP1);
+            }
+            else if (settings.preset == 2) // Primary color only
+            {
+                player->setColor(mainColorP1);
+                player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+            }
+            else if (settings.preset == 3) // Secondary color only
+            {
+                player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+                player->setSecondColor(mainColorP1);
+            }
 
             if (settings.glow)
             {
                 player->setGlowOutline(settings.sync ? mainColorP1 : invertedColorP1);
             }
 
-            auto children = player->getChildren();
-            if (children)
-            {
-                for (int i = 0; i < children->count(); ++i)
-                {
-                    auto mainNode = static_cast<CCNode *>(children->objectAtIndex(i));
-                    auto mainSprite = typeinfo_cast<CCSprite *>(mainNode);
-
-                    if (mainSprite)
-                    {
-                        mainSprite->setColor(mainColorP1);
-
-                        if (mainSprite->getChildrenCount() > 0)
-                        {
-                            auto subChildren = mainSprite->getChildren();
-                            if (doLog && i == 0)
-                                geode::log::info("SubChild Count for Child 0: {}", subChildren->count());
-
-                            // Child [0] -> Glow
-                            if (settings.glow && subChildren->count() > 0)
-                            {
-                                auto glowNode = static_cast<CCNode *>(subChildren->objectAtIndex(0));
-                                if (auto glowSprite = typeinfo_cast<CCSprite *>(glowNode))
-                                {
-                                    glowSprite->setColor(settings.sync ? mainColorP1 : invertedColorP1);
-                                }
-                            }
-
-                            // Child [2] -> Secondary
-                            if (subChildren->count() > 2)
-                            {
-                                auto secNode = static_cast<CCNode *>(subChildren->objectAtIndex(2));
-                                if (auto secSprite = typeinfo_cast<CCSprite *>(secNode))
-                                {
-                                    ccColor3B secondaryColor;
-                                    if (settings.preset == 0 || settings.preset == 1)
-                                        secondaryColor = settings.sync ? mainColorP1 : invertedColorP1;
-                                    else if (settings.preset == 3)
-                                        secondaryColor = mainColorP1;
-                                    else
-                                        secondaryColor = GameManager::sharedState()->colorForIdx(GameManager::sharedState()->getPlayerColor2());
-
-                                    if (settings.preset == 0 || settings.preset == 1 || settings.preset == 3)
-                                    {
-                                        secSprite->setColor(secondaryColor);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            player->updateColors();
         }
         else
         {
