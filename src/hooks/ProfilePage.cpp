@@ -19,9 +19,6 @@ class $modify(MyProfilePage, ProfilePage)
 
     void updateProfileRainbow(float dt)
     {
-        static int logCounter = 0;
-        bool doLog = (logCounter++ % 180) == 0;
-
         auto settings = getModSettings();
         if (!settings.enable || !settings.profileEnable)
             return;
@@ -51,8 +48,6 @@ class $modify(MyProfilePage, ProfilePage)
                     if (potentialMenu)
                     {
                         menu = potentialMenu;
-                        if (doLog)
-                            geode::log::info("ProfilePage: Found 'player-menu' in child layer {}, ID: {}", i, child->getID());
                         break;
                     }
                 }
@@ -60,32 +55,11 @@ class $modify(MyProfilePage, ProfilePage)
         }
 
         if (!menu)
-        {
-            if (doLog)
-            {
-                geode::log::info("ProfilePage: 'player-menu' not found in any child layer");
-                if (children)
-                {
-                    for (int i = 0; i < children->count(); ++i)
-                    {
-                        auto child = static_cast<CCNode *>(children->objectAtIndex(i));
-                        geode::log::info("ProfilePage Child {}: ID='{}', Type={}", i, child->getID(), typeid(*child).name());
-                    }
-                }
-            }
             return;
-        }
 
         auto menuChildren = menu->getChildren();
         if (!menuChildren)
-        {
-            if (doLog)
-                geode::log::info("ProfilePage: 'player-menu' has no children");
             return;
-        }
-
-        if (doLog)
-            geode::log::info("ProfilePage: 'player-menu' child count: {}", menuChildren->count());
 
         for (int i = 0; i < menuChildren->count(); ++i)
         {
@@ -130,11 +104,6 @@ class $modify(MyProfilePage, ProfilePage)
                 }
 
                 player->updateColors();
-            }
-            else
-            {
-                if (doLog)
-                    geode::log::info("ProfilePage: SimplePlayer not found in child {}", i);
             }
         }
     }

@@ -19,8 +19,6 @@ class $modify(MyGarageLayer, GJGarageLayer)
         if (!GJGarageLayer::init())
             return false;
 
-        geode::log::info("MyGarageLayer::init called - Hook is working!");
-
         if (Mod::get()->getSettingValue<bool>("shortcut"))
         {
             auto menu = this->getChildByID("shards-menu");
@@ -44,15 +42,7 @@ class $modify(MyGarageLayer, GJGarageLayer)
 
     void rainbowUpdate(float dt)
     {
-        static int logCounter = 0;
-        bool doLog = (logCounter++ % 180) == 0;
-
         auto settings = getModSettings();
-
-        if (doLog)
-        {
-            geode::log::info("MyGarageLayer::rainbowUpdate - Enable: {}, GaragePreview: {}", settings.enable, settings.garagePreview);
-        }
 
         if (!settings.enable || !settings.garagePreview)
             return;
@@ -76,11 +66,6 @@ class $modify(MyGarageLayer, GJGarageLayer)
 
         if (player)
         {
-            if (doLog)
-            {
-                geode::log::info("GaragePlayer Found: {}", player);
-            }
-
             auto gm = GameManager::sharedState();
 
             if (settings.preset == 1) // Both colors
@@ -105,11 +90,6 @@ class $modify(MyGarageLayer, GJGarageLayer)
             }
 
             player->updateColors();
-        }
-        else
-        {
-            if (doLog)
-                geode::log::info("GaragePlayer NOT FOUND");
         }
     }
 };

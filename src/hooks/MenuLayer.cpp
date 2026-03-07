@@ -13,9 +13,8 @@ class $modify(MyMenuLayer, MenuLayer)
         if (!MenuLayer::init())
             return false;
 
-        if (Loader::get()->isModLoaded("capeling.icon_profile"))
+        if (Loader::get()->isModLoaded("dasshu.icon_profile"))
         {
-            geode::log::info("Rainbow Icon: 'capeling.icon_profile' is LOADED");
             this->schedule(schedule_selector(MyMenuLayer::updateProfileRainbow));
         }
 
@@ -75,19 +74,23 @@ class $modify(MyMenuLayer, MenuLayer)
 
         if (player)
         {
-            player->setColor(mainColor);
-
             auto gm = GameManager::sharedState();
-            ccColor3B secondaryColor;
 
-            if (settings.preset == 0 || settings.preset == 1) // Both
-                secondaryColor = settings.sync ? mainColor : invertedColor;
-            else if (settings.preset == 3) // Secondary only
-                secondaryColor = mainColor;
-            else
-                secondaryColor = gm->colorForIdx(gm->getPlayerColor2());
-
-            player->setSecondColor(secondaryColor);
+            if (settings.preset == 1) // Both colors
+            {
+                player->setColor(mainColor);
+                player->setSecondColor(settings.sync ? mainColor : invertedColor);
+            }
+            else if (settings.preset == 2) // Primary color only
+            {
+                player->setColor(mainColor);
+                player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+            }
+            else if (settings.preset == 3) // Secondary color only
+            {
+                player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+                player->setSecondColor(mainColor);
+            }
 
             if (settings.glow)
             {

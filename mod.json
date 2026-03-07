@@ -63,7 +63,7 @@
 		"profileEnable": {
 			"name": "Rainbow in Profile",
 			"type": "bool",
-			"description": "Enable or disable the rainbow effect on the icons in the profile page.",
+			"description": "Enable or disable the rainbow effect on the icons in the profile page. (Requires 'dasshu.icon_profile' mod)",
 			"default": true
 		},
 		"menuEnable": {

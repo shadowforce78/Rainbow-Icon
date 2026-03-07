@@ -1,5 +1,7 @@
 # 1.5.0
-- Refactored the code to be more efficient and less spaghetti (like completely remade the mod)
+- Remade the mod with better code and better performance (nerdy stuff)
+- Fixed Garage preview and profile icon support for presets
+- Removed stupid logging for the profile icon mod support because it was just spamming the console and it was really dumb
 
 # 1.4.2
 - Updated the mod to be compatible with 2.2081 
