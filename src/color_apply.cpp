@@ -11,12 +11,6 @@ void applyRainbowColors(PlayerObject *player, bool isPlayer1, RainbowSettings &s
     if (!applyToThisPlayer)
         return;
 
-    // Apply Wave Trail Color
-    if (settings.wave && player->m_waveTrail)
-    {
-        player->m_waveTrail->setColor(mainColor);
-    }
-
     auto gm = GameManager::sharedState();
 
     // Apply Player Colors based on preset
@@ -34,6 +28,20 @@ void applyRainbowColors(PlayerObject *player, bool isPlayer1, RainbowSettings &s
     {
         player->setColor(gm->colorForIdx(gm->getPlayerColor()));
         player->setSecondColor(mainColor);
+    }
+
+    // Apply Wave Trail Color
+    if (player->m_waveTrail)
+    {
+        if (settings.wave)
+        {
+            player->m_waveTrail->setColor(mainColor);
+        }
+        else
+        {
+            ccColor3B normalColor = gm->colorForIdx(isPlayer1 ? gm->getPlayerColor() : gm->getPlayerColor2());
+            player->m_waveTrail->setColor(normalColor);
+        }
     }
 
     // Apply Glow Color
