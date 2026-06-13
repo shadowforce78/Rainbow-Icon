@@ -14,7 +14,12 @@ void applyRainbowColors(PlayerObject *player, bool isPlayer1, RainbowSettings &s
     auto gm = GameManager::sharedState();
 
     // Apply Player Colors based on preset
-    if (settings.preset == 1) // Both colors
+    if (settings.preset == 0) // Glow only - restore normal colors so flashPlayer doesn't leave the icon white
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+    }
+    else if (settings.preset == 1) // Both colors
     {
         player->setColor(mainColor);
         player->setSecondColor(settings.sync ? mainColor : invertedColor);
@@ -28,6 +33,11 @@ void applyRainbowColors(PlayerObject *player, bool isPlayer1, RainbowSettings &s
     {
         player->setColor(gm->colorForIdx(gm->getPlayerColor()));
         player->setSecondColor(mainColor);
+    }
+    else if (settings.preset == 4) // Glow and Trail only - restore normal icon colors, glow/wave trail still get rainbow
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
     }
 
     // Apply Wave Trail Color
@@ -65,7 +75,12 @@ void applyRainbowColorsSimple(SimplePlayer *player, bool isPlayer1, RainbowSetti
 
     auto gm = GameManager::sharedState();
 
-    if (settings.preset == 1) // Both colors
+    if (settings.preset == 0) // Glow only - restore normal colors so flashPlayer doesn't leave the icon white
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+    }
+    else if (settings.preset == 1) // Both colors
     {
         player->setColor(mainColor);
         player->setSecondColor(settings.sync ? mainColor : invertedColor);
@@ -79,6 +94,11 @@ void applyRainbowColorsSimple(SimplePlayer *player, bool isPlayer1, RainbowSetti
     {
         player->setColor(gm->colorForIdx(gm->getPlayerColor()));
         player->setSecondColor(mainColor);
+    }
+    else if (settings.preset == 4) // Glow and Trail only - restore normal icon colors, glow/wave trail still get rainbow
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
     }
 
     if (settings.glow)
