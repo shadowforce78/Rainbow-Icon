@@ -1,3 +1,6 @@
+# 1.5.1
+- Fixed glow outline bug with flashing effect
+
 # 1.5.0
 - Remade the mod with better code and better performance (nerdy stuff)
 - Fixed Garage preview and profile icon support for presets
