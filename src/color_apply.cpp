@@ -34,6 +34,11 @@ void applyRainbowColors(PlayerObject *player, bool isPlayer1, RainbowSettings &s
         player->setColor(gm->colorForIdx(gm->getPlayerColor()));
         player->setSecondColor(mainColor);
     }
+    else if (settings.preset == 4) // Glow and Trail only - restore normal icon colors, glow/wave trail still get rainbow
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
+    }
 
     // Apply Wave Trail Color
     if (player->m_waveTrail)
@@ -89,6 +94,11 @@ void applyRainbowColorsSimple(SimplePlayer *player, bool isPlayer1, RainbowSetti
     {
         player->setColor(gm->colorForIdx(gm->getPlayerColor()));
         player->setSecondColor(mainColor);
+    }
+    else if (settings.preset == 4) // Glow and Trail only - restore normal icon colors, glow/wave trail still get rainbow
+    {
+        player->setColor(gm->colorForIdx(gm->getPlayerColor()));
+        player->setSecondColor(gm->colorForIdx(gm->getPlayerColor2()));
     }
 
     if (settings.glow)

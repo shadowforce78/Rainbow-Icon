@@ -102,6 +102,12 @@
 			"description": "Enable or disable the wave effect on the rainbow.",
 			"default": true
 		},
+		"streak": {
+			"name": "Rainbow Hardstreak",
+			"type": "bool",
+			"description": "Enable or disable the rainbow effect on the hardstreak trail behind the icon.",
+			"default": true
+		},
 		"offset_color_p1": {
 			"type": "int",
 			"name": "Rainbow Offset Color Player 1",
@@ -138,9 +144,9 @@
 		"preset": {
 			"name": "Rainbow Preset",
 			"type": "int",
-			"description": "0 = Only Glow(if enabled), 1 = All enabled, 2 = Only the color1 rainbow effect, 3 = Only the color2 rainbow effect",
+			"description": "0 = Only Glow (if enabled), 1 = All enabled, 2 = Only color1 rainbow, 3 = Only color2 rainbow, 4 = Only Glow and Trail (icon colors stay normal)",
 			"default": 1,
-			"max": 3,
+			"max": 4,
 			"min": 0,
 			"control": {
 				"arrows": true,
