@@ -1,5 +1,6 @@
 # 1.5.2
 - Changed the mod icon thanks to [ArthurSimin](https://github.com/ArthurSimin)
+- Updated to Geode SDK 5.10.1
 
 # 1.5.1
 - Fixed glow outline bug with flashing effect
