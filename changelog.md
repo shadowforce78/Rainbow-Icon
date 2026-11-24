@@ -1,3 +1,7 @@
+# 1.6.0
+- Updated to Geode SDK 6.0.0
+- Updated to GD 2.2091
+
 # 1.5.2
 - Changed the mod icon thanks to [ArthurSimin](https://github.com/ArthurSimin)
 - Updated to Geode SDK 5.10.1
